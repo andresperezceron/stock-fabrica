@@ -63,5 +63,4 @@ Registra todos los movimientos de inventario.
 
 El stock se calcula dinámicamente:
 
-```text
 Stock = SUM(ENTRADAS) - SUM(SALIDAS)
