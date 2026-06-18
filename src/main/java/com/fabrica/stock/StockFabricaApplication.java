@@ -24,7 +24,7 @@ public class StockFabricaApplication {
         SpringApplication.run(StockFabricaApplication.class, args);
     }
 
-    @Bean
+   /* @Bean
     CommandLineRunner initData(
             ProductoRepository productoRepo,
             LoteRepository loteRepo,
@@ -84,5 +84,5 @@ public class StockFabricaApplication {
             );
         };
 
-    }
+    }*/
 }
