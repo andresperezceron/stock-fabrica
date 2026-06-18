@@ -63,5 +63,60 @@ Registra todos los movimientos de inventario.
 
 El stock se calcula dinámicamente:
 
-```text
 Stock = SUM(ENTRADAS) - SUM(SALIDAS)
+
+---
+
+# 🚀 Cómo ejecutar el proyecto
+
+1. Requisitos
+Java 21+
+PostgreSQL
+Maven
+
+2. Configuración base de datos:
+
+    Crear base de datos: CREATE DATABASE stock_fabrica;
+
+3. Configuración application.properties:
+
+
+    spring.datasource.url=jdbc:postgresql://localhost:5432/stock_fabrica
+    spring.datasource.username=postgres
+    spring.datasource.password=tu_password
+
+    spring.jpa.hibernate.ddl-auto=update
+    spring.jpa.show-sql=true
+
+4. Ejecutar aplicación:
+
+    mvn spring-boot:run
+
+---
+
+# 📊 Estado actual del proyecto
+
+✔ Modelado de dominio completo
+
+✔ Persistencia con JPA
+
+✔ Relaciones entre entidades
+
+✔ Movimientos de stock funcionales
+
+✔ Cálculo dinámico de stock
+
+---
+
+# 📌 Próximos pasos
+API REST con Controllers
+
+Gestión de stock por producto
+
+Validación de stock negativo
+
+UI (Swing / Android / Web)
+
+Separación en arquitectura hexagonal
+
+Migraciones con Flyway
