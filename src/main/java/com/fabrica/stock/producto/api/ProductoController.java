@@ -4,6 +4,7 @@ package com.fabrica.stock.producto.api;
 import com.fabrica.stock.producto.api.dto.ProductoRequest;
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.producto.infrastructure.ProductoRepository;
+import com.fabrica.stock.shared.domain.RecursoNoEncontradoException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,6 @@ public class ProductoController {
     @GetMapping("/{id}")
     public Producto obtener(@PathVariable Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Producto no encontrado " + id));
     }
 }
