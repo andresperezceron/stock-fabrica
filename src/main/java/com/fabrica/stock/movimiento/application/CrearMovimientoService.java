@@ -31,6 +31,17 @@ public class CrearMovimientoService {
     }
 
     public MovimientoStock ejecutar(MovimientoRequest request) {
+        TipoMovimiento tipo = TipoMovimiento.valueOf(request.tipo);
+        BigDecimal stockActual = stockService.calcularStockPorLote(request.loteId);
+        BigDecimal cantidad = request.cantidad;
+
+        if(tipo == TipoMovimiento.SALIDA && cantidad.compareTo(stockActual) > 0) {
+            throw new MovimientoStockNegativoException(
+                    "Stock insuficiente. Disponible: "
+                    + stockActual
+                    + ", solicitado: "
+                    + cantidad);
+        }
 
         Lote lote = loteRepository
                 .findById(request.loteId)
@@ -38,19 +49,11 @@ public class CrearMovimientoService {
                         "Lote no encontrado: " + request.loteId
                 ));
 
-        TipoMovimiento tipo = TipoMovimiento.valueOf(request.tipo);
-
-        BigDecimal stockActual = stockService.calcularStockPorLote(request.loteId);
-        BigDecimal cantidad = stockService.calcularStockPorLote(request.loteId);
-
-        if(tipo == TipoMovimiento.SALIDA && cantidad.compareTo(stockActual) > 0) {
-            throw new MovimientoStockNegativoException("Cantidad negativo");
-        }
 
         MovimientoStock movimiento = new MovimientoStock(
                 lote,
                 tipo,
-                request.cantidad,
+                cantidad,
                 LocalDateTime.now()
         );
         return movimientoStockRepository.save(movimiento);
