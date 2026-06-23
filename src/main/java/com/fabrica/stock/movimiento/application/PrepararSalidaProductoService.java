@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class PrepararSalidaProductoService {
@@ -41,6 +42,7 @@ public class PrepararSalidaProductoService {
                 ));
         BigDecimal cantidadSolicitada = request.cantidadSolicitada;
         BigDecimal cantidadPendiente = cantidadSolicitada;
+        BigDecimal stockTotal = BigDecimal.ZERO;
 
         List<Lote> lotes = loteRepository.findByProductoId(producto.getId());
         lotes.sort(Comparator.comparing(Lote::getFechaCreacion));
@@ -52,9 +54,20 @@ public class PrepararSalidaProductoService {
             response.codigoLote = lote.getCodigoLote();
             response.fechaCreacion =  lote.getFechaCreacion();
             response.stockDisponible = stockService.calcularStockPorLote(lote.getId());
-            //response.cantidadAsignada = response.stockDisponible - cantidadPendiente;
+            stockTotal = stockTotal.add(response.stockDisponible);
+            response.cantidadAsignada = response.stockDisponible.compareTo(cantidadPendiente) >= 0 ?
+                    cantidadPendiente : response.stockDisponible;
+            cantidadPendiente = cantidadPendiente.subtract(response.cantidadAsignada);
+            lotesSalida.add(response);
         }
 
-        return null;
+        PrepararSalidaResponse response = new PrepararSalidaResponse();
+        response.productoId = producto.getId();
+        response.codigo =  producto.getCodigo();
+        response.cantidadSolicitada = cantidadSolicitada;
+        response.stockTotal = stockTotal;
+        response.stockSuficiente = Objects.equals(cantidadPendiente, BigDecimal.ZERO);
+
+        return response;
     }
 }
