@@ -18,13 +18,10 @@ public class StockService {
     }
 
     public BigDecimal calcularStockPorLote(Long loteId) {
-
         List<MovimientoStock> movimientos = movimientoRepo.findByLoteId(loteId);
-
         BigDecimal stock = BigDecimal.ZERO;
 
-        for (MovimientoStock m : movimientos) {
-
+        for(MovimientoStock m : movimientos) {
             if (m.getTipo() == TipoMovimiento.ENTRADA) {
                 stock = stock.add(m.getCantidad());
             } else {

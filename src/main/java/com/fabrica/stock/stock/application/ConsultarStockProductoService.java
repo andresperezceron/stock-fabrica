@@ -50,6 +50,7 @@ public class ConsultarStockProductoService {
             StockLoteResponse loteResponse = new StockLoteResponse();
             loteResponse.loteId = lote.getId();
             loteResponse.codigoLote = lote.getCodigoLote();
+            loteResponse.fechaCreacion = lote.getFechaCreacion();
             loteResponse.stock = stockLote;
             lotesResponse.add(loteResponse);
             stockTotal = stockTotal.add(stockLote);
