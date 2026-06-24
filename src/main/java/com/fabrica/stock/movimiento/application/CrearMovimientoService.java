@@ -35,6 +35,11 @@ public class CrearMovimientoService {
         BigDecimal stockActual = stockService.calcularStockPorLote(request.loteId);
         BigDecimal cantidad = request.cantidad;
 
+        System.out.println(
+                "Lote: " + request.loteId
+                        + " Stock: " + stockActual
+                        + " Cantidad: " + cantidad
+        );
         if(tipo == TipoMovimiento.SALIDA && cantidad.compareTo(stockActual) > 0) {
             throw new MovimientoStockNegativoException(
                     "Stock insuficiente. Disponible: "
