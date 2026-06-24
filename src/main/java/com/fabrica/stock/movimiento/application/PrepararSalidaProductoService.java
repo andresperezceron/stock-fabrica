@@ -12,7 +12,6 @@ import com.fabrica.stock.stock.application.StockService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -54,11 +53,15 @@ public class PrepararSalidaProductoService {
             response.codigoLote = lote.getCodigoLote();
             response.fechaCreacion =  lote.getFechaCreacion();
             response.stockDisponible = stockService.calcularStockPorLote(lote.getId());
+
+            if(cantidadPendiente.compareTo(BigDecimal.ZERO) > 0) {
+                response.cantidadAsignada = response.stockDisponible.compareTo(cantidadPendiente) >= 0 ?
+                        cantidadPendiente : response.stockDisponible;
+                cantidadPendiente = cantidadPendiente.subtract(response.cantidadAsignada);
+                lotesSalida.add(response);
+            }
+
             stockTotal = stockTotal.add(response.stockDisponible);
-            response.cantidadAsignada = response.stockDisponible.compareTo(cantidadPendiente) >= 0 ?
-                    cantidadPendiente : response.stockDisponible;
-            cantidadPendiente = cantidadPendiente.subtract(response.cantidadAsignada);
-            lotesSalida.add(response);
         }
 
         PrepararSalidaResponse response = new PrepararSalidaResponse();
@@ -66,7 +69,8 @@ public class PrepararSalidaProductoService {
         response.codigo =  producto.getCodigo();
         response.cantidadSolicitada = cantidadSolicitada;
         response.stockTotal = stockTotal;
-        response.stockSuficiente = Objects.equals(cantidadPendiente, BigDecimal.ZERO);
+        response.stockSuficiente = cantidadPendiente.compareTo(BigDecimal.ZERO) == 0;
+        response.lotes = lotesSalida;
 
         return response;
     }
