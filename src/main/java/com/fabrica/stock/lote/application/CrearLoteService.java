@@ -10,6 +10,8 @@ import com.fabrica.stock.shared.domain.RecursoNoEncontradoException;
 import com.fabrica.stock.movimiento.domain.MovimientoStock;
 import com.fabrica.stock.movimiento.domain.TipoMovimiento;
 import com.fabrica.stock.movimiento.infrastructure.MovimientoStockRepository;
+import com.fabrica.stock.ubicacion.domain.Ubicacion;
+import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +23,18 @@ public class CrearLoteService {
     private final LoteRepository loteRepository;
     private final ProductoRepository productoRepository;
     private final MovimientoStockRepository movimientoRepository;
+    private final UbicacionRepository ubicacionRepository;
 
     public CrearLoteService(
             LoteRepository loteRepository,
             ProductoRepository productoRepository,
-            MovimientoStockRepository movimientoRepository
+            MovimientoStockRepository movimientoRepository,
+            UbicacionRepository ubicacionRepository
     ) {
         this.loteRepository = loteRepository;
         this.productoRepository = productoRepository;
         this.movimientoRepository = movimientoRepository;
+        this.ubicacionRepository = ubicacionRepository;
     }
 
     @Transactional
@@ -44,9 +49,20 @@ public class CrearLoteService {
                         )
                 );
 
+        Ubicacion origen = ubicacionRepository
+                .findById(request.origenId)
+                .orElseThrow(() ->
+                        new RecursoNoEncontradoException("Origen indicado no existente. ")
+                );
+        Ubicacion destino = ubicacionRepository
+                .findById(request.destinoId)
+                .orElseThrow(() ->
+                        new RecursoNoEncontradoException("Destino indicado no existente. ")
+                );
+
         Lote lote = new Lote(
                 request.codigoLote,
-                OrigenLote.valueOf(request.origen),
+                OrigenLote.valueOf(request.origenLote),
                 request.loteProveedor,
                 producto,
                 LocalDateTime.now(),
@@ -60,7 +76,9 @@ public class CrearLoteService {
                         lote,
                         TipoMovimiento.ENTRADA,
                         request.cantidadInicial,
-                        LocalDateTime.now()
+                        LocalDateTime.now(),
+                        origen,
+                        destino
                 );
 
         movimientoRepository.save(movimientoInicial);

@@ -1,6 +1,7 @@
 package com.fabrica.stock.movimiento.domain;
 
 import com.fabrica.stock.lote.domain.Lote;
+import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -28,17 +29,29 @@ public class MovimientoStock {
     @Column(nullable = false)
     private LocalDateTime fecha;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "origen_id")
+    private Ubicacion origen;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "destino_id")
+    private Ubicacion destino;
+
     protected MovimientoStock() {
     }
 
     public MovimientoStock(Lote lote,
                            TipoMovimiento tipo,
                            BigDecimal cantidad,
-                           LocalDateTime fecha) {
+                           LocalDateTime fecha,
+                           Ubicacion origen,
+                           Ubicacion destino) {
         this.lote = lote;
         this.tipo = tipo;
         this.cantidad = cantidad;
         this.fecha = fecha;
+        this.origen = origen;
+        this.destino = destino;
     }
 
     public Long getId() {
@@ -60,4 +73,6 @@ public class MovimientoStock {
     public LocalDateTime getFecha() {
         return fecha;
     }
+    public Ubicacion getOrigen() {return origen;}
+    public Ubicacion getDestino() {return destino;}
 }

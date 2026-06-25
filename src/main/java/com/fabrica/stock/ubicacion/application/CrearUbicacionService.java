@@ -1,0 +1,22 @@
+package com.fabrica.stock.ubicacion.application;
+
+import com.fabrica.stock.ubicacion.api.dto.UbicacionRequest;
+import com.fabrica.stock.ubicacion.domain.Ubicacion;
+import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
+@Service
+public class CrearUbicacionService {
+    private final UbicacionRepository ubicacionRepository;
+
+    public CrearUbicacionService(UbicacionRepository ubicacionRepository) {
+        this.ubicacionRepository = ubicacionRepository;
+    }
+
+    public Ubicacion ejecutar(UbicacionRequest request) {
+        Ubicacion ubicacion = new Ubicacion(request.nombre);
+        ubicacionRepository.exists(ubicacion)
+        return ubicacionRepository.save(new Ubicacion(request.nombre));
+    }
+}

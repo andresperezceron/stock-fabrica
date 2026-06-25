@@ -9,6 +9,8 @@ import com.fabrica.stock.movimiento.infrastructure.MovimientoStockRepository;
 import com.fabrica.stock.shared.domain.MovimientoStockNegativoException;
 import com.fabrica.stock.shared.domain.RecursoNoEncontradoException;
 import com.fabrica.stock.stock.application.StockService;
+import com.fabrica.stock.ubicacion.domain.Ubicacion;
+import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,15 +21,18 @@ public class CrearMovimientoService {
     private final StockService stockService;
     private final MovimientoStockRepository movimientoStockRepository;
     private final LoteRepository loteRepository;
+    private final UbicacionRepository ubicacionRepository;
 
     public CrearMovimientoService(
             StockService stockService,
             MovimientoStockRepository movimientoStockRepository,
-            LoteRepository loteRepository)
+            LoteRepository loteRepository,
+            UbicacionRepository ubicacionRepository)
     {
         this.stockService = stockService;
         this.movimientoStockRepository = movimientoStockRepository;
         this.loteRepository = loteRepository;
+        this.ubicacionRepository = ubicacionRepository;
     }
 
     public MovimientoStock ejecutar(MovimientoRequest request) {
@@ -35,11 +40,17 @@ public class CrearMovimientoService {
         BigDecimal stockActual = stockService.calcularStockPorLote(request.loteId);
         BigDecimal cantidad = request.cantidad;
 
-        System.out.println(
-                "Lote: " + request.loteId
-                        + " Stock: " + stockActual
-                        + " Cantidad: " + cantidad
-        );
+        Ubicacion origen = ubicacionRepository
+                .findById(request.origenId)
+                .orElseThrow(() ->
+                        new RecursoNoEncontradoException("Origen indicado no existente. ")
+                );
+        Ubicacion destino = ubicacionRepository
+                .findById(request.destinoId)
+                .orElseThrow(() ->
+                    new RecursoNoEncontradoException("Destino indicado no existente. ")
+                );
+
         if(tipo == TipoMovimiento.SALIDA && cantidad.compareTo(stockActual) > 0) {
             throw new MovimientoStockNegativoException(
                     "Stock insuficiente. Disponible: "
@@ -59,7 +70,9 @@ public class CrearMovimientoService {
                 lote,
                 tipo,
                 cantidad,
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                origen,
+                destino
         );
         return movimientoStockRepository.save(movimiento);
     }
