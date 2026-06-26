@@ -1,9 +1,10 @@
 package com.fabrica.stock.producto.api.dto;
 
-public class ProductoRequest {
+import com.fabrica.stock.producto.domain.UnidadMedida;
 
+public class ProductoRequest {
     public String codigo;
     public String descripcion;
-    public String unidad;
+    public UnidadMedida unidad;
     public String familia;
 }

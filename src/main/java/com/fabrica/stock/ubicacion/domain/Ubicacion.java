@@ -10,7 +10,7 @@ public class Ubicacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = UbicacionConstraints.NOMBRE)
     private String nombre;
 
     protected Ubicacion() {}

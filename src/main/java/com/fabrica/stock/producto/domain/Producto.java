@@ -3,28 +3,21 @@ package com.fabrica.stock.producto.domain;
 import jakarta.persistence.*;
 
 @Entity
-@Table(
-        name = "producto",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "codigo")
-        }
-)
-
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, unique = true, length = ProductoConstraints.CODIGO)
     private String codigo;
 
-    @Column(nullable = false, length = 200)
+    @Column(nullable = false, length = ProductoConstraints.DESCRIPCION)
     private String descripcion;
 
-    @Column(nullable = false, length = 30)
-    private String unidad;
+    @Column(nullable = false, length = ProductoConstraints.UNIDAD_MEDIDA)
+    private UnidadMedida unidad;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = ProductoConstraints.FAMILIA)
     private String familia;
 
     @Column(nullable = false)
@@ -37,7 +30,7 @@ public class Producto {
     public Producto(
             String codigo,
             String descripcion,
-            String unidad,
+            UnidadMedida unidad,
             String familia
     ) {
         this.codigo = codigo;
@@ -58,7 +51,7 @@ public class Producto {
         return descripcion;
     }
 
-    public String getUnidad() {
+    public UnidadMedida getUnidad() {
         return unidad;
     }
 

@@ -2,9 +2,11 @@ package com.fabrica.stock.producto.api;
 
 
 import com.fabrica.stock.producto.api.dto.ProductoRequest;
+import com.fabrica.stock.producto.application.CrearProductoService;
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.producto.infrastructure.ProductoRepository;
 import com.fabrica.stock.shared.domain.RecursoNoEncontradoException;
+import com.fabrica.stock.ubicacion.application.ListarUbicacionesService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,33 +15,20 @@ import java.util.List;
 @RequestMapping("/api/productos")
 public class ProductoController {
 
-    private final ProductoRepository repository;
+    private final CrearProductoService crearProductoService;
 
-    public ProductoController(ProductoRepository repository) {
-        this.repository = repository;
+    public ProductoController(CrearProductoService crearProductoService) {
+        this.crearProductoService = crearProductoService;
     }
 
     @PostMapping
     public Producto crear(@RequestBody ProductoRequest request) {
-
-        Producto producto = new Producto(
-                request.codigo,
-                request.descripcion,
-                request.unidad,
-                request.familia
-        );
-
-        return repository.save(producto);
+        return crearProductoService.crear(request);
     }
 
-    @GetMapping
-    public List<Producto> listar() {
-        return repository.findAll();
-    }
-
-    @GetMapping("/{id}")
+    /*@GetMapping("/{id}")
     public Producto obtener(@PathVariable Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Producto no encontrado " + id));
-    }
+    }*/
 }
