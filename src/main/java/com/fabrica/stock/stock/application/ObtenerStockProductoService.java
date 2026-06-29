@@ -3,10 +3,10 @@ package com.fabrica.stock.stock.application;
 import com.fabrica.stock.lote.api.dto.StockLoteResponse;
 import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.lote.infrastructure.LoteRepository;
+import com.fabrica.stock.producto.application.ObtenerProductoService;
 import com.fabrica.stock.stock.api.dto.StockProductoResponse;
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.producto.infrastructure.ProductoRepository;
-import com.fabrica.stock.shared.domain.RecursoNoEncontradoException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,26 +14,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ConsultarStockProductoService {
-    private final ProductoRepository productoRepository;
+public class ObtenerStockProductoService {
     private final LoteRepository loteRepository;
     private final StockService stockService;
+    private final ObtenerProductoService obtenerProductoService;
 
-    public ConsultarStockProductoService(
-            ProductoRepository productoRepository,
+    public ObtenerStockProductoService(
             LoteRepository loteRepository,
-            StockService stockService ) {
-        this.productoRepository = productoRepository;
+            StockService stockService,
+            ObtenerProductoService obtenerProductoService)
+    {
         this.loteRepository = loteRepository;
         this.stockService = stockService;
+        this.obtenerProductoService = obtenerProductoService;
     }
 
-    public StockProductoResponse consultar(Long productoId) {
-        Producto producto = productoRepository
-                .findById(productoId)
-                .orElseThrow(() -> new RecursoNoEncontradoException(
-                        "Producto no encontrado: " + productoId
-                ));
+    public StockProductoResponse ejecutar(Long productoId) {
+        Producto producto = obtenerProductoService.ejecutar(productoId);
 
         List<Lote> lotes = loteRepository.findByProductoId(productoId);
 

@@ -1,7 +1,7 @@
 package com.fabrica.stock.stock.api;
 
 import com.fabrica.stock.stock.api.dto.StockProductoResponse;
-import com.fabrica.stock.stock.application.ConsultarStockProductoService;
+import com.fabrica.stock.stock.application.ObtenerStockProductoService;
 import com.fabrica.stock.stock.application.StockService;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +12,11 @@ import java.math.BigDecimal;
 public class StockController {
 
     private final StockService stockService;
-    private final ConsultarStockProductoService consultarStockProductoService;
+    private final ObtenerStockProductoService consultarStockProductoService;
 
     public StockController(
             StockService stockService,
-            ConsultarStockProductoService consultarStockProductoService)
+            ObtenerStockProductoService consultarStockProductoService)
     {
         this.stockService = stockService;
         this.consultarStockProductoService = consultarStockProductoService;
@@ -29,6 +29,6 @@ public class StockController {
 
     @GetMapping("/producto/{productoId}")
     public StockProductoResponse stockPorProducto(@PathVariable Long productoId) {
-        return consultarStockProductoService.consultar(productoId);
+        return consultarStockProductoService.ejecutar(productoId);
     }
 }

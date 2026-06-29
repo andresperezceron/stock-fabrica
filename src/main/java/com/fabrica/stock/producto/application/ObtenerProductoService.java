@@ -11,7 +11,7 @@ public class ObtenerProductoService {
         this.productoRepository = productoRepository;
     }
 
-    public Producto obtener(Long id) {
+    public Producto ejecutar(Long id) {
         return productoRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Recurso no encontrado: " + id));
     }
