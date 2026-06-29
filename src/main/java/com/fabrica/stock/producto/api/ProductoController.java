@@ -4,12 +4,7 @@ package com.fabrica.stock.producto.api;
 import com.fabrica.stock.producto.api.dto.ProductoRequest;
 import com.fabrica.stock.producto.application.CrearProductoService;
 import com.fabrica.stock.producto.domain.Producto;
-import com.fabrica.stock.producto.infrastructure.ProductoRepository;
-import com.fabrica.stock.shared.domain.RecursoNoEncontradoException;
-import com.fabrica.stock.ubicacion.application.ListarUbicacionesService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/productos")
@@ -23,7 +18,7 @@ public class ProductoController {
 
     @PostMapping
     public Producto crear(@RequestBody ProductoRequest request) {
-        return crearProductoService.crear(request);
+        return crearProductoService.ejecutar(request);
     }
 
     /*@GetMapping("/{id}")

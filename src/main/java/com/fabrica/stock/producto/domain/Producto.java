@@ -14,7 +14,8 @@ public class Producto {
     @Column(nullable = false, length = ProductoConstraints.DESCRIPCION)
     private String descripcion;
 
-    @Column(nullable = false, length = ProductoConstraints.UNIDAD_MEDIDA)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private UnidadMedida unidad;
 
     @Column(nullable = false, length = ProductoConstraints.FAMILIA)

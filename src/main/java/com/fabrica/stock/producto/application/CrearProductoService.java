@@ -2,8 +2,11 @@ package com.fabrica.stock.producto.application;
 
 import com.fabrica.stock.producto.api.dto.ProductoRequest;
 import com.fabrica.stock.producto.domain.Producto;
+import com.fabrica.stock.producto.domain.ProductoConstraints;
 import com.fabrica.stock.producto.infrastructure.ProductoRepository;
 import com.fabrica.stock.shared.domain.CodigoProductoDuplicadoException;
+import com.fabrica.stock.shared.domain.CodigoProductoIsBlanckException;
+import com.fabrica.stock.shared.domain.CodigoProductoMaxLengthException;
 import com.fabrica.stock.shared.domain.CodigoProductoNullException;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +18,7 @@ public class CrearProductoService {
         this.productoRepository = productoRepository;
     }
 
-    public Producto crear(ProductoRequest request) {
+    public Producto ejecutar(ProductoRequest request) {
         if(request.codigo == null) {
             throw new CodigoProductoNullException("El codigo no puede ser nulo.");
         }
@@ -23,7 +26,13 @@ public class CrearProductoService {
         request.codigo = request.codigo.trim();
 
         if(request.codigo.isBlank()) {
-            throw new CodigoProductoNullException("El codigo es obligatorio.");
+            throw new CodigoProductoIsBlanckException("El codigo es obligatorio.");
+        }
+
+        if(request.codigo.length() > ProductoConstraints.CODIGO) {
+            throw  new CodigoProductoMaxLengthException("Codigo demasiado largo. " +
+                    "Maximo: " + ProductoConstraints.CODIGO);
+
         }
 
         if(productoRepository.existsByCodigo(request.codigo)) {

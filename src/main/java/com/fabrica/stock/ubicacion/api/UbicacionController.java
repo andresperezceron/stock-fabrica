@@ -4,6 +4,7 @@ import com.fabrica.stock.ubicacion.api.dto.UbicacionRequest;
 import com.fabrica.stock.ubicacion.application.CrearUbicacionService;
 import com.fabrica.stock.ubicacion.application.ListarUbicacionesService;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +24,8 @@ public class UbicacionController {
     }
 
     @PostMapping
-    public Ubicacion crear(@RequestBody UbicacionRequest request) {
-        return crearUbicacionService.crear(request);
+    public Ubicacion crear(@Valid @RequestBody UbicacionRequest request) {
+        return crearUbicacionService.ejecutar(request);
     }
 
     @GetMapping("/listar")
