@@ -2,9 +2,10 @@ package com.fabrica.stock.producto.application;
 
 import com.fabrica.stock.producto.api.dto.ProductoRequest;
 import com.fabrica.stock.producto.domain.Producto;
-import com.fabrica.stock.producto.domain.ProductoConstraints;
+import com.fabrica.stock.producto.domain.constraints.ProductoConstraints;
+import com.fabrica.stock.producto.domain.validation.CrearProductoValidator;
 import com.fabrica.stock.producto.infrastructure.ProductoRepository;
-import com.fabrica.stock.shared.domain.CodigoProductoDuplicadoException;
+import com.fabrica.stock.producto.domain.exceptions.CodigoProductoDuplicadoException;
 import com.fabrica.stock.shared.domain.CodigoProductoIsBlanckException;
 import com.fabrica.stock.shared.domain.CodigoProductoMaxLengthException;
 import com.fabrica.stock.shared.domain.CodigoProductoNullException;
@@ -19,26 +20,7 @@ public class CrearProductoService {
     }
 
     public Producto ejecutar(ProductoRequest request) {
-        if(request.codigo == null) {
-            throw new CodigoProductoNullException("El codigo no puede ser nulo.");
-        }
-
-        request.codigo = request.codigo.trim();
-
-        if(request.codigo.isBlank()) {
-            throw new CodigoProductoIsBlanckException("El codigo es obligatorio.");
-        }
-
-        if(request.codigo.length() > ProductoConstraints.CODIGO) {
-            throw  new CodigoProductoMaxLengthException("Codigo demasiado largo. " +
-                    "Maximo: " + ProductoConstraints.CODIGO);
-
-        }
-
-        if(productoRepository.existsByCodigo(request.codigo)) {
-            throw new CodigoProductoDuplicadoException("Codigo producto duplicado.");
-        }
-
+        new CrearProductoValidator(request, productoRepository).validate();
         return productoRepository.save(
                 new Producto(
                 request.codigo,

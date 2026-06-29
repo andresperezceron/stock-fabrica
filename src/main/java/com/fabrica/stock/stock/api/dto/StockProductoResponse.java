@@ -1,4 +1,4 @@
-package com.fabrica.stock.producto.api.dto;
+package com.fabrica.stock.stock.api.dto;
 
 import com.fabrica.stock.lote.api.dto.StockLoteResponse;
 

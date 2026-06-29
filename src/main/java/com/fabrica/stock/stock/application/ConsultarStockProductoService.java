@@ -3,7 +3,7 @@ package com.fabrica.stock.stock.application;
 import com.fabrica.stock.lote.api.dto.StockLoteResponse;
 import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.lote.infrastructure.LoteRepository;
-import com.fabrica.stock.producto.api.dto.StockProductoResponse;
+import com.fabrica.stock.stock.api.dto.StockProductoResponse;
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.producto.infrastructure.ProductoRepository;
 import com.fabrica.stock.shared.domain.RecursoNoEncontradoException;

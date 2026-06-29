@@ -1,6 +1,6 @@
 package com.fabrica.stock.stock.api;
 
-import com.fabrica.stock.producto.api.dto.StockProductoResponse;
+import com.fabrica.stock.stock.api.dto.StockProductoResponse;
 import com.fabrica.stock.stock.application.ConsultarStockProductoService;
 import com.fabrica.stock.stock.application.StockService;
 import org.springframework.web.bind.annotation.*;

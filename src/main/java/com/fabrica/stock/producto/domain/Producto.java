@@ -1,5 +1,6 @@
 package com.fabrica.stock.producto.domain;
 
+import com.fabrica.stock.producto.domain.constraints.ProductoConstraints;
 import jakarta.persistence.*;
 
 @Entity

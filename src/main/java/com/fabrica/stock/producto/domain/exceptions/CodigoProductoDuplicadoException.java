@@ -1,4 +1,4 @@
-package com.fabrica.stock.shared.domain;
+package com.fabrica.stock.producto.domain.exceptions;
 
 public class CodigoProductoDuplicadoException extends RuntimeException {
     public CodigoProductoDuplicadoException(String message) {

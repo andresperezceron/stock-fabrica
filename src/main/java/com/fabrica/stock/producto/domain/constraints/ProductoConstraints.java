@@ -1,4 +1,4 @@
-package com.fabrica.stock.producto.domain;
+package com.fabrica.stock.producto.domain.constraints;
 
 public class ProductoConstraints {
     public static final int CODIGO = 10;
