@@ -7,10 +7,7 @@ import com.fabrica.stock.ubicacion.api.dto.UbicacionRequest;
 import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 
 public class CrearUbicacionValidator extends RequestValidator<UbicacionRequest, Ubicacion, UbicacionRepository> {
-    public CrearUbicacionValidator(
-            UbicacionRequest request,
-            UbicacionRepository repository) {
-
+    public CrearUbicacionValidator(UbicacionRequest request, UbicacionRepository repository) {
         super(request, repository);
     }
 

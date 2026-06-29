@@ -17,27 +17,24 @@ import java.util.List;
 public class ObtenerStockProductoService {
     private final LoteRepository loteRepository;
     private final StockService stockService;
-    private final ObtenerProductoService obtenerProductoService;
 
     public ObtenerStockProductoService(
             LoteRepository loteRepository,
-            StockService stockService,
-            ObtenerProductoService obtenerProductoService)
+            StockService stockService)
     {
         this.loteRepository = loteRepository;
         this.stockService = stockService;
-        this.obtenerProductoService = obtenerProductoService;
     }
 
     public StockProductoResponse ejecutar(Long productoId) {
-        Producto producto = obtenerProductoService.ejecutar(productoId);
+        //Producto producto = obtenerProductoService.ejecutar(productoId);
 
         List<Lote> lotes = loteRepository.findByProductoId(productoId);
 
         StockProductoResponse response = new StockProductoResponse();
-        response.productoId = producto.getId();
+        /*response.productoId = producto.getId();
         response.codigo = producto.getCodigo();
-        response.descripcion = producto.getDescripcion();
+        response.descripcion = producto.getDescripcion();*/
 
         BigDecimal stockTotal = BigDecimal.ZERO;
         List<StockLoteResponse> lotesResponse = new ArrayList<>();

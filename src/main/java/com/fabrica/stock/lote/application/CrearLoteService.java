@@ -6,7 +6,6 @@ import com.fabrica.stock.lote.domain.OrigenLote;
 import com.fabrica.stock.lote.infrastructure.LoteRepository;
 import com.fabrica.stock.producto.application.ObtenerProductoService;
 import com.fabrica.stock.producto.domain.Producto;
-import com.fabrica.stock.producto.infrastructure.ProductoRepository;
 import com.fabrica.stock.shared.domain.RecursoNoEncontradoException;
 import com.fabrica.stock.movimiento.domain.MovimientoStock;
 import com.fabrica.stock.movimiento.domain.TipoMovimiento;
@@ -25,23 +24,21 @@ public class CrearLoteService {
     private final MovimientoStockRepository movimientoRepository;
     private final UbicacionRepository ubicacionRepository;
 
-    private final ObtenerProductoService obtenerProductoService;
+    //private final ObtenerProductoService obtenerProductoService;
 
     public CrearLoteService(
             LoteRepository loteRepository,
             MovimientoStockRepository movimientoRepository,
-            UbicacionRepository ubicacionRepository,
-            ObtenerProductoService obtenerProductoService
+            UbicacionRepository ubicacionRepository
     ) {
         this.loteRepository = loteRepository;
         this.movimientoRepository = movimientoRepository;
         this.ubicacionRepository = ubicacionRepository;
-        this.obtenerProductoService = obtenerProductoService;
     }
 
     @Transactional
     public Lote ejecutar(LoteRequest request) {
-        Producto producto = obtenerProductoService.ejecutar(request.productoId);
+      //  Producto producto = obtenerProductoService.ejecutar(request.productoId);
 
         Ubicacion origen = ubicacionRepository
                 .findById(request.origenId)
@@ -58,7 +55,7 @@ public class CrearLoteService {
                 request.codigoLote,
                 OrigenLote.valueOf(request.origenLote),
                 request.loteProveedor,
-                producto,
+                null,
                 LocalDateTime.now(),
                 request.cantidadInicial
         );

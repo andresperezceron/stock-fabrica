@@ -1,6 +1,5 @@
 package com.fabrica.stock.shared.exception.handler;
 
-import com.fabrica.stock.producto.domain.exceptions.CodigoProductoDuplicadoException;
 import com.fabrica.stock.shared.domain.*;
 import com.fabrica.stock.shared.exception.dto.ValidationErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -30,9 +29,6 @@ public class RestExceptionHandler {
                     error.getDefaultMessage()
             );
         }
-
-
         return new ValidationErrorResponse(errores);
     }
 }
-
