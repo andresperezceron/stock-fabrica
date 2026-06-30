@@ -92,7 +92,7 @@
 # 🧠 1. Filosofía del proyecto
 La arquitectura de este proyecto nace de una idea muy sencilla:
 
-El código debe expresar el negocio antes que la tecnología.
+    **El código debe expresar el negocio antes que la tecnología.**
 
 Cada decisión de diseño busca que el proyecto sea fácil de entender, mantener y evolucionar con el paso del tiempo. Para ello, la arquitectura se apoya en una serie de principios que sirven como guía durante todo el desarrollo.
 
