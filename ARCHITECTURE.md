@@ -5,9 +5,13 @@
 1. Filosofía del proyecto
 
 2. Organización del proyecto
+
    2.1 Arquitectura modular
+
    2.2 Estructura de paquetes
+
    2.3 Responsabilidad de cada capa
+
 
 3. Dominio
    3.1 Entidades
