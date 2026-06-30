@@ -1,6 +1,6 @@
 package com.fabrica.stock.ubicacion.application;
 
-import com.fabrica.stock.ubicacion.api.dto.UbicacionRequest;
+import com.fabrica.stock.ubicacion.api.dto.CrearUbicacionRequest;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import com.fabrica.stock.ubicacion.domain.validation.CrearUbicacionValidator;
 import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
@@ -14,7 +14,7 @@ public class CrearUbicacionService {
         this.ubicacionRepository = ubicacionRepository;
     }
 
-    public Ubicacion ejecutar(UbicacionRequest request) {
+    public Ubicacion crear(CrearUbicacionRequest request) {
         new CrearUbicacionValidator(request, ubicacionRepository).validate();
         return ubicacionRepository.save(new Ubicacion(request.nombre));
     }

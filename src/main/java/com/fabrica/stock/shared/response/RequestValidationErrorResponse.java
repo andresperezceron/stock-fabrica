@@ -1,11 +1,11 @@
-package com.fabrica.stock.shared.exception.dto;
+package com.fabrica.stock.shared.response;
 
 import java.util.Map;
 
-public class ValidationErrorResponse {
+public class RequestValidationErrorResponse {
     private final Map<String, String> errors;
 
-    public ValidationErrorResponse(Map<String, String> errors) {
+    public RequestValidationErrorResponse(Map<String, String> errors) {
         this.errors = errors;
     }
 
