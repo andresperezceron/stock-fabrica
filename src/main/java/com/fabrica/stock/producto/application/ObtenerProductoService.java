@@ -1,9 +1,11 @@
 package com.fabrica.stock.producto.application;
 
 import com.fabrica.stock.producto.domain.Producto;
+import com.fabrica.stock.producto.domain.exceptions.ProductoNoEncontradoException;
 import com.fabrica.stock.producto.infrastructure.ProductoRepository;
-import com.fabrica.stock.shared.domain.RecursoNoEncontradoException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ObtenerProductoService {
     private final ProductoRepository productoRepository;
 
@@ -11,8 +13,8 @@ public class ObtenerProductoService {
         this.productoRepository = productoRepository;
     }
 
-    public Producto ejecutar(Long id) {
+    public Producto obtener(Long id) {
         return productoRepository.findById(id)
-                .orElseThrow(() -> new RecursoNoEncontradoException("Recurso no encontrado: " + id));
+                .orElseThrow(() -> new ProductoNoEncontradoException("No existe Producto con id: " + id));
     }
 }

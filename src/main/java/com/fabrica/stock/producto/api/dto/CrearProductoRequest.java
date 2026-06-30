@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class ProductoRequest {
+public class CrearProductoRequest {
 
     @NotBlank(message = "Codigo producto es obligatorio.")
     @Size(max = ProductoConstraints.CODIGO)

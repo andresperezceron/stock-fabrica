@@ -1,5 +1,6 @@
 package com.fabrica.stock.lote.domain;
 
+import com.fabrica.stock.lote.domain.constraints.LoteConstrints;
 import com.fabrica.stock.producto.domain.Producto;
 import jakarta.persistence.*;
 
@@ -14,14 +15,14 @@ public class Lote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = LoteConstrints.CODIGO_LOTE)
     private String codigoLote;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OrigenLote origen;
 
-    @Column(length = 100)
+    @Column(length = LoteConstrints.CODIGO_LOTE_PROVEEDOR)
     private String loteProveedor;
 
     @ManyToOne(optional = false)

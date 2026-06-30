@@ -32,7 +32,7 @@ public class UbicacionController {
         return listarUbicacionesService.listar();
     }
 
-    @PostMapping("/crear")
+    @PostMapping
     public Ubicacion crear(@Valid @RequestBody CrearUbicacionRequest request) {
         return crearUbicacionService.crear(request);
     }

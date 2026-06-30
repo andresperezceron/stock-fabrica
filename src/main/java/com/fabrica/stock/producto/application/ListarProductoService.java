@@ -14,7 +14,7 @@ public class ListarProductoService {
         this.productoRepository = productoRepository;
     }
 
-    public List<Producto> ejecutar() {
+    public List<Producto> listar() {
         return productoRepository.findAll();
     }
 }
