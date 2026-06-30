@@ -1,10 +1,9 @@
 package com.fabrica.stock.lote.domain;
 
-import com.fabrica.stock.lote.domain.constraints.LoteConstrints;
+import com.fabrica.stock.lote.domain.constraints.LoteConstraints;
 import com.fabrica.stock.producto.domain.Producto;
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,14 +14,14 @@ public class Lote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = LoteConstrints.CODIGO_LOTE)
+    @Column(nullable = false, unique = true, length = LoteConstraints.CODIGO_LOTE)
     private String codigoLote;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OrigenLote origen;
 
-    @Column(length = LoteConstrints.CODIGO_LOTE_PROVEEDOR)
+    @Column(length = LoteConstraints.CODIGO_LOTE_PROVEEDOR)
     private String loteProveedor;
 
     @ManyToOne(optional = false)
@@ -35,9 +34,6 @@ public class Lote {
     @Column(nullable = false)
     private LocalDateTime fechaCreacion;
 
-    @Column(nullable = false, precision = 15, scale = 3)
-    private BigDecimal cantidadInicial;
-
     protected Lote() {
         // JPA
     }
@@ -47,15 +43,13 @@ public class Lote {
             OrigenLote origen,
             String loteProveedor,
             Producto producto,
-            LocalDateTime fechaCreacion,
-            BigDecimal cantidadInicial
+            LocalDateTime fechaCreacion
     ) {
         this.codigoLote = codigoLote;
         this.origen = origen;
         this.loteProveedor = loteProveedor;
         this.producto = producto;
         this.fechaCreacion = fechaCreacion;
-        this.cantidadInicial = cantidadInicial;
     }
 
     public Long getId() {
@@ -80,9 +74,5 @@ public class Lote {
 
     public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
-    }
-
-    public BigDecimal getCantidadInicial() {
-        return cantidadInicial;
     }
 }

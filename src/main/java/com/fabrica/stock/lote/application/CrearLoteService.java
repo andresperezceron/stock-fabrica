@@ -19,26 +19,30 @@ import java.time.LocalDateTime;
 
 @Service
 public class CrearLoteService {
-
     private final LoteRepository loteRepository;
     private final MovimientoStockRepository movimientoRepository;
     private final UbicacionRepository ubicacionRepository;
+    private final ObtenerLoteService obtenerLoteService;
+    private final ObtenerProductoService obtenerProductoService;
 
     //private final ObtenerProductoService obtenerProductoService;
 
     public CrearLoteService(
             LoteRepository loteRepository,
             MovimientoStockRepository movimientoRepository,
-            UbicacionRepository ubicacionRepository
+            UbicacionRepository ubicacionRepository,
+            ObtenerLoteService obtenerLoteService,
+            ObtenerProductoService obtenerProductoService
     ) {
         this.loteRepository = loteRepository;
         this.movimientoRepository = movimientoRepository;
         this.ubicacionRepository = ubicacionRepository;
+        this.obtenerLoteService = obtenerLoteService;
+        this.obtenerProductoService = obtenerProductoService;
     }
 
     @Transactional
     public Lote ejecutar(LoteRequest request) {
-      //  Producto producto = obtenerProductoService.ejecutar(request.productoId);
 
         Ubicacion origen = ubicacionRepository
                 .findById(request.origenId)
@@ -55,9 +59,8 @@ public class CrearLoteService {
                 request.codigoLote,
                 OrigenLote.valueOf(request.origenLote),
                 request.loteProveedor,
-                null,
-                LocalDateTime.now(),
-                request.cantidadInicial
+                obtenerProductoService.obtener(request.productoId),
+                LocalDateTime.now()
         );
 
         loteRepository.save(lote);
