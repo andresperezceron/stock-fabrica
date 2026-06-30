@@ -1,6 +1,6 @@
 # 📦 Stock Fabrica · Arquitectura del Proyecto
 
-
+> Este documento describe las decisiones arquitectónicas que definen el proyecto. No pretende explicar el funcionamiento de Spring Boot ni de las tecnologías utilizadas, sino servir como guía para desarrollar nuevos módulos siguiendo los mismos principios y convenciones.
 ## Índice
 
 1. Filosofía del proyecto
