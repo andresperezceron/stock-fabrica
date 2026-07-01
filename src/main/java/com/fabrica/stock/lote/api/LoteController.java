@@ -1,6 +1,6 @@
 package com.fabrica.stock.lote.api;
 
-import com.fabrica.stock.lote.api.dto.LoteRequest;
+import com.fabrica.stock.lote.api.dto.CrearLoteRequest;
 import com.fabrica.stock.lote.application.CrearLoteService;
 import com.fabrica.stock.lote.domain.Lote;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ public class LoteController {
     }
 
     @PostMapping
-    public Lote crear(@RequestBody LoteRequest request) {
+    public Lote crear(@RequestBody CrearLoteRequest request) {
         return crearLoteService.ejecutar(request);
     }
 }

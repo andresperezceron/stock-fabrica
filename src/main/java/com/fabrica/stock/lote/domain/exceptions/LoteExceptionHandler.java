@@ -14,4 +14,22 @@ public class LoteExceptionHandler {
     public DomainErrorResponse manjarLoteNoEncontrado(DomainErrorResponse response) {
         return new DomainErrorResponse(response.getMessage());
     }
+
+    @ExceptionHandler(CodigoLoteDuplicadoException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public DomainErrorResponse manejarCodigoLoteDuplicado(DomainErrorResponse response) {
+        return new DomainErrorResponse(response.getMessage());
+    }
+
+    @ExceptionHandler(LoteProveedorObligatorioException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public DomainErrorResponse manejarLoteProveedorObligatorio(DomainErrorResponse response) {
+        return new DomainErrorResponse(response.getMessage());
+    }
+
+    @ExceptionHandler(LoteProveedorIsNotNull.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public DomainErrorResponse manejarLoteProveedorIsNotNull(DomainErrorResponse response) {
+        return new DomainErrorResponse(response.getMessage());
+    }
 }

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface LoteRepository extends JpaRepository<Lote, Long> {
     List<Lote> findByProductoId(Long productoId);
+    boolean existsByCodigoLote(String codigoLote);
 }
