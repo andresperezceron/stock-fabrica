@@ -14,7 +14,7 @@ public class CrearProductoService {
         this.productoRepository = productoRepository;
     }
 
-    public Producto ejecutar(CrearProductoRequest request) {
+    public Producto crear(CrearProductoRequest request) {
         new CrearProductoValidator(request, productoRepository).validate();
         return productoRepository.save(
                 new Producto(

@@ -30,7 +30,7 @@ public class ProductoController {
 
     @PostMapping
     public Producto crear(@Valid @RequestBody CrearProductoRequest request) {
-        return crearProductoService.ejecutar(request);
+        return crearProductoService.crear(request);
     }
 
     @PostMapping("/{id}")
