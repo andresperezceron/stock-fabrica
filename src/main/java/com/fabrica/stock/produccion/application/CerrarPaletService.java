@@ -5,13 +5,12 @@ import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.lote.domain.MaquinaProduccion;
 import com.fabrica.stock.lote.domain.OrigenLote;
 import com.fabrica.stock.movimiento.api.dto.MovimientoRequest;
-import com.fabrica.stock.movimiento.application.CrearMovimientoService;
 import com.fabrica.stock.movimiento.domain.MovimientoStock;
 import com.fabrica.stock.movimiento.domain.TipoMovimiento;
+import com.fabrica.stock.movimiento.infrastructure.MovimientoStockRepository;
 import com.fabrica.stock.produccion.api.dto.CerrarPaletRequest;
 import com.fabrica.stock.producto.application.ObtenerProductoService;
 import com.fabrica.stock.producto.domain.Producto;
-import com.fabrica.stock.ubicacion.application.ObtenerUbicacionService;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import org.springframework.stereotype.Service;
 
@@ -21,36 +20,34 @@ import java.time.LocalDateTime;
 public class CerrarPaletService {
     private final CrearLoteService crearLoteService;
     private final ObtenerProductoService obtenerProductoService;
-    private final ObtenerUbicacionService obtenerUbicacionService;
-    private final CrearMovimientoService crearMovimientoService;
+    private final MovimientoStockRepository movimientoStockRepository;
 
     public CerrarPaletService(
             CrearLoteService crearLoteService,
             ObtenerProductoService obtenerProductoService,
-            ObtenerUbicacionService obtenerUbicacionService,
-            CrearMovimientoService crearMovimientoService)
+            MovimientoStockRepository movimientoStockRepository)
     {
         this.crearLoteService = crearLoteService;
         this.obtenerProductoService = obtenerProductoService;
-        this.obtenerUbicacionService = obtenerUbicacionService;
-        this.crearMovimientoService = crearMovimientoService;
+        this.movimientoStockRepository = movimientoStockRepository;
     }
 
-    public void cerrarPalet(CerrarPaletRequest request) {
+    public MovimientoStock cerrarPalet(CerrarPaletRequest request) {
         LocalDateTime fecha = LocalDateTime.now();
         OrigenLote origen = OrigenLote.PRODUCCION;
         MaquinaProduccion maquina = MaquinaProduccion.valueOf(request.maquina);
         Producto producto = obtenerProductoService.obtener(request.productoId);
 
-        Lote lote = crearLoteService.crear(maquina, origen,null, producto, fecha);
+        Lote lote = crearLoteService.crear(producto, origen,null, maquina, fecha);
 
         MovimientoRequest movimientoRequest = new MovimientoRequest();
         movimientoRequest.loteId = lote.getId();
-        movimientoRequest.tipo = TipoMovimiento.ENTRADA.name();
+        movimientoRequest.tipo = TipoMovimiento.SALIDA.name();
         movimientoRequest.cantidad = request.cantidad;
-        movimientoRequest.origenId = 1L;
+        //movimientoRequest.origenId = UbicacionSistema.PRODUCCION;
         movimientoRequest.destinoId = 1L;
-        MovimientoStock movimiento2 = crearMovimientoService.ejecutar(movimientoRequest);
+
+
 
         MovimientoStock movimiento = new MovimientoStock(
                 lote,
@@ -60,5 +57,7 @@ public class CerrarPaletService {
                 new Ubicacion("PRODUCCION"),
                 new Ubicacion("VALIDACION")
         );
+
+        return movimientoStockRepository.save(movimiento);
     }
 }

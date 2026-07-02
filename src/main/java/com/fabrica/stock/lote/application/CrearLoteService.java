@@ -19,10 +19,10 @@ public class CrearLoteService {
         this.generarLoteService = generarLoteService;
     }
 
-    public Lote crear(MaquinaProduccion maquina,
+    public Lote crear(Producto producto,
                       OrigenLote origenLote,
                       String loteProveedor,
-                      Producto producto,
+                      MaquinaProduccion maquina,
                       LocalDateTime fecha)
     {
         return loteRepository.save(new Lote(

@@ -1,16 +1,10 @@
 package com.fabrica.stock.movimiento.application;
 
 import com.fabrica.stock.lote.domain.Lote;
-import com.fabrica.stock.lote.infrastructure.LoteRepository;
-import com.fabrica.stock.movimiento.api.dto.MovimientoRequest;
 import com.fabrica.stock.movimiento.domain.MovimientoStock;
 import com.fabrica.stock.movimiento.domain.TipoMovimiento;
 import com.fabrica.stock.movimiento.infrastructure.MovimientoStockRepository;
-import com.fabrica.stock.shared.domain.MovimientoStockNegativoException;
-import com.fabrica.stock.shared.domain.RecursoNoEncontradoException;
-import com.fabrica.stock.stock.application.StockService;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
-import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -18,62 +12,29 @@ import java.time.LocalDateTime;
 
 @Service
 public class CrearMovimientoService {
-    private final StockService stockService;
-    private final MovimientoStockRepository movimientoStockRepository;
-    private final LoteRepository loteRepository;
-    private final UbicacionRepository ubicacionRepository;
+    private final MovimientoStockRepository movimientoRepository;
 
-    public CrearMovimientoService(
-            StockService stockService,
-            MovimientoStockRepository movimientoStockRepository,
-            LoteRepository loteRepository,
-            UbicacionRepository ubicacionRepository)
-    {
-        this.stockService = stockService;
-        this.movimientoStockRepository = movimientoStockRepository;
-        this.loteRepository = loteRepository;
-        this.ubicacionRepository = ubicacionRepository;
+    public CrearMovimientoService(MovimientoStockRepository movimientoRepository) {
+        this.movimientoRepository = movimientoRepository;
     }
 
-    public MovimientoStock ejecutar(MovimientoRequest request) {
-        TipoMovimiento tipo = TipoMovimiento.valueOf(request.tipo);
-        BigDecimal stockActual = stockService.calcularStockPorLote(request.loteId);
-        BigDecimal cantidad = request.cantidad;
-
-        Ubicacion origen = ubicacionRepository
-                .findById(request.origenId)
-                .orElseThrow(() ->
-                        new RecursoNoEncontradoException("Origen indicado no existente. ")
-                );
-        Ubicacion destino = ubicacionRepository
-                .findById(request.destinoId)
-                .orElseThrow(() ->
-                    new RecursoNoEncontradoException("Destino indicado no existente. ")
-                );
-
-        if(tipo == TipoMovimiento.SALIDA && cantidad.compareTo(stockActual) > 0) {
-            throw new MovimientoStockNegativoException(
-                    "Stock insuficiente. Disponible: "
-                    + stockActual
-                    + ", solicitado: "
-                    + cantidad);
-        }
-
-        Lote lote = loteRepository
-                .findById(request.loteId)
-                .orElseThrow(() -> new RecursoNoEncontradoException(
-                        "Lote no encontrado: " + request.loteId
-                ));
-
+    public MovimientoStock crear(
+            Lote lote,
+            TipoMovimiento tipoMovimiento,
+            BigDecimal cantidad,
+            LocalDateTime fecha,
+            Ubicacion origen,
+            Ubicacion destino) {
 
         MovimientoStock movimiento = new MovimientoStock(
                 lote,
-                tipo,
+                tipoMovimiento,
                 cantidad,
-                LocalDateTime.now(),
+                fecha,
                 origen,
                 destino
         );
-        return movimientoStockRepository.save(movimiento);
+
+        return movimientoRepository.save(movimiento);
     }
 }
