@@ -1,7 +1,6 @@
 package com.fabrica.stock.ubicacion.application;
 
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
-import com.fabrica.stock.ubicacion.domain.UbicacionSistema;
 import com.fabrica.stock.ubicacion.domain.exceptions.UbicacionNoEncontradaException;
 import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 import org.springframework.stereotype.Service;
@@ -14,14 +13,15 @@ public class ObtenerUbicacionService {
         this.ubicacionRepository = ubicacionRepository;
     }
 
-    public Ubicacion obtener(Long id){
+    public Ubicacion obtener(Long id) {
         return ubicacionRepository.findById(id).
                 orElseThrow(() -> new UbicacionNoEncontradaException("No existe ubicacion con id: " + id));
     }
 
-    public Ubicacion obtener(UbicacionSistema ubicacionSistema){
+    public Ubicacion obtener(String nombreUbicacion) {
         return ubicacionRepository
-                .findByNombre(ubicacionSistema.getNombre())
-                .orElseThrow(() -> new UbicacionNoEncontradaException("probando"));
+                .findByNombre(nombreUbicacion)
+                .orElseThrow(() ->
+                        new UbicacionNoEncontradaException("No existe ubicacion con nombre: " + nombreUbicacion));
     }
 }

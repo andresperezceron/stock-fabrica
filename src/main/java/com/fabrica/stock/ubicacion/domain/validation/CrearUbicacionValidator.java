@@ -2,8 +2,10 @@ package com.fabrica.stock.ubicacion.domain.validation;
 
 import com.fabrica.stock.shared.validation.RequestValidator;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
+import com.fabrica.stock.ubicacion.domain.UbicacionSistema;
 import com.fabrica.stock.ubicacion.domain.exceptions.NombreUbicacionDuplicadoException;
 import com.fabrica.stock.ubicacion.api.dto.CrearUbicacionRequest;
+import com.fabrica.stock.ubicacion.domain.exceptions.NombreUbicacionSistemaException;
 import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 
 public class CrearUbicacionValidator extends RequestValidator<CrearUbicacionRequest, Ubicacion, UbicacionRepository> {
@@ -22,6 +24,10 @@ public class CrearUbicacionValidator extends RequestValidator<CrearUbicacionRequ
             throw new NombreUbicacionDuplicadoException(
                     "Ya existe una ubicación con el nombre: "
                             + request.nombre);
+        }
+
+        if(UbicacionSistema.esUbicacionSistema(request.nombre)) {
+            throw new NombreUbicacionSistemaException("Ubicacion reservada para el sistema.");
         }
     }
 }

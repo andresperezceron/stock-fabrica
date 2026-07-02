@@ -20,4 +20,10 @@ public class UbicacionExceptionHandler {
     public DomainErrorResponse manejarNombreUbicacionDuplicado(NombreUbicacionDuplicadoException ex) {
         return new DomainErrorResponse(ex.getMessage());
     }
+
+    @ExceptionHandler(NombreUbicacionSistemaException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public DomainErrorResponse manejarNombreUbicacionSistema(NombreUbicacionSistemaException ex) {
+        return new DomainErrorResponse(ex.getMessage());
+    }
 }

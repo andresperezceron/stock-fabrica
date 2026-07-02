@@ -1,23 +1,13 @@
 package com.fabrica.stock.ubicacion.domain;
 
 public enum UbicacionSistema {
-    PRODUCCION("PRODUCCION"),
-    VALIDACION("VALIDACION"),
-    PROVEEDOR("PROVEEDOR");
+    PRODUCCION,
+    VALIDACION,
+    PROVEEDOR;
 
-    private final String nombre;
-
-    UbicacionSistema(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public static boolean esUbicacionSistema(UbicacionSistema ubicacion) {
-        return ubicacion == UbicacionSistema.PRODUCCION ||
-                ubicacion == UbicacionSistema.PROVEEDOR ||
-                ubicacion == UbicacionSistema.VALIDACION;
+    public static boolean esUbicacionSistema(String nombreUbicacion) {
+        return nombreUbicacion.toUpperCase().equals(PRODUCCION.name()) ||
+                nombreUbicacion.toUpperCase().equals(VALIDACION.name()) ||
+                nombreUbicacion.toUpperCase().equals(PROVEEDOR.name());
     }
 }
