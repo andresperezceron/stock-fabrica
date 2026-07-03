@@ -4,7 +4,6 @@ import com.fabrica.stock.lote.application.CrearLoteService;
 import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.lote.domain.MaquinaProduccion;
 import com.fabrica.stock.lote.domain.OrigenLote;
-import com.fabrica.stock.movimiento.api.dto.MovimientoRequest;
 import com.fabrica.stock.movimiento.domain.MovimientoStock;
 import com.fabrica.stock.movimiento.domain.TipoMovimiento;
 import com.fabrica.stock.movimiento.infrastructure.MovimientoStockRepository;

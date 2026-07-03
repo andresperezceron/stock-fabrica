@@ -11,10 +11,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Service
-public class CrearMovimientoService {
+public class CrearMovimientoService1 {
     private final MovimientoStockRepository movimientoRepository;
 
-    public CrearMovimientoService(MovimientoStockRepository movimientoRepository) {
+    public CrearMovimientoService1(MovimientoStockRepository movimientoRepository) {
         this.movimientoRepository = movimientoRepository;
     }
 
