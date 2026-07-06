@@ -1,31 +1,25 @@
 package com.fabrica.stock.palet.application;
 
-import com.fabrica.stock.palet.api.dto.AbrirPaletRequest;
-import com.fabrica.stock.palet.api.dto.AbrirPaletResponse;
 import com.fabrica.stock.palet.domain.EstadoPalet;
 import com.fabrica.stock.palet.domain.Palet;
-import com.fabrica.stock.palet.infrastructure.PaletRepository;
-import com.fabrica.stock.ubicacion.application.ObtenerUbicacionService;
+import com.fabrica.stock.palet.domain.exceptions.EstadoPaletInvalidoException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AbrirPaletService {
-    private final ObtenerUbicacionService obtenerUbicacionService;
-    private final PaletRepository paletRepository;
+    private final ObtenerPaletService obtenerPaletService;
 
-    public AbrirPaletService(ObtenerUbicacionService obtenerUbicacionService,
-                             PaletRepository paletRepository)
-    {
-        this.obtenerUbicacionService = obtenerUbicacionService;
-        this.paletRepository = paletRepository;
+    public AbrirPaletService(ObtenerPaletService obtenerPaletService) {
+        this.obtenerPaletService = obtenerPaletService;
     }
 
-    public AbrirPaletResponse abrir(AbrirPaletRequest request) {
-        Palet palet = paletRepository.save(new Palet(
-                obtenerUbicacionService.obtener(request.ubicacionId),
-                EstadoPalet.ABIERTO));
-        AbrirPaletResponse response = new AbrirPaletResponse();
-        response.paletId = palet.getId();
-        return response;
+    @Transactional
+    public void abrir(Long idPalet) {
+        Palet palet = obtenerPaletService.obtener(idPalet);
+        if(!palet.estaCerrado()) {
+            throw new EstadoPaletInvalidoException("El palet no esta cerrado");
+        }
+        palet.setEstado(EstadoPalet.ABIERTO);
     }
 }

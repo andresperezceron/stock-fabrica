@@ -1,6 +1,7 @@
 package com.fabrica.stock.palet.domain;
 
-import com.fabrica.stock.contenidoPalet.ContenidoPalet;
+import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
+import com.fabrica.stock.palet.domain.exceptions.EstadoPaletInvalidoException;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import jakarta.persistence.*;
 
@@ -26,14 +27,27 @@ public class Palet {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private EstadoPalet estado = EstadoPalet.ABIERTO;
+    private EstadoPalet estado;
 
     @OneToMany(mappedBy = "palet")
     private final List<ContenidoPalet> contenidos = new ArrayList<>();
 
-    public Palet(Ubicacion ubicacion, EstadoPalet estado) {
+    public Palet(Ubicacion ubicacion, ConfiguracionPalet configuracion, EstadoPalet estado) {
         this.ubicacion = ubicacion;
+        this.configuracion = configuracion;
         this.estado = estado;
+    }
+
+    public boolean estaAbierto() {
+        return estado == EstadoPalet.ABIERTO;
+    }
+
+    public boolean estaCerrado() {
+        return estado == EstadoPalet.CERRADO;
+    }
+
+    public boolean estaFinalizado() {
+        return estado == EstadoPalet.FINALIZADO;
     }
 
     public Long getId() {
@@ -44,6 +58,8 @@ public class Palet {
         return ubicacion;
     }
 
+    public ConfiguracionPalet getConfiguracion() { return configuracion; }
+
     public EstadoPalet getEstado() {
         return estado;
     }
@@ -51,4 +67,6 @@ public class Palet {
     public List<ContenidoPalet> getContenidos() {
         return contenidos;
     }
+
+    public void setEstado(EstadoPalet estado) { this.estado = estado; }
 }
