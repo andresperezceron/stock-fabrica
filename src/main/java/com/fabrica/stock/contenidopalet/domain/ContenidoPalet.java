@@ -2,6 +2,7 @@ package com.fabrica.stock.contenidopalet.domain;
 
 import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.palet.domain.Palet;
+import com.fabrica.stock.producto.domain.Producto;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -17,6 +18,9 @@ public class ContenidoPalet {
     private Palet palet;
 
     @ManyToOne(optional = false)
+    private Producto producto;
+
+    @ManyToOne(optional = false)
     private Lote lote;
 
     @Column(nullable = false)
@@ -25,8 +29,9 @@ public class ContenidoPalet {
     @Column(nullable = false)
     private LocalDateTime fecha;
 
-    public ContenidoPalet(Palet palet, Lote lote, BigDecimal cantidad, LocalDateTime fecha) {
+    public ContenidoPalet(Palet palet, Producto producto, Lote lote, BigDecimal cantidad, LocalDateTime fecha) {
         this.palet = palet;
+        this.producto = producto;
         this.lote = lote;
         this.cantidad = cantidad;
         this.fecha = fecha;
@@ -41,6 +46,8 @@ public class ContenidoPalet {
     public Palet getPalet() {
         return palet;
     }
+
+    public Producto getProducto() { return  producto; }
 
     public Lote getLote() {
         return lote;

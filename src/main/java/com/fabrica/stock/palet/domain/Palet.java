@@ -1,7 +1,6 @@
 package com.fabrica.stock.palet.domain;
 
 import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
-import com.fabrica.stock.palet.domain.exceptions.EstadoPaletInvalidoException;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import jakarta.persistence.*;
 
@@ -36,6 +35,10 @@ public class Palet {
         this.ubicacion = ubicacion;
         this.configuracion = configuracion;
         this.estado = estado;
+    }
+
+    protected Palet() {
+
     }
 
     public boolean estaAbierto() {

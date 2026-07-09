@@ -1,6 +1,7 @@
 package com.fabrica.stock.movimiento.domain;
 
 import com.fabrica.stock.lote.domain.Lote;
+import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import jakarta.persistence.*;
 
@@ -10,10 +11,13 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "movimiento_stock")
 public class MovimientoStock {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "producto_id", nullable = false)
+    private Producto producto;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "lote_id", nullable = false)
@@ -40,12 +44,15 @@ public class MovimientoStock {
     protected MovimientoStock() {
     }
 
-    public MovimientoStock(Lote lote,
+    public MovimientoStock(Producto producto,
+                           Lote lote,
                            TipoMovimiento tipo,
                            BigDecimal cantidad,
                            LocalDateTime fecha,
                            Ubicacion origen,
-                           Ubicacion destino) {
+                           Ubicacion destino)
+    {
+        this.producto = producto;
         this.lote = lote;
         this.tipo = tipo;
         this.cantidad = cantidad;
@@ -57,6 +64,8 @@ public class MovimientoStock {
     public Long getId() {
         return id;
     }
+
+    public Producto getProducto() { return producto; }
 
     public Lote getLote() {
         return lote;
@@ -73,6 +82,8 @@ public class MovimientoStock {
     public LocalDateTime getFecha() {
         return fecha;
     }
-    public Ubicacion getOrigen() {return origen;}
-    public Ubicacion getDestino() {return destino;}
+
+    public Ubicacion getOrigen() { return origen; }
+
+    public Ubicacion getDestino() { return destino; }
 }

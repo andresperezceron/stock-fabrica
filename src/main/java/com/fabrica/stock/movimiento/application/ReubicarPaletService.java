@@ -39,6 +39,7 @@ public class ReubicarPaletService {
 
         for(ContenidoPalet contenido : palet.getContenidos()) {
             MovimientoStock movimiento = new MovimientoStock(
+                    contenido.getProducto(),
                     contenido.getLote(),
                     TipoMovimiento.SALIDA,
                     contenido.getCantidad(),
