@@ -27,7 +27,6 @@ public class ConfiguradorPaletService {
     private final ObtenerUbicacionService obtenerUbicacionService;
     private final ObtenerProductoService obtenerProductoService;
     private final ObtenerPaletService obtenerPaletService;
-    private final ObtenerLoteService obtenerLoteService;
     private final CrearPaletService crearPaletService;
     private final CrearLoteService crearLoteService;
     private final CrearPrimerMovimientoService crearPrimerMovimientoService;
@@ -49,7 +48,6 @@ public class ConfiguradorPaletService {
                                     FinalizarPaletService finalizarPaletService)
     {
         this.obtenerUbicacionService = obtenerUbicacionService;
-        this.obtenerLoteService = obtenerLoteService;
         this.crearPaletService = crearPaletService;
         this.crearPrimerMovimientoService = crearPrimerMovimientoService;
         this.abrirPaletService = abrirPaletService;
