@@ -6,7 +6,6 @@ import com.fabrica.stock.configurador.api.dto.NuevoPaletResponse;
 import com.fabrica.stock.contenidopalet.applicantion.CrearContenidoService;
 import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
 import com.fabrica.stock.lote.application.CrearLoteService;
-import com.fabrica.stock.lote.application.ObtenerLoteService;
 import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.lote.domain.OrigenLote;
 import com.fabrica.stock.movimiento.application.CrearPrimerMovimientoService;
@@ -27,7 +26,6 @@ public class ConfiguradorPaletService {
     private final ObtenerUbicacionService obtenerUbicacionService;
     private final ObtenerProductoService obtenerProductoService;
     private final ObtenerPaletService obtenerPaletService;
-    private final ObtenerLoteService obtenerLoteService;
     private final CrearPaletService crearPaletService;
     private final CrearLoteService crearLoteService;
     private final CrearPrimerMovimientoService crearPrimerMovimientoService;
@@ -38,7 +36,6 @@ public class ConfiguradorPaletService {
 
     public ConfiguradorPaletService(ObtenerUbicacionService obtenerUbicacionService,
                                     ObtenerProductoService obtenerProductoService,
-                                    ObtenerLoteService obtenerLoteService,
                                     ObtenerPaletService obtenerPaletService,
                                     CrearPaletService crearPaletService,
                                     CrearLoteService crearLoteService,
@@ -49,7 +46,6 @@ public class ConfiguradorPaletService {
                                     FinalizarPaletService finalizarPaletService)
     {
         this.obtenerUbicacionService = obtenerUbicacionService;
-        this.obtenerLoteService = obtenerLoteService;
         this.crearPaletService = crearPaletService;
         this.crearPrimerMovimientoService = crearPrimerMovimientoService;
         this.abrirPaletService = abrirPaletService;

@@ -1,7 +1,6 @@
 package com.fabrica.stock.palet.domain;
 
 import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
-import com.fabrica.stock.palet.domain.exceptions.EstadoPaletInvalidoException;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import jakarta.persistence.*;
 
