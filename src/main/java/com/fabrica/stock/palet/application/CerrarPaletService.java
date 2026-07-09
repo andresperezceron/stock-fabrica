@@ -1,17 +1,18 @@
 package com.fabrica.stock.palet.application;
 
-import com.fabrica.stock.produccion.api.dto.CerrarPaletRequest;
+import com.fabrica.stock.palet.domain.EstadoPalet;
+import com.fabrica.stock.palet.domain.Palet;
+import com.fabrica.stock.palet.domain.exceptions.EstadoPaletInvalidoException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CerrarPaletService {
-    private final ObtenerPaletService obtenerPaletService;
-
-    public CerrarPaletService(ObtenerPaletService obtenerPaletService) {
-        this.obtenerPaletService = obtenerPaletService;
-    }
-
-    public void cerrar(CerrarPaletRequest request) {
-
+    @Transactional
+    public void cerrar(Palet palet) {
+        if(!palet.estaAbierto()) {
+            throw new EstadoPaletInvalidoException("El palet no esta abierto");
+        }
+        palet.setEstado(EstadoPalet.CERRADO);
     }
 }

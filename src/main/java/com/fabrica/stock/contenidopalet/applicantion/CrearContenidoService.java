@@ -7,6 +7,7 @@ import com.fabrica.stock.palet.domain.Palet;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Service
 public class CrearContenidoService {
@@ -16,7 +17,9 @@ public class CrearContenidoService {
         this.contenidoPaletRepository = contenidoPaletRepository;
     }
 
-    public ContenidoPalet crear(Palet palet, Lote lote, BigDecimal cantidad) {
-        return contenidoPaletRepository.save(new ContenidoPalet(palet, lote, cantidad));
+    public ContenidoPalet crear(Palet palet, Lote lote, BigDecimal cantidad, LocalDateTime fecha) {
+        ContenidoPalet contenido =  new ContenidoPalet(palet, lote, cantidad, fecha);
+        palet.incorporarContenidoPalet(contenido);
+        return contenidoPaletRepository.save(contenido);
     }
 }

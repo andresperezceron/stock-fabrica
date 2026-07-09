@@ -1,26 +1,39 @@
 package com.fabrica.stock.configurador.api;
 
-import com.fabrica.stock.configurador.api.dto.CrearPaletRequest;
-import com.fabrica.stock.palet.application.CrearPaletService;
-import com.fabrica.stock.palet.domain.Palet;
-import com.fabrica.stock.ubicacion.application.ObtenerUbicacionService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.fabrica.stock.configurador.api.dto.CerrarPaletRequest;
+import com.fabrica.stock.configurador.api.dto.FinalizarPaletRequest;
+import com.fabrica.stock.configurador.api.dto.NuevoPaletRequest;
+import com.fabrica.stock.configurador.api.dto.NuevoPaletResponse;
+import com.fabrica.stock.configurador.application.ConfiguradorPaletService;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/configurador-palets")
 public class ConfiguradorController {
-    private final ObtenerUbicacionService obtenerUbicacionService;
-    private final CrearPaletService crearPaletService;
+    private final ConfiguradorPaletService configuradorPaletService;
 
-    public ConfiguradorController(ObtenerUbicacionService obtenerUbicacionService,
-                                  CrearPaletService crearPaletService)
-    {
-        this.obtenerUbicacionService = obtenerUbicacionService;
-        this.crearPaletService = crearPaletService;
+    public ConfiguradorController(ConfiguradorPaletService configuradorPaletService) {
+        this.configuradorPaletService = configuradorPaletService;
     }
 
-    public Palet crear(CrearPaletRequest request) {
-        return null;
+    @PostMapping
+    public NuevoPaletResponse crear(@Valid @RequestBody NuevoPaletRequest request) {
+        return configuradorPaletService.nuevoPalet(request);
+    }
+
+    @PostMapping("/{id}/abrir")
+    public void abrir(@PathVariable Long id) {
+        configuradorPaletService.abrirPalet(id);
+    }
+
+    @PostMapping("/cerrar")
+    public void cerrar(@Valid @RequestBody CerrarPaletRequest request) {
+        configuradorPaletService.cerrarPalet(request);
+    }
+
+    @PostMapping("/finalizar")
+    public void finalizar(@Valid @RequestBody FinalizarPaletRequest request) {
+        configuradorPaletService.finalizarPalet(request);
     }
 }

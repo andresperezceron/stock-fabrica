@@ -46,9 +46,7 @@ public class Palet {
         return estado == EstadoPalet.CERRADO;
     }
 
-    public boolean estaFinalizado() {
-        return estado == EstadoPalet.FINALIZADO;
-    }
+    public boolean estaFinalizado() { return estado == EstadoPalet.FINALIZADO; }
 
     public Long getId() {
         return id;
@@ -69,4 +67,8 @@ public class Palet {
     }
 
     public void setEstado(EstadoPalet estado) { this.estado = estado; }
+
+    public void setUbicacion(Ubicacion ubicacion) { this.ubicacion = ubicacion; }
+
+    public void incorporarContenidoPalet(ContenidoPalet contenido) { this.contenidos.add(contenido); }
 }
