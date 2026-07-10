@@ -21,14 +21,8 @@ public enum TurnoProduccion {
     public static TurnoProduccion obtener(LocalDateTime fecha) {
         int hora = fecha.getHour();
 
-        if(hora >= 6 && hora < 14) {
-            return MANANA;
-        }
-
-        if(hora >= 14 && hora < 22) {
-            return TARDE;
-        }
-
-        return NOCHE;
+        if(hora >= 6 && hora < 14) return MANANA;
+        else if(hora >= 14 && hora < 22) return TARDE;
+        else return NOCHE;
     }
 }

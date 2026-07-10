@@ -30,7 +30,7 @@ public class CrearLoteService {
                 origenLote,
                 loteProveedor,
                 fecha,
-                maquina,
+                loteGenerado.getMaquina(),
                 loteGenerado.getTurno()
         )));
     }

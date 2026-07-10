@@ -2,7 +2,6 @@ package com.fabrica.stock.movimiento.application;
 
 import com.fabrica.stock.lote.application.ObtenerLoteService;
 import com.fabrica.stock.lote.domain.Lote;
-import com.fabrica.stock.movimiento.api.dto.ConsultarTrazabilidadLoteRequest;
 import com.fabrica.stock.movimiento.api.dto.ConsultarTrazabilidadLoteResponse;
 import com.fabrica.stock.movimiento.api.dto.MovimientoResponse;
 import com.fabrica.stock.movimiento.infrastructure.MovimientoStockRepository;
@@ -21,17 +20,16 @@ public class ConsultarTrazabilidadLoteService {
         this.obtenerLoteService = obtenerLoteService;
     }
 
-    public ConsultarTrazabilidadLoteResponse consultar(ConsultarTrazabilidadLoteRequest request) {
-        Lote lote = obtenerLoteService.obtener(request.loteId);
-        ConsultarTrazabilidadLoteResponse response = new ConsultarTrazabilidadLoteResponse();
-        response.codigoLote = lote.getCodigoLote();
-        response.fechaProduccion = lote.getFechaCreacion();
-        response.movimientos = movimientoStockRepository
-                .findAllByLoteOrderByFechaAsc(lote)
-                .stream()
-                .map(MovimientoResponse::new)
-                .toList();
+    public ConsultarTrazabilidadLoteResponse consultar(Long loteId) {
+        Lote lote = obtenerLoteService.obtener(loteId);
 
-        return response;
+        return new ConsultarTrazabilidadLoteResponse(
+                lote,
+                movimientoStockRepository
+                        .findAllByLoteOrderByFechaAsc(lote)
+                        .stream()
+                        .map(MovimientoResponse::new)
+                        .toList()
+        );
     }
 }

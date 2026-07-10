@@ -5,6 +5,7 @@ import com.fabrica.stock.configurador.api.dto.FinalizarPaletRequest;
 import com.fabrica.stock.configurador.api.dto.NuevoPaletRequest;
 import com.fabrica.stock.configurador.api.dto.NuevoPaletResponse;
 import com.fabrica.stock.configurador.application.ConfiguradorPaletService;
+import com.fabrica.stock.movimiento.api.dto.ReubicarPaletRequest;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,5 +36,10 @@ public class ConfiguradorController {
     @PostMapping("/finalizar")
     public void finalizar(@Valid @RequestBody FinalizarPaletRequest request) {
         configuradorPaletService.finalizarPalet(request);
+    }
+
+    @PostMapping("/reubicar")
+    public void reubicar(@Valid @RequestBody ReubicarPaletRequest request) {
+        configuradorPaletService.reubicarPalet(request);
     }
 }

@@ -8,7 +8,9 @@ import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
 import com.fabrica.stock.lote.application.CrearLoteService;
 import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.lote.domain.OrigenLote;
+import com.fabrica.stock.movimiento.api.dto.ReubicarPaletRequest;
 import com.fabrica.stock.movimiento.application.CrearPrimerMovimientoService;
+import com.fabrica.stock.movimiento.application.ReubicarPaletService;
 import com.fabrica.stock.palet.application.*;
 import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.configurador.api.dto.CerrarPaletRequest;
@@ -32,6 +34,7 @@ public class ConfiguradorPaletService {
     private final CrearContenidoService crearContenidoService;
     private final AbrirPaletService abrirPaletService;
     private final CerrarPaletService cerrarPaletService;
+    private final ReubicarPaletService reubicarPaletService;
     private final FinalizarPaletService finalizarPaletService;
 
     public ConfiguradorPaletService(ObtenerUbicacionService obtenerUbicacionService,
@@ -43,6 +46,7 @@ public class ConfiguradorPaletService {
                                     CrearContenidoService crearContenidoService,
                                     AbrirPaletService abrirPaletService,
                                     CerrarPaletService cerrarPaletService,
+                                    ReubicarPaletService reubicarPaletService,
                                     FinalizarPaletService finalizarPaletService)
     {
         this.obtenerUbicacionService = obtenerUbicacionService;
@@ -54,6 +58,7 @@ public class ConfiguradorPaletService {
         this.obtenerProductoService = obtenerProductoService;
         this.crearLoteService = crearLoteService;
         this.crearContenidoService = crearContenidoService;
+        this.reubicarPaletService = reubicarPaletService;
         this.finalizarPaletService = finalizarPaletService;
     }
 
@@ -97,5 +102,12 @@ public class ConfiguradorPaletService {
                     contenido.getCantidad(),
                     fecha);
         }
+    }
+
+    public void reubicarPalet(ReubicarPaletRequest request) {
+        reubicarPaletService.reubicar(
+                obtenerPaletService.obtener(request.paletId),
+                obtenerUbicacionService.obtener(request.destinoId)
+        );
     }
 }

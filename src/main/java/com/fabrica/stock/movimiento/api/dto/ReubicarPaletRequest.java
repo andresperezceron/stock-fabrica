@@ -2,7 +2,7 @@ package com.fabrica.stock.movimiento.api.dto;
 
 import jakarta.validation.constraints.NotNull;
 
-public class MoverPaletRequest {
+public class ReubicarPaletRequest {
     @NotNull
     public Long paletId;
 

@@ -41,8 +41,7 @@ public class MovimientoStock {
     @JoinColumn(name = "destino_id")
     private Ubicacion destino;
 
-    protected MovimientoStock() {
-    }
+    protected MovimientoStock() {}
 
     public MovimientoStock(Producto producto,
                            Lote lote,
