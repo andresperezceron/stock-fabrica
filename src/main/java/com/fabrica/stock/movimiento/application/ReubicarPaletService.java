@@ -16,14 +16,14 @@ import java.time.LocalDateTime;
 
 
 @Service
-public class MoverPaletService {
+public class ReubicarPaletService {
     private final MovimientoStockRepository movimientoStockRepository;
     private final ObtenerPaletService obtenerPaletService;
     private final ObtenerUbicacionService obtenerUbicacionService;
 
-    public MoverPaletService(MovimientoStockRepository movimientoStockRepository,
-                             ObtenerPaletService obtenerPaletService,
-                             ObtenerUbicacionService obtenerUbicacionService)
+    public ReubicarPaletService(MovimientoStockRepository movimientoStockRepository,
+                                ObtenerPaletService obtenerPaletService,
+                                ObtenerUbicacionService obtenerUbicacionService)
     {
         this.movimientoStockRepository = movimientoStockRepository;
         this.obtenerPaletService = obtenerPaletService;
@@ -39,6 +39,7 @@ public class MoverPaletService {
 
         for(ContenidoPalet contenido : palet.getContenidos()) {
             MovimientoStock movimiento = new MovimientoStock(
+                    contenido.getProducto(),
                     contenido.getLote(),
                     TipoMovimiento.SALIDA,
                     contenido.getCantidad(),

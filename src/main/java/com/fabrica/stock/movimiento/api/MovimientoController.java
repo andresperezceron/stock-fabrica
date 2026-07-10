@@ -1,34 +1,21 @@
 package com.fabrica.stock.movimiento.api;
 
-import com.fabrica.stock.movimiento.api.dto.*;
-import com.fabrica.stock.movimiento.application.PrepararSalidaProductoService;
-import com.fabrica.stock.movimiento.domain.MovimientoStock;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.fabrica.stock.movimiento.api.dto.ConsultarTrazabilidadLoteRequest;
+import com.fabrica.stock.movimiento.api.dto.ConsultarTrazabilidadLoteResponse;
+import com.fabrica.stock.movimiento.application.ConsultarTrazabilidadLoteService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/movimientos")
 public class MovimientoController {
-    private final PrepararSalidaProductoService prepararSalidaProductoService;
+    private final ConsultarTrazabilidadLoteService consultarTrazabilidadLoteService;
 
-    public MovimientoController(PrepararSalidaProductoService prepararSalidaProductoService) {
-        this.prepararSalidaProductoService = prepararSalidaProductoService;
+    public MovimientoController(ConsultarTrazabilidadLoteService consultarTrazabilidadLoteService) {
+        this.consultarTrazabilidadLoteService = consultarTrazabilidadLoteService;
     }
 
-    @PostMapping
-    public MovimientoStock crear(@RequestBody MovimientoRequest request) {
-       return null;
-    }
-
-    @PostMapping("/salida/preparar")
-    public PrepararSalidaResponse prepararSalida(@RequestBody PrepararSalidaRequest request) {
-        return prepararSalidaProductoService.prepararSalida(request);
-    }
-
-    @PostMapping("/salida/confirmar")
-    public ConfirmarSalidaResponse confirmarSalida(@RequestBody ConfirmarSalidaRequest request) {
-        return null;
+    public ConsultarTrazabilidadLoteResponse consultar(ConsultarTrazabilidadLoteRequest request) {
+        return consultarTrazabilidadLoteService.consultar(request);
     }
 }

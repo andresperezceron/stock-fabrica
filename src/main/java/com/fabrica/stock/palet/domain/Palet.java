@@ -37,6 +37,10 @@ public class Palet {
         this.estado = estado;
     }
 
+    protected Palet() {
+
+    }
+
     public boolean estaAbierto() {
         return estado == EstadoPalet.ABIERTO;
     }

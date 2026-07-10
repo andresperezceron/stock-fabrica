@@ -4,6 +4,7 @@ import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.movimiento.domain.MovimientoStock;
 import com.fabrica.stock.movimiento.domain.TipoMovimiento;
 import com.fabrica.stock.movimiento.infrastructure.MovimientoStockRepository;
+import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.ubicacion.application.ObtenerUbicacionService;
 import com.fabrica.stock.ubicacion.domain.UbicacionSistema;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,9 @@ public class CrearPrimerMovimientoService {
         this.obtenerUbicacionService = obtenerUbicacionService;
     }
 
-    public void crear(Lote lote, BigDecimal cantidad, LocalDateTime fecha) {
+    public void crear(Producto producto, Lote lote, BigDecimal cantidad, LocalDateTime fecha) {
         MovimientoStock movimiento = new MovimientoStock(
+                producto,
                 lote,
                 TipoMovimiento.SALIDA,
                 cantidad,

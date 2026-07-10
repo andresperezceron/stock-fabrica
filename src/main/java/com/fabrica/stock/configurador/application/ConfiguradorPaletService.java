@@ -75,14 +75,13 @@ public class ConfiguradorPaletService {
         Producto producto = obtenerProductoService.obtener(request.productoId);
 
         Lote lote = crearLoteService.crear(
-                producto,
                 OrigenLote.PRODUCCION,
                 null,
                 request.maquina,
                 fecha
         );
 
-        crearContenidoService.crear(palet, lote, request.cantidad, fecha);
+        crearContenidoService.crear(palet, producto, lote, request.cantidad, fecha);
     }
 
     @Transactional
@@ -93,6 +92,7 @@ public class ConfiguradorPaletService {
 
         for(ContenidoPalet contenido : palet.getContenidos()) {
             crearPrimerMovimientoService.crear(
+                    contenido.getProducto(),
                     contenido.getLote(),
                     contenido.getCantidad(),
                     fecha);
