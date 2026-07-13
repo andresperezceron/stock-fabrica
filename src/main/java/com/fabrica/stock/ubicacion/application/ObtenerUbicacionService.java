@@ -14,8 +14,9 @@ public class ObtenerUbicacionService {
     }
 
     public Ubicacion obtener(Long id) {
-        return ubicacionRepository.findById(id).
-                orElseThrow(() -> new UbicacionNoEncontradaException("No existe ubicacion con id: " + id));
+        return ubicacionRepository
+                .findById(id)
+                .orElseThrow(() -> new UbicacionNoEncontradaException("No existe ubicacion con id: " + id));
     }
 
     public Ubicacion obtener(String nombreUbicacion) {

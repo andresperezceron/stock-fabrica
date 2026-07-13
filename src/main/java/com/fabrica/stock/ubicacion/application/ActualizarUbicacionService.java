@@ -19,10 +19,9 @@ public class ActualizarUbicacionService {
     }
 
     @Transactional
-    public Ubicacion actualizar(ModificarUbicacionRequest request) {
+    public void actualizar(ModificarUbicacionRequest request) {
         new ModificarUbicacionValidator(request, ubicacionRepository).validate();
         Ubicacion ubicacion = obtenerUbicacionService.obtener(request.ubicacionId);
-        ubicacion.setNombre(request.nombreModificado);
-        return ubicacion;
+        ubicacion.modificarNombre(request.nombreModificado);
     }
 }

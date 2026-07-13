@@ -1,10 +1,12 @@
 package com.fabrica.stock.palet.infrastructure;
 
 import com.fabrica.stock.palet.domain.Palet;
+import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
 public interface PaletRepository extends JpaRepository<Palet, Long> {
     Optional<Palet> findById(long id);
+    boolean existsByUbicacion(Ubicacion ubicacion);
 }

@@ -24,7 +24,7 @@ public class InicializarUbicacionesSistema implements CommandLineRunner {
 
     private void crearSiNoExiste(UbicacionSistema ubicacionSistema) {
         if(!repository.existsByNombre(ubicacionSistema.name())) {
-            repository.save(new Ubicacion(ubicacionSistema.name()));
+            repository.save(Ubicacion.sistema(ubicacionSistema.name()));
         }
     }
 }

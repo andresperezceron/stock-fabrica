@@ -2,10 +2,7 @@ package com.fabrica.stock.ubicacion.api;
 
 import com.fabrica.stock.ubicacion.api.dto.CrearUbicacionRequest;
 import com.fabrica.stock.ubicacion.api.dto.ModificarUbicacionRequest;
-import com.fabrica.stock.ubicacion.application.ActualizarUbicacionService;
-import com.fabrica.stock.ubicacion.application.CrearUbicacionService;
-import com.fabrica.stock.ubicacion.application.ListarUbicacionService;
-import com.fabrica.stock.ubicacion.application.ObtenerUbicacionService;
+import com.fabrica.stock.ubicacion.application.*;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -18,18 +15,21 @@ public class UbicacionController {
     private final CrearUbicacionService crearUbicacionService;
     private final ObtenerUbicacionService obtenerUbicacionService;
     private final ActualizarUbicacionService actualizarUbicacionService;
-    private final ListarUbicacionService listarUbicacionesService;
+    private final ListarUbicacionActivaService listarUbicacionesService;
+    private final EliminarUbicacionService eliminarUbicacionService;
 
     public UbicacionController(
             CrearUbicacionService crearUbicacionService,
             ObtenerUbicacionService obtenerUbicacionService,
             ActualizarUbicacionService actualizarUbicacionService,
-            ListarUbicacionService listarUbicacionesService)
+            ListarUbicacionActivaService listarUbicacionesService,
+            EliminarUbicacionService eliminarUbicacionService)
     {
         this.crearUbicacionService = crearUbicacionService;
         this.obtenerUbicacionService = obtenerUbicacionService;
         this.actualizarUbicacionService = actualizarUbicacionService;
         this.listarUbicacionesService = listarUbicacionesService;
+        this.eliminarUbicacionService = eliminarUbicacionService;
     }
 
     @GetMapping
@@ -38,8 +38,8 @@ public class UbicacionController {
     }
 
     @PostMapping
-    public Ubicacion crear(@Valid @RequestBody CrearUbicacionRequest request) {
-        return crearUbicacionService.crear(request);
+    public void crear(@Valid @RequestBody CrearUbicacionRequest request) {
+        crearUbicacionService.crear(request);
     }
 
     @PostMapping("/{id}")
@@ -48,7 +48,12 @@ public class UbicacionController {
     }
 
     @PutMapping("/{id}")
-    public Ubicacion actualizar(@Valid @RequestBody ModificarUbicacionRequest request){
-        return actualizarUbicacionService.actualizar(request);
+    public void actualizar(@Valid @RequestBody ModificarUbicacionRequest request){
+        actualizarUbicacionService.actualizar(request);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Long id){
+        eliminarUbicacionService.eliminar(id);
     }
 }

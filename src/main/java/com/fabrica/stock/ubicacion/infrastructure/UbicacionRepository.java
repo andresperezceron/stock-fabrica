@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface UbicacionRepository extends JpaRepository<Ubicacion, Long> {
     boolean existsByNombre(String nombreUbicacion);
     Optional<Ubicacion> findByNombre(String nombreUbicacion);
-    List<Ubicacion> findAllByOrderByNombreAsc();
+    List<Ubicacion> findAllByActivoIsTrueOrderByNombreAsc();
 }

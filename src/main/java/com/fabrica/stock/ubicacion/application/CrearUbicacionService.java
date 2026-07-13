@@ -14,8 +14,8 @@ public class CrearUbicacionService {
         this.ubicacionRepository = ubicacionRepository;
     }
 
-    public Ubicacion crear(CrearUbicacionRequest request) {
+    public void crear(CrearUbicacionRequest request) {
         new CrearUbicacionValidator(request, ubicacionRepository).validate();
-        return ubicacionRepository.save(new Ubicacion(request.nombre));
+        ubicacionRepository.save(new Ubicacion(request.nombre));
     }
 }
