@@ -19,6 +19,7 @@ public class InicializarUbicacionesSistema implements CommandLineRunner {
         crearSiNoExiste(UbicacionSistema.PRODUCCION);
         crearSiNoExiste(UbicacionSistema.VALIDACION);
         crearSiNoExiste(UbicacionSistema.PROVEEDOR);
+        crearSiNoExiste(UbicacionSistema.EXPEDICION);
     }
 
     private void crearSiNoExiste(UbicacionSistema ubicacionSistema) {

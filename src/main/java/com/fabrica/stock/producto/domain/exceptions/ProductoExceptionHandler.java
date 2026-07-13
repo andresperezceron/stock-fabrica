@@ -11,13 +11,13 @@ public class ProductoExceptionHandler {
 
     @ExceptionHandler(ProductoNoEncontradoException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public DomainErrorResponse manejarProductoNoEncontrado(DomainErrorResponse response) {
-        return new DomainErrorResponse(response.getMessage());
+    public DomainErrorResponse manejarProductoNoEncontrado(ProductoNoEncontradoException ex) {
+        return new DomainErrorResponse(ex.getMessage());
     }
 
     @ExceptionHandler(CodigoProductoDuplicadoException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public DomainErrorResponse manejarProductoDuplicado(DomainErrorResponse response) {
-        return new DomainErrorResponse(response.getMessage());
+    public DomainErrorResponse manejarProductoDuplicado(CodigoProductoDuplicadoException ex) {
+        return new DomainErrorResponse(ex.getMessage());
     }
 }

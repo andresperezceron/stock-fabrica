@@ -20,7 +20,7 @@ public class ReubicarPaletService {
     }
 
     @Transactional
-    public void reubicar(Palet palet, Ubicacion destino) {
+    public void reubicar(Palet palet, TipoMovimiento tipo, Ubicacion destino) {
         Ubicacion origen = palet.getUbicacion();
         LocalDateTime fecha = LocalDateTime.now();
         movimientoStockRepository.saveAll(palet.getContenidos()
@@ -28,7 +28,7 @@ public class ReubicarPaletService {
                 .map(contenido -> new MovimientoStock(
                         contenido.getProducto(),
                         contenido.getLote(),
-                        TipoMovimiento.SALIDA,
+                        tipo,
                         contenido.getCantidad(),
                         fecha,
                         origen,
