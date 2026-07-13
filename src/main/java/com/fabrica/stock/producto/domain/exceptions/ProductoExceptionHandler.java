@@ -20,4 +20,10 @@ public class ProductoExceptionHandler {
     public DomainErrorResponse manejarProductoDuplicado(CodigoProductoDuplicadoException ex) {
         return new DomainErrorResponse(ex.getMessage());
     }
+
+    @ExceptionHandler(CodigoProductoNoNumericoException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public DomainErrorResponse manejarCodigoProductoNoNumerico(CodigoProductoNoNumericoException ex) {
+        return new DomainErrorResponse(ex.getMessage());
+    }
 }

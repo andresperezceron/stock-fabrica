@@ -33,8 +33,8 @@ public class Producto {
             String codigo,
             String descripcion,
             UnidadMedida unidad,
-            String familia
-    ) {
+            String familia)
+    {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.unidad = unidad;
@@ -61,12 +61,8 @@ public class Producto {
         return familia;
     }
 
-    public boolean isActivo() {
+    public boolean estaActivo() {
         return activo;
-    }
-
-    public void activar() {
-        this.activo = true;
     }
 
     public void desactivar() {

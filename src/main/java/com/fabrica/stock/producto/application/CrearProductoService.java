@@ -14,14 +14,8 @@ public class CrearProductoService {
         this.productoRepository = productoRepository;
     }
 
-    public Producto crear(CrearProductoRequest request) {
+    public void crear(CrearProductoRequest request) {
         new CrearProductoValidator(request, productoRepository).validate();
-        return productoRepository.save(
-                new Producto(
-                request.codigo,
-                request.descripcion,
-                request.unidad,
-                request.familia
-        ));
+        productoRepository.save(new Producto(request.codigo, request.descripcion, request.unidad, request.familia));
     }
 }

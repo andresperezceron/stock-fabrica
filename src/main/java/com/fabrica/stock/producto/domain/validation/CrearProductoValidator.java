@@ -2,6 +2,7 @@ package com.fabrica.stock.producto.domain.validation;
 
 import com.fabrica.stock.producto.api.dto.CrearProductoRequest;
 import com.fabrica.stock.producto.domain.Producto;
+import com.fabrica.stock.producto.domain.exceptions.CodigoProductoNoNumericoException;
 import com.fabrica.stock.producto.infrastructure.ProductoRepository;
 import com.fabrica.stock.producto.domain.exceptions.CodigoProductoDuplicadoException;
 import com.fabrica.stock.shared.validation.RequestValidator;
@@ -22,6 +23,10 @@ public class CrearProductoValidator extends RequestValidator<CrearProductoReques
     protected void validateBusinessRules() {
         if(repository.existsByCodigo(request.codigo)) {
             throw new CodigoProductoDuplicadoException("Codigo producto duplicado.");
+        }
+
+        if(!request.codigo.matches("\\d+")) {
+            throw new CodigoProductoNoNumericoException("Codigo producto solo puede ser seis dígitos.");
         }
     }
 }

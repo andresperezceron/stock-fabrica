@@ -7,9 +7,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class CrearProductoRequest {
-
     @NotBlank(message = "Codigo producto es obligatorio.")
-    @Size(max = ProductoConstraints.CODIGO)
+    @Size(max = ProductoConstraints.CODIGO, min = ProductoConstraints.CODIGO,
+            message = "Codigo solo puede ser seis dígitos.")
     public String codigo;
 
     @NotBlank(message = "Descripcion producto es obligatorio")

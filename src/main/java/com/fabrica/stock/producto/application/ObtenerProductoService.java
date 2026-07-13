@@ -17,4 +17,9 @@ public class ObtenerProductoService {
         return productoRepository.findById(id)
                 .orElseThrow(() -> new ProductoNoEncontradoException("No existe Producto con id: " + id));
     }
+
+    public Producto obtener(String codigo) {
+        return productoRepository.findByCodigo(codigo)
+                .orElseThrow(() -> new ProductoNoEncontradoException("No existe Producto con codigo: " + codigo));
+    }
 }
