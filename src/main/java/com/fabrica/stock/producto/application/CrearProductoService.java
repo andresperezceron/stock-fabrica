@@ -26,7 +26,6 @@ public class CrearProductoService {
 
     public void crear(ProductoRequest request) {
         new CrearProductoValidator(request, productoRepository, familiaRepository).validate();
-
         Familia familia = obtenerFamiliaService.obtener(request.familia_id);
         productoRepository.save(new Producto(request.codigo, request.descripcion, request.unidad, familia));
     }

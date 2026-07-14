@@ -1,6 +1,5 @@
 package com.fabrica.stock.producto.api;
 
-
 import com.fabrica.stock.producto.api.dto.ProductoRequest;
 import com.fabrica.stock.producto.application.ActualizarProductoService;
 import com.fabrica.stock.producto.application.CrearProductoService;
@@ -45,7 +44,10 @@ public class ProductoController {
         crearProductoService.crear(request);
     }
 
-    public void actualizar(@PathVariable Long id, @Valid @RequestBody ProductoRequest request) {
+    @PutMapping("/{id}")
+    public void actualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody ProductoRequest request) {
         actualizarProductoService.actualizar(id, request);
     }
 }

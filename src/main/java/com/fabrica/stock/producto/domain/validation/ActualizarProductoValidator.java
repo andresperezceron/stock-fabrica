@@ -9,8 +9,6 @@ import com.fabrica.stock.producto.domain.exceptions.ProductoNoEncontradoExceptio
 import com.fabrica.stock.producto.infrastructure.ProductoRepository;
 import com.fabrica.stock.shared.validation.RequestValidator;
 
-import java.util.Objects;
-
 public class ActualizarProductoValidator extends RequestValidator<ProductoRequest, Producto, ProductoRepository> {
     private final FamiliaRepository familiaRepository;
     private final Long productoId;
@@ -33,16 +31,18 @@ public class ActualizarProductoValidator extends RequestValidator<ProductoReques
 
     @Override
     protected void validateBusinessRules() {
-        Producto producto = repository.findById(productoId)
+        Producto anteriorProducto = repository.findById(productoId)
                 .orElseThrow(() -> new ProductoNoEncontradoException("Producto no encontrado"));
 
-        if(!Objects.equals(producto.getCodigo(), request.codigo) && repository.existsByCodigo(request.codigo)) {
+        boolean cambioCodigo = !anteriorProducto.getCodigo().equals(request.codigo);
+        boolean cambioFamilia = !anteriorProducto.getFamilia().getId().equals(request.familia_id);
+
+        if(cambioCodigo && repository.existsByCodigo(request.codigo)) {
             throw new CodigoProductoDuplicadoException("Nuevo codigo producto ya esta en uso.");
         }
 
-        if(!Objects.equals(producto.getFamilia().getId(), request.familia_id)) {
-            familiaRepository.findById(request.familia_id).orElseThrow(() ->
-                    new FamiliaNoEncontradaException("Nueva familia no encontrada con id: " +  request.familia_id));
+        if(cambioFamilia && !familiaRepository.existsById(request.familia_id)) {
+            throw new FamiliaNoEncontradaException("Nueva familia no encontrada con id: " +  request.familia_id);
         }
     }
 }

@@ -27,9 +27,7 @@ public class Producto {
     @Column(nullable = false)
     private boolean activo = true;
 
-    protected Producto() {
-        // JPA
-    }
+    protected Producto() {}
 
     public Producto(
             String codigo,
@@ -65,7 +63,12 @@ public class Producto {
         return activo;
     }
 
-    public void desactivar() {
-        this.activo = false;
+    public void desactivar() { this.activo = false; }
+
+    public void actualizar(String codigo, String descripcion, UnidadMedida unidad, Familia familia) {
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.unidad = unidad;
+        this.familia = familia;
     }
 }

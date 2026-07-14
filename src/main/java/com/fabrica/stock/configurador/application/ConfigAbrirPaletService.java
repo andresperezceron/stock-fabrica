@@ -1,21 +1,21 @@
 package com.fabrica.stock.configurador.application;
 
-import com.fabrica.stock.palet.application.AbrirPaletService;
+import com.fabrica.stock.palet.application.CambiarEstadoPaletService;
 import com.fabrica.stock.palet.application.ObtenerPaletService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ConfigAbrirPaletService {
-    private final AbrirPaletService abrirPaletService;
+    private final CambiarEstadoPaletService cambiarEstadoPaletService;
     private final ObtenerPaletService obtenerPaletService;
 
-    public ConfigAbrirPaletService(AbrirPaletService abrirPaletService,
+    public ConfigAbrirPaletService(CambiarEstadoPaletService cambiarEstadoPaletService,
                                    ObtenerPaletService obtenerPaletService) {
-        this.abrirPaletService = abrirPaletService;
+        this.cambiarEstadoPaletService = cambiarEstadoPaletService;
         this.obtenerPaletService = obtenerPaletService;
     }
 
     public void abrirPalet(Long idPalet){
-        abrirPaletService.abrir(obtenerPaletService.obtener(idPalet));
+        cambiarEstadoPaletService.abrir(obtenerPaletService.obtener(idPalet));
     }
 }

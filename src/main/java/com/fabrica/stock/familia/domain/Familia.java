@@ -13,9 +13,6 @@ public class Familia {
     @Column(nullable = false, unique = true, length = FamiliaConstraints.NOMBRE)
     private String nombre;
 
-    @Column(nullable = false)
-    private boolean activo = true;
-
     protected Familia() {}
 
     public Familia(String nombre) { this.nombre = nombre; }
@@ -25,12 +22,4 @@ public class Familia {
     public String getNombre() { return nombre; }
 
     public void modificarNombre(String nombre) { this.nombre = nombre; }
-
-    public boolean estaActivo() {
-        return activo;
-    }
-
-    public void desactivar() {
-        this.activo = false;
-    }
 }
