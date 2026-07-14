@@ -1,13 +1,12 @@
 package com.fabrica.stock.ubicacion.api.dto;
 
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class ModificarUbicacionRequest {
+public class ActualizarUbicacionRequest {
     @NotNull
-    public Long ubicacionId;
+    public Long id;
 
     @NotBlank
-    public String nombreModificado;
+    public String nombre;
 }

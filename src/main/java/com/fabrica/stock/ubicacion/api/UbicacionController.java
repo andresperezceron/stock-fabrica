@@ -1,7 +1,7 @@
 package com.fabrica.stock.ubicacion.api;
 
 import com.fabrica.stock.ubicacion.api.dto.CrearUbicacionRequest;
-import com.fabrica.stock.ubicacion.api.dto.ModificarUbicacionRequest;
+import com.fabrica.stock.ubicacion.api.dto.ActualizarUbicacionRequest;
 import com.fabrica.stock.ubicacion.application.*;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import jakarta.validation.Valid;
@@ -37,18 +37,18 @@ public class UbicacionController {
         return listarUbicacionesService.listar();
     }
 
+    @GetMapping("/{id}")
+    public Ubicacion obtener(@PathVariable Long id){
+        return obtenerUbicacionService.obtener(id);
+    }
+
     @PostMapping
     public void crear(@Valid @RequestBody CrearUbicacionRequest request) {
         crearUbicacionService.crear(request);
     }
 
-    @PostMapping("/{id}")
-    public Ubicacion obtener(@PathVariable Long id){
-        return obtenerUbicacionService.obtener(id);
-    }
-
-    @PutMapping("/{id}")
-    public void actualizar(@Valid @RequestBody ModificarUbicacionRequest request){
+    @PutMapping
+    public void actualizar(@Valid @RequestBody ActualizarUbicacionRequest request){
         actualizarUbicacionService.actualizar(request);
     }
 

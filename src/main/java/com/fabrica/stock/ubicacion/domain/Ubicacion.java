@@ -26,9 +26,7 @@ public class Ubicacion {
         return id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getNombre() { return nombre; }
 
     public void modificarNombre(String nombre) { this.nombre = nombre; }
 

@@ -1,5 +1,6 @@
 package com.fabrica.stock.producto.domain;
 
+import com.fabrica.stock.familia.domain.Familia;
 import com.fabrica.stock.producto.domain.constraints.ProductoConstraints;
 import jakarta.persistence.*;
 
@@ -19,8 +20,9 @@ public class Producto {
     @Column(nullable = false)
     private UnidadMedida unidad;
 
-    @Column(nullable = false, length = ProductoConstraints.FAMILIA)
-    private String familia;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "familia_id")
+    private Familia familia;
 
     @Column(nullable = false)
     private boolean activo = true;
@@ -33,7 +35,7 @@ public class Producto {
             String codigo,
             String descripcion,
             UnidadMedida unidad,
-            String familia)
+            Familia familia)
     {
         this.codigo = codigo;
         this.descripcion = descripcion;
@@ -57,9 +59,7 @@ public class Producto {
         return unidad;
     }
 
-    public String getFamilia() {
-        return familia;
-    }
+    public Familia getFamilia() { return familia; }
 
     public boolean estaActivo() {
         return activo;

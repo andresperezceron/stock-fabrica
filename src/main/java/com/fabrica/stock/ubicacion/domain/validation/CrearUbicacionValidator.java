@@ -15,7 +15,7 @@ public class CrearUbicacionValidator extends RequestValidator<CrearUbicacionRequ
 
     @Override
     protected void normalize() {
-        request.nombre = request.nombre.trim();
+        request.nombre = request.nombre.trim().toUpperCase();
     }
 
     @Override

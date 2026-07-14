@@ -1,8 +1,8 @@
 package com.fabrica.stock.ubicacion.application;
 
-import com.fabrica.stock.ubicacion.api.dto.ModificarUbicacionRequest;
+import com.fabrica.stock.ubicacion.api.dto.ActualizarUbicacionRequest;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
-import com.fabrica.stock.ubicacion.domain.validation.ModificarUbicacionValidator;
+import com.fabrica.stock.ubicacion.domain.validation.ActualizarUbicacionValidator;
 import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -19,9 +19,9 @@ public class ActualizarUbicacionService {
     }
 
     @Transactional
-    public void actualizar(ModificarUbicacionRequest request) {
-        new ModificarUbicacionValidator(request, ubicacionRepository).validate();
-        Ubicacion ubicacion = obtenerUbicacionService.obtener(request.ubicacionId);
-        ubicacion.modificarNombre(request.nombreModificado);
+    public void actualizar(ActualizarUbicacionRequest request) {
+        new ActualizarUbicacionValidator(request, ubicacionRepository).validate();
+        Ubicacion ubicacion = obtenerUbicacionService.obtener(request.id);
+        ubicacion.modificarNombre(request.nombre);
     }
 }

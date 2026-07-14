@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Size;
 
 public class CrearUbicacionRequest {
     @NotBlank(message = "Nombre Ubicacion es obligatorio.")
-    @Size(max = UbicacionConstraints.NOMBRE)
+    @Size(
+            max = UbicacionConstraints.NOMBRE,
+            message = "Nombre demasiado largo. Max: " +  UbicacionConstraints.NOMBRE
+    )
     public String nombre;
 }

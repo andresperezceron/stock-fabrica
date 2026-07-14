@@ -6,20 +6,24 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class CrearProductoRequest {
+public class ProductoRequest {
     @NotBlank(message = "Codigo producto es obligatorio.")
-    @Size(max = ProductoConstraints.CODIGO, min = ProductoConstraints.CODIGO,
-            message = "Codigo solo puede ser seis dígitos.")
+    @Size(
+            max = ProductoConstraints.CODIGO, min = ProductoConstraints.CODIGO,
+            message = "Codigo solo puede ser seis dígitos."
+    )
     public String codigo;
 
     @NotBlank(message = "Descripcion producto es obligatorio")
-    @Size(max = ProductoConstraints.DESCRIPCION)
+    @Size(
+            max = ProductoConstraints.DESCRIPCION,
+            message = "Descripcion demasiado larga. Max: " +  ProductoConstraints.DESCRIPCION
+    )
     public String descripcion;
 
     @NotNull(message = "Unidad no puede ser nula.")
     public UnidadMedida unidad;
 
-    @NotBlank(message = "Familia producto es obligatorio.")
-    @Size(max = ProductoConstraints.FAMILIA)
-    public String familia;
+    @NotNull(message = "Familia producto es obligatorio.")
+    public Long familia_id;
 }

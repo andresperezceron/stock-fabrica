@@ -14,10 +14,7 @@ public class Palet {
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(
-            name = "ubicacion_id",
-            nullable = false
-    )
+    @JoinColumn(name = "ubicacion_id", nullable = false)
     private Ubicacion ubicacion;
 
     @Enumerated(EnumType.STRING)
@@ -37,9 +34,7 @@ public class Palet {
         this.estado = estado;
     }
 
-    protected Palet() {
-
-    }
+    protected Palet() {}
 
     public boolean estaAbierto() {
         return estado == EstadoPalet.ABIERTO;
