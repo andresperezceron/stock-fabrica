@@ -31,4 +31,11 @@ public class CambiarEstadoPaletService {
         }
         palet.setEstado(EstadoPalet.FINALIZADO);
     }
+
+    public void validar(Palet palet) {
+        if(!palet.estaFinalizado()) {
+            throw new EstadoPaletInvalidoException("El palet no esta finalizado.");
+        }
+        palet.setEstado(EstadoPalet.VALIDADO);
+    }
 }

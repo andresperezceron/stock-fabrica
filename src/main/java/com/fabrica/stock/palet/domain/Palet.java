@@ -36,16 +36,6 @@ public class Palet {
 
     protected Palet() {}
 
-    public boolean estaAbierto() {
-        return estado == EstadoPalet.ABIERTO;
-    }
-
-    public boolean estaCerrado() {
-        return estado == EstadoPalet.CERRADO;
-    }
-
-    public boolean estaFinalizado() { return estado == EstadoPalet.FINALIZADO; }
-
     public Long getId() {
         return id;
     }
@@ -63,6 +53,18 @@ public class Palet {
     public List<ContenidoPalet> getContenidos() {
         return contenidos;
     }
+
+    public boolean estaAbierto() {
+        return estado == EstadoPalet.ABIERTO;
+    }
+
+    public boolean estaCerrado() {
+        return estado == EstadoPalet.CERRADO;
+    }
+
+    public boolean estaFinalizado() { return estado == EstadoPalet.FINALIZADO; }
+
+    public boolean estaValidado() { return estado == EstadoPalet.VALIDADO; }
 
     public void setEstado(EstadoPalet estado) { this.estado = estado; }
 

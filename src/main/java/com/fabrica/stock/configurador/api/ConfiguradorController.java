@@ -17,17 +17,21 @@ public class ConfiguradorController {
     private final ConfigCerrarPaletService configCerrarPaletService;
     private final ConfigFinalizarPaletService configFinalizarPaletService;
     private final ConfigReubicarPaletService configReubicarPaletService;
+    private final ConfigValidarPaletService configValidarPaletService;
 
     public ConfiguradorController(ConfigNuevoPaletService configNuevoPaletService,
                                   ConfigAbrirPaletService configAbrirPaletService,
                                   ConfigCerrarPaletService configCerrarPaletService,
                                   ConfigFinalizarPaletService configFinalizarPaletService,
-                                  ConfigReubicarPaletService configReubicarPaletService) {
+                                  ConfigReubicarPaletService configReubicarPaletService,
+                                  ConfigValidarPaletService configValidarPaletService)
+    {
         this.configNuevoPaletService = configNuevoPaletService;
         this.configAbrirPaletService = configAbrirPaletService;
         this.configCerrarPaletService = configCerrarPaletService;
         this.configFinalizarPaletService = configFinalizarPaletService;
         this.configReubicarPaletService = configReubicarPaletService;
+        this.configValidarPaletService = configValidarPaletService;
     }
 
     @PostMapping
@@ -48,6 +52,11 @@ public class ConfiguradorController {
     @PostMapping("/finalizar")
     public void finalizar(@Valid @RequestBody FinalizarPaletRequest request) {
         configFinalizarPaletService.finalizarPalet(request);
+    }
+
+    @PostMapping("/validar/{id}")
+    public void validar(@PathVariable Long id) {
+        configValidarPaletService.validar(id);
     }
 
     @PostMapping("/reubicar")

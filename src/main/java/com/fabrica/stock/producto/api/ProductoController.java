@@ -1,10 +1,7 @@
 package com.fabrica.stock.producto.api;
 
 import com.fabrica.stock.producto.api.dto.ProductoRequest;
-import com.fabrica.stock.producto.application.ActualizarProductoService;
-import com.fabrica.stock.producto.application.CrearProductoService;
-import com.fabrica.stock.producto.application.ListarProductoService;
-import com.fabrica.stock.producto.application.ObtenerProductoService;
+import com.fabrica.stock.producto.application.*;
 import com.fabrica.stock.producto.domain.Producto;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -14,21 +11,23 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/productos")
 public class ProductoController {
-
     private final CrearProductoService crearProductoService;
     private final ListarProductoService listarProductoService;
     private final ObtenerProductoService obtenerProductoService;
     private final ActualizarProductoService actualizarProductoService;
+    private final EliminarProductoService eliminarProductoService;
 
     public ProductoController(CrearProductoService crearProductoService,
                               ListarProductoService listarProductoService,
                               ObtenerProductoService obtenerProductoService,
-                              ActualizarProductoService actualizarProductoService)
+                              ActualizarProductoService actualizarProductoService,
+                              EliminarProductoService eliminarProductoService)
     {
         this.crearProductoService = crearProductoService;
         this.listarProductoService = listarProductoService;
         this.obtenerProductoService = obtenerProductoService;
         this.actualizarProductoService = actualizarProductoService;
+        this.eliminarProductoService = eliminarProductoService;
     }
 
     @GetMapping
@@ -50,4 +49,7 @@ public class ProductoController {
             @Valid @RequestBody ProductoRequest request) {
         actualizarProductoService.actualizar(id, request);
     }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Long id) { eliminarProductoService.eliminar(id); }
 }

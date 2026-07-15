@@ -59,9 +59,7 @@ public class Producto {
 
     public Familia getFamilia() { return familia; }
 
-    public boolean estaActivo() {
-        return activo;
-    }
+    public boolean estaActivo() { return activo; }
 
     public void desactivar() { this.activo = false; }
 

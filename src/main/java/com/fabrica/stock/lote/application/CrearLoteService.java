@@ -17,11 +17,7 @@ public class CrearLoteService {
         this.loteRepository = loteRepository;
     }
 
-    public Lote crear(OrigenLote origenLote,
-                      String loteProveedor,
-                      MaquinaProduccion maquina,
-                      LocalDateTime fecha)
-    {
+    public Lote crear(OrigenLote origenLote, String loteProveedor, MaquinaProduccion maquina, LocalDateTime fecha) {
         LoteGenerado loteGenerado = new LoteGenerado(maquina, fecha);
         Optional<Lote> existente = loteRepository.findByCodigoLote(loteGenerado.getCodigoLote());
 
