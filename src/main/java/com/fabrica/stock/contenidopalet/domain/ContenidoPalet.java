@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class ContenidoPalet {
@@ -28,6 +30,9 @@ public class ContenidoPalet {
 
     @Column(nullable = false)
     private LocalDateTime fecha;
+
+    @ManyToMany
+    private final List<Lote> lotesMateriaPrima = new ArrayList<>();
 
     public ContenidoPalet(Palet palet, Producto producto, Lote lote, BigDecimal cantidad, LocalDateTime fecha) {
         this.palet = palet;
@@ -58,4 +63,6 @@ public class ContenidoPalet {
     }
 
     public LocalDateTime getFecha() { return fecha; }
+
+    public List<Lote> getLotesMateriaPrima() { return lotesMateriaPrima; }
 }

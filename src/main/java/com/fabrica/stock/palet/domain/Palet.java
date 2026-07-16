@@ -19,6 +19,10 @@ public class Palet {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    private TipoPalet tipoPalet;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private ConfiguracionPalet configuracion;
 
     @Enumerated(EnumType.STRING)
@@ -28,8 +32,9 @@ public class Palet {
     @OneToMany(mappedBy = "palet")
     private final List<ContenidoPalet> contenidos = new ArrayList<>();
 
-    public Palet(Ubicacion ubicacion, ConfiguracionPalet configuracion, EstadoPalet estado) {
+    public Palet(Ubicacion ubicacion, TipoPalet tipoPalet, ConfiguracionPalet configuracion, EstadoPalet estado) {
         this.ubicacion = ubicacion;
+        this.tipoPalet = tipoPalet;
         this.configuracion = configuracion;
         this.estado = estado;
     }
@@ -44,15 +49,15 @@ public class Palet {
         return ubicacion;
     }
 
+    public TipoPalet getTipoPalet() { return  tipoPalet; }
+
     public ConfiguracionPalet getConfiguracion() { return configuracion; }
 
     public EstadoPalet getEstado() {
         return estado;
     }
 
-    public List<ContenidoPalet> getContenidos() {
-        return contenidos;
-    }
+    public List<ContenidoPalet> getContenidos() { return contenidos; }
 
     public boolean estaAbierto() {
         return estado == EstadoPalet.ABIERTO;

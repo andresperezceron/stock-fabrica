@@ -24,6 +24,9 @@ public class Producto {
     @JoinColumn(name = "familia_id")
     private Familia familia;
 
+    @Column(nullable = false, unique = true)
+    private int piezasPorCaja;
+
     @Column(nullable = false)
     private boolean activo = true;
 
@@ -33,12 +36,14 @@ public class Producto {
             String codigo,
             String descripcion,
             UnidadMedida unidad,
-            Familia familia)
+            Familia familia,
+            int piezasPorCaja)
     {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.unidad = unidad;
         this.familia = familia;
+        this.piezasPorCaja = piezasPorCaja;
     }
 
     public Long getId() {
@@ -59,14 +64,22 @@ public class Producto {
 
     public Familia getFamilia() { return familia; }
 
+    public int getPiezasPorCaja() { return piezasPorCaja; }
+
     public boolean estaActivo() { return activo; }
 
     public void desactivar() { this.activo = false; }
 
-    public void actualizar(String codigo, String descripcion, UnidadMedida unidad, Familia familia) {
+    public void actualizar(String codigo,
+                           String descripcion,
+                           UnidadMedida unidad,
+                           Familia familia,
+                           int piezasPorCaja)
+    {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.unidad = unidad;
         this.familia = familia;
+        this.piezasPorCaja = piezasPorCaja;
     }
 }

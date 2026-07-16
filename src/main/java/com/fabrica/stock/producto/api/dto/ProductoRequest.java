@@ -2,6 +2,7 @@ package com.fabrica.stock.producto.api.dto;
 
 import com.fabrica.stock.producto.domain.UnidadMedida;
 import com.fabrica.stock.producto.domain.constraints.ProductoConstraints;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -26,4 +27,8 @@ public class ProductoRequest {
 
     @NotNull(message = "Familia producto es obligatorio.")
     public Long familia_id;
+
+    @NotNull(message = "Piezas por caja es obligatorio.")
+    @Min(0)
+    public Integer piezasPorCaja;
 }

@@ -33,6 +33,11 @@ public class ActualizarProductoService {
         new ActualizarProductoValidator(request, productoRepository, familiaRepository, id).validate();
         Producto anteriorProducto = obtenerProductoService.obtener(id);
         Familia nuevaFamilia = obtenerFamiliaService.obtener(request.familia_id);
-        anteriorProducto.actualizar(request.codigo, request.descripcion, request.unidad, nuevaFamilia);
+        anteriorProducto.actualizar(
+                request.codigo,
+                request.descripcion,
+                request.unidad,
+                nuevaFamilia,
+                request.piezasPorCaja);
     }
 }

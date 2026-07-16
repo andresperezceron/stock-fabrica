@@ -21,7 +21,7 @@ public class ConfigNuevoPaletService {
 
     public NuevoPaletResponse crearPalet(NuevoPaletRequest request){
         Ubicacion ubicacion = obtenerUbicacionService.obtener(request.ubicacionId);
-        Palet palet = crearPaletService.crear(ubicacion);
+        Palet palet = crearPaletService.crear(ubicacion, request.tipoPalet);
         return new NuevoPaletResponse(palet.getId());
     }
 }
