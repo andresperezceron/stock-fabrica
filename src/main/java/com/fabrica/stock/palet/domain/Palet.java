@@ -4,6 +4,7 @@ import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Palet {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TipoPalet tipoPalet;
+    private TipoPalet tipo;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -32,11 +33,15 @@ public class Palet {
     @OneToMany(mappedBy = "palet")
     private final List<ContenidoPalet> contenidos = new ArrayList<>();
 
-    public Palet(Ubicacion ubicacion, TipoPalet tipoPalet, ConfiguracionPalet configuracion, EstadoPalet estado) {
+    @Column(nullable = false)
+    private LocalDateTime fechaCreacion;
+
+    public Palet(Ubicacion ubicacion, TipoPalet tipo, ConfiguracionPalet configuracion, EstadoPalet estado) {
         this.ubicacion = ubicacion;
-        this.tipoPalet = tipoPalet;
+        this.tipo = tipo;
         this.configuracion = configuracion;
         this.estado = estado;
+        fechaCreacion = LocalDateTime.now();
     }
 
     protected Palet() {}
@@ -49,7 +54,7 @@ public class Palet {
         return ubicacion;
     }
 
-    public TipoPalet getTipoPalet() { return  tipoPalet; }
+    public TipoPalet getTipo() { return tipo; }
 
     public ConfiguracionPalet getConfiguracion() { return configuracion; }
 
@@ -58,6 +63,8 @@ public class Palet {
     }
 
     public List<ContenidoPalet> getContenidos() { return contenidos; }
+
+    public LocalDateTime getFechaCreacion() { return fechaCreacion; }
 
     public boolean estaAbierto() {
         return estado == EstadoPalet.ABIERTO;
