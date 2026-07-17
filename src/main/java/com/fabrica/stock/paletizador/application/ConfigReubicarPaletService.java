@@ -1,4 +1,4 @@
-package com.fabrica.stock.configurador.application;
+package com.fabrica.stock.paletizador.application;
 
 import com.fabrica.stock.movimiento.api.dto.ReubicarPaletRequest;
 import com.fabrica.stock.movimiento.application.ReubicarPaletService;

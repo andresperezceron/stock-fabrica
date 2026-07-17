@@ -1,4 +1,4 @@
-package com.fabrica.stock.configurador.api.dto;
+package com.fabrica.stock.paletizador.api.dto;
 
 import com.fabrica.stock.palet.domain.TipoPalet;
 import jakarta.validation.constraints.NotNull;

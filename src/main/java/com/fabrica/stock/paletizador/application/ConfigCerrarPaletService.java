@@ -1,6 +1,6 @@
-package com.fabrica.stock.configurador.application;
+package com.fabrica.stock.paletizador.application;
 
-import com.fabrica.stock.configurador.api.dto.CerrarPaletRequest;
+import com.fabrica.stock.paletizador.api.dto.CerrarPaletRequest;
 import com.fabrica.stock.contenidopalet.applicantion.CrearContenidoService;
 import com.fabrica.stock.lote.application.CrearLoteService;
 import com.fabrica.stock.lote.domain.Lote;

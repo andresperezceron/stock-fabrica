@@ -1,33 +1,33 @@
-package com.fabrica.stock.configurador.api;
+package com.fabrica.stock.paletizador.api;
 
-import com.fabrica.stock.configurador.api.dto.CerrarPaletRequest;
-import com.fabrica.stock.configurador.api.dto.FinalizarPaletRequest;
-import com.fabrica.stock.configurador.api.dto.NuevoPaletRequest;
-import com.fabrica.stock.configurador.api.dto.NuevoPaletResponse;
-import com.fabrica.stock.configurador.application.*;
+import com.fabrica.stock.paletizador.api.dto.CerrarPaletRequest;
+import com.fabrica.stock.paletizador.api.dto.FinalizarPaletRequest;
+import com.fabrica.stock.paletizador.api.dto.NuevoPaletRequest;
+import com.fabrica.stock.paletizador.api.dto.NuevoPaletResponse;
+import com.fabrica.stock.paletizador.application.*;
 import com.fabrica.stock.movimiento.api.dto.ReubicarPaletRequest;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/configurador-palets")
-public class ConfiguradorController {
+public class PaletizadorController {
     private final ConfigNuevoPaletService configNuevoPaletService;
-    private final ConfigAbrirPaletService configAbrirPaletService;
+    private final AbrirPaletService abrirPaletService;
     private final ConfigCerrarPaletService configCerrarPaletService;
     private final ConfigFinalizarPaletService configFinalizarPaletService;
     private final ConfigReubicarPaletService configReubicarPaletService;
     private final ConfigValidarPaletService configValidarPaletService;
 
-    public ConfiguradorController(ConfigNuevoPaletService configNuevoPaletService,
-                                  ConfigAbrirPaletService configAbrirPaletService,
-                                  ConfigCerrarPaletService configCerrarPaletService,
-                                  ConfigFinalizarPaletService configFinalizarPaletService,
-                                  ConfigReubicarPaletService configReubicarPaletService,
-                                  ConfigValidarPaletService configValidarPaletService)
+    public PaletizadorController(ConfigNuevoPaletService configNuevoPaletService,
+                                 AbrirPaletService abrirPaletService,
+                                 ConfigCerrarPaletService configCerrarPaletService,
+                                 ConfigFinalizarPaletService configFinalizarPaletService,
+                                 ConfigReubicarPaletService configReubicarPaletService,
+                                 ConfigValidarPaletService configValidarPaletService)
     {
         this.configNuevoPaletService = configNuevoPaletService;
-        this.configAbrirPaletService = configAbrirPaletService;
+        this.abrirPaletService = abrirPaletService;
         this.configCerrarPaletService = configCerrarPaletService;
         this.configFinalizarPaletService = configFinalizarPaletService;
         this.configReubicarPaletService = configReubicarPaletService;
@@ -41,7 +41,7 @@ public class ConfiguradorController {
 
     @PostMapping("/{id}/abrir")
     public void abrir(@PathVariable Long id) {
-        configAbrirPaletService.abrirPalet(id);
+        abrirPaletService.abrirPalet(id);
     }
 
     @PostMapping("/cerrar")

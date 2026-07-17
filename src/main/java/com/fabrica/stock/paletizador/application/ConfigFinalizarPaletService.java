@@ -1,6 +1,6 @@
-package com.fabrica.stock.configurador.application;
+package com.fabrica.stock.paletizador.application;
 
-import com.fabrica.stock.configurador.api.dto.FinalizarPaletRequest;
+import com.fabrica.stock.paletizador.api.dto.FinalizarPaletRequest;
 import com.fabrica.stock.movimiento.application.ReubicarPaletService;
 import com.fabrica.stock.movimiento.domain.TipoMovimiento;
 import com.fabrica.stock.palet.application.CambiarEstadoPaletService;

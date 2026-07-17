@@ -1,6 +1,6 @@
 package com.fabrica.stock.familia.domain;
 
-import com.fabrica.stock.familia.domain.constraints.FamiliaConstraints;
+import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,7 +10,7 @@ public class Familia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = FamiliaConstraints.NOMBRE)
+    @Column(nullable = false, unique = true, length = TextoConstraints.CORTO)
     private String nombre;
 
     protected Familia() {}

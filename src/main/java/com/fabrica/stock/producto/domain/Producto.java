@@ -2,9 +2,11 @@ package com.fabrica.stock.producto.domain;
 
 import com.fabrica.stock.familia.domain.Familia;
 import com.fabrica.stock.producto.domain.constraints.ProductoConstraints;
+import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "producto")
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,7 +15,7 @@ public class Producto {
     @Column(nullable = false, unique = true, length = ProductoConstraints.CODIGO)
     private String codigo;
 
-    @Column(nullable = false, length = ProductoConstraints.DESCRIPCION)
+    @Column(nullable = false, length = TextoConstraints.MEDIO)
     private String descripcion;
 
     @Enumerated(EnumType.STRING)

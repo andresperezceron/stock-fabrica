@@ -1,7 +1,7 @@
-package com.fabrica.stock.configurador.application;
+package com.fabrica.stock.paletizador.application;
 
-import com.fabrica.stock.configurador.api.dto.NuevoPaletRequest;
-import com.fabrica.stock.configurador.api.dto.NuevoPaletResponse;
+import com.fabrica.stock.paletizador.api.dto.NuevoPaletRequest;
+import com.fabrica.stock.paletizador.api.dto.NuevoPaletResponse;
 import com.fabrica.stock.palet.application.CrearPaletService;
 import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.ubicacion.application.ObtenerUbicacionService;

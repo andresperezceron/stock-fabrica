@@ -2,6 +2,7 @@ package com.fabrica.stock.producto.api.dto;
 
 import com.fabrica.stock.producto.domain.UnidadMedida;
 import com.fabrica.stock.producto.domain.constraints.ProductoConstraints;
+import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,8 +18,8 @@ public class ProductoRequest {
 
     @NotBlank(message = "Descripcion producto es obligatorio")
     @Size(
-            max = ProductoConstraints.DESCRIPCION,
-            message = "Descripcion demasiado larga. Max: " +  ProductoConstraints.DESCRIPCION
+            max = TextoConstraints.MEDIO,
+            message = "Descripcion demasiado larga. Max: " +  TextoConstraints.MEDIO
     )
     public String descripcion;
 
