@@ -2,7 +2,6 @@ package com.fabrica.stock.producto.configproduccion.application;
 
 import com.fabrica.stock.lote.application.ObtenerLoteService;
 import com.fabrica.stock.lote.domain.Lote;
-import com.fabrica.stock.lote.infrastructure.LoteRepository;
 import com.fabrica.stock.producto.application.ObtenerProductoService;
 import com.fabrica.stock.producto.configproduccion.api.dto.CrearConfigProduccionRequest;
 import com.fabrica.stock.producto.configproduccion.domain.ConfigProduccion;
@@ -17,19 +16,16 @@ import java.util.List;
 @Service
 public class CrearConfigProduccionService {
     private final ConfigProduccionRepository configProduccionRepository;
-    private final LoteRepository loteRepository;
     private final ProductoRepository productoRepository;
     private final ObtenerProductoService obtenerProductoService;
     private final ObtenerLoteService obtenerLoteService;
 
     public CrearConfigProduccionService(ConfigProduccionRepository configProduccionRepository,
-                                        LoteRepository loteRepository,
                                         ProductoRepository productoRepository,
                                         ObtenerProductoService obtenerProductoService,
                                         ObtenerLoteService obtenerLoteService)
     {
         this.configProduccionRepository = configProduccionRepository;
-        this.loteRepository = loteRepository;
         this.productoRepository = productoRepository;
         this.obtenerProductoService = obtenerProductoService;
         this.obtenerLoteService = obtenerLoteService;

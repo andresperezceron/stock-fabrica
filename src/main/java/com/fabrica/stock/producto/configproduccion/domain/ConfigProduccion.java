@@ -25,7 +25,7 @@ public class ConfigProduccion {
             joinColumns = @JoinColumn(name = "config_produccion_id"),
             inverseJoinColumns = @JoinColumn(name = "lote_id")
     )
-    private final List<Lote> lotesMateriaPrima = new ArrayList<>();
+    private List<Lote> lotesMateriaPrima;
 
     @Column(nullable = false, length = TextoConstraints.LARGO)
     String observaciones;
@@ -34,7 +34,7 @@ public class ConfigProduccion {
 
     public ConfigProduccion(Producto producto, List<Lote> lotesMateriaPrima, String observaciones) {
         this.producto = producto;
-        this.lotesMateriaPrima.addAll(lotesMateriaPrima);
+        this.lotesMateriaPrima = new ArrayList<>(lotesMateriaPrima);
         this.observaciones = observaciones;
     }
 
@@ -45,4 +45,9 @@ public class ConfigProduccion {
     public List<Lote> getLotesMateriaPrima() { return lotesMateriaPrima; }
 
     public String getObservaciones() { return observaciones; }
+
+    public void actualizar(String observaciones, List<Lote> lotesMateriaPrima) {
+        this.observaciones = observaciones;
+        this.lotesMateriaPrima = lotesMateriaPrima;
+    }
 }

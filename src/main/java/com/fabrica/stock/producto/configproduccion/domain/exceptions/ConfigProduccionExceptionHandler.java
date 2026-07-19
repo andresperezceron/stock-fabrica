@@ -14,9 +14,15 @@ public class ConfigProduccionExceptionHandler {
         return new DomainErrorResponse(ex.getMessage());
     }
 
-    @ExceptionHandler(LoteMateriaPrimaDuplicadoException.class)
+    @ExceptionHandler(ConfigProduccionNoEncontradaException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public DomainErrorResponse manejarConfigProduccionNoEncontrada(ConfigProduccionNoEncontradaException exception) {
+        return new DomainErrorResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler(LoteMateriaPrimaDupicadoException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public DomainErrorResponse manejarLoteMateriaPrimaDuplicado(LoteMateriaPrimaDuplicadoException ex) {
+    public DomainErrorResponse manejarLoteMateriaPrimaDuplicado(LoteMateriaPrimaDupicadoException ex) {
         return new DomainErrorResponse(ex.getMessage());
     }
 }

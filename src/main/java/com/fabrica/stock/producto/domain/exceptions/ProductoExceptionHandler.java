@@ -26,4 +26,10 @@ public class ProductoExceptionHandler {
     public DomainErrorResponse manejarCodigoProductoNoNumerico(CodigoProductoNoNumericoException ex) {
         return new DomainErrorResponse(ex.getMessage());
     }
+
+    @ExceptionHandler(ProductoNoActivoException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public DomainErrorResponse manejarProductoNoActivo(ProductoNoActivoException ex) {
+        return new DomainErrorResponse(ex.getMessage());
+    }
 }
