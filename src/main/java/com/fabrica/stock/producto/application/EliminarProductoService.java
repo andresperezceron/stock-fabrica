@@ -12,7 +12,8 @@ public class EliminarProductoService {
 
     public EliminarProductoService(ProductoRepository productoRepository,
                                    ObtenerProductoService obtenerProductoService,
-                                   ComprobarUsoProductoService comprobarUsoProductoService) {
+                                   ComprobarUsoProductoService comprobarUsoProductoService)
+    {
         this.productoRepository = productoRepository;
         this.obtenerProductoService = obtenerProductoService;
         this.comprobarUsoProductoService = comprobarUsoProductoService;

@@ -26,7 +26,7 @@ public class ActualizarConfigProduccionService {
 
     public void actualizar(ActualizarConfigProduccionRequest request) {
         new ActualizarConfigProduccionValidator(request, configProduccionRepository).validate();
-        ConfigProduccion config = obtenerConfigProduccionService.obtener(request.id);
+        ConfigProduccion config = obtenerConfigProduccionService.obtenerPorProducto(request.id);
         List<Lote> lotesMateriaPrima = request.lotesMateriaPrima.stream()
                 .map(obtenerLoteService::obtener)
                 .toList();

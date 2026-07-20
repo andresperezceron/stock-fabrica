@@ -15,13 +15,13 @@ public class ObtenerUbicacionService {
 
     public Ubicacion obtener(Long id) {
         return ubicacionRepository
-                .findById(id)
+                .findByIdAndActivoTrue(id)
                 .orElseThrow(() -> new UbicacionNoEncontradaException("No existe ubicacion con id: " + id));
     }
 
     public Ubicacion obtener(String nombreUbicacion) {
         return ubicacionRepository
-                .findByNombre(nombreUbicacion)
+                .findByNombreAndActivoTrue(nombreUbicacion)
                 .orElseThrow(() ->
                         new UbicacionNoEncontradaException("No existe ubicacion con nombre: " + nombreUbicacion));
     }

@@ -12,26 +12,26 @@ import java.util.List;
 @RequestMapping("/api/productos")
 public class ProductoController {
     private final CrearProductoService crearProductoService;
-    private final ListarProductoService listarProductoService;
+    private final ListarProductosService listarProductosService;
     private final ObtenerProductoService obtenerProductoService;
     private final ActualizarProductoService actualizarProductoService;
     private final EliminarProductoService eliminarProductoService;
 
     public ProductoController(CrearProductoService crearProductoService,
-                              ListarProductoService listarProductoService,
+                              ListarProductosService listarProductosService,
                               ObtenerProductoService obtenerProductoService,
                               ActualizarProductoService actualizarProductoService,
                               EliminarProductoService eliminarProductoService)
     {
         this.crearProductoService = crearProductoService;
-        this.listarProductoService = listarProductoService;
+        this.listarProductosService = listarProductosService;
         this.obtenerProductoService = obtenerProductoService;
         this.actualizarProductoService = actualizarProductoService;
         this.eliminarProductoService = eliminarProductoService;
     }
 
     @GetMapping
-    public List<Producto> listar() { return listarProductoService.listar(); }
+    public List<Producto> listar() { return listarProductosService.listar(); }
 
     @GetMapping("/{id}")
     public Producto obtener(@PathVariable Long id) {

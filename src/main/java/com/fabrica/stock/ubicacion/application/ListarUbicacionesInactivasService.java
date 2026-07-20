@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ListarUbicacionActivaService {
+public class ListarUbicacionesInactivasService {
     private final UbicacionRepository ubicacionRepository;
 
-    public ListarUbicacionActivaService(UbicacionRepository ubicacionRepository) {
+    public ListarUbicacionesInactivasService(UbicacionRepository ubicacionRepository) {
         this.ubicacionRepository = ubicacionRepository;
     }
 
     public List<Ubicacion> listar() {
-        return ubicacionRepository.findAllByActivoIsTrueOrderByNombreAsc();
+        return ubicacionRepository.findAllByActivoFalseOrderByNombreAsc();
     }
 }

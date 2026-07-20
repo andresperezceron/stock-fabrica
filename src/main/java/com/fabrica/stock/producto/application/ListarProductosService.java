@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ListarProductoService {
+public class ListarProductosService {
     private final ProductoRepository productoRepository;
 
-    public ListarProductoService(ProductoRepository productoRepository) {
+    public ListarProductosService(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
     }
 
     public List<Producto> listar() {
-        return productoRepository.findAll();
+        return productoRepository.findAllByActivoTrueOrderByDescripcionAsc();
     }
 }

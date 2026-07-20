@@ -70,7 +70,9 @@ public class Producto {
 
     public boolean estaActivo() { return activo; }
 
-    public void desactivar() { this.activo = false; }
+    public void activar() { activo = true; }
+
+    public void desactivar() { activo = false; }
 
     public void actualizar(String codigo,
                            String descripcion,

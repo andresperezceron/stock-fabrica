@@ -1,11 +1,11 @@
 package com.fabrica.stock.producto.configproduccion.domain;
 
-import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -21,33 +21,31 @@ public class ConfigProduccion {
 
     @ManyToMany
     @JoinTable(
-            name = "config_produccion_lote",
+            name = "config_produccion_producto",
             joinColumns = @JoinColumn(name = "config_produccion_id"),
-            inverseJoinColumns = @JoinColumn(name = "lote_id")
+            inverseJoinColumns = @JoinColumn(name = "producto_id")
     )
-    private List<Lote> lotesMateriaPrima;
+    private final List<Producto> materiasPrimas = new ArrayList<>();
 
     @Column(nullable = false, length = TextoConstraints.LARGO)
     String observaciones;
 
     protected ConfigProduccion() {}
 
-    public ConfigProduccion(Producto producto, List<Lote> lotesMateriaPrima, String observaciones) {
+    public ConfigProduccion(Producto producto) {
         this.producto = producto;
-        this.lotesMateriaPrima = new ArrayList<>(lotesMateriaPrima);
-        this.observaciones = observaciones;
+        this.observaciones = "";
     }
 
     public Long getId() { return id; }
 
     public Producto getProducto() { return producto; }
 
-    public List<Lote> getLotesMateriaPrima() { return lotesMateriaPrima; }
+    public List<Producto> getMateriasPrimas() { return Collections.unmodifiableList(materiasPrimas); }
 
     public String getObservaciones() { return observaciones; }
 
-    public void actualizar(String observaciones, List<Lote> lotesMateriaPrima) {
-        this.observaciones = observaciones;
-        this.lotesMateriaPrima = lotesMateriaPrima;
-    }
+    public void agregarMateriaPrima(Producto producto) { materiasPrimas.add(producto); }
+
+    public void quitarMateriaPrima(Producto producto) { materiasPrimas.remove(producto); }
 }

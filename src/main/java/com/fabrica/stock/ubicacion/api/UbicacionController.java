@@ -15,26 +15,37 @@ public class UbicacionController {
     private final CrearUbicacionService crearUbicacionService;
     private final ObtenerUbicacionService obtenerUbicacionService;
     private final ActualizarUbicacionService actualizarUbicacionService;
-    private final ListarUbicacionActivaService listarUbicacionesService;
+    private final ListarUbicacionesService listarUbicacionesService;
+    private final ListarUbicacionesInactivasService listarUbicacionesInactivasService;
     private final EliminarUbicacionService eliminarUbicacionService;
+    private final ActivarUbicacionService activarUbicacionService;
 
     public UbicacionController(
             CrearUbicacionService crearUbicacionService,
             ObtenerUbicacionService obtenerUbicacionService,
             ActualizarUbicacionService actualizarUbicacionService,
-            ListarUbicacionActivaService listarUbicacionesService,
-            EliminarUbicacionService eliminarUbicacionService)
+            ListarUbicacionesService listarUbicacionesService,
+            ListarUbicacionesInactivasService listarUbicacionesInactivasService,
+            EliminarUbicacionService eliminarUbicacionService,
+            ActivarUbicacionService activarUbicacionService)
     {
         this.crearUbicacionService = crearUbicacionService;
         this.obtenerUbicacionService = obtenerUbicacionService;
         this.actualizarUbicacionService = actualizarUbicacionService;
         this.listarUbicacionesService = listarUbicacionesService;
+        this.listarUbicacionesInactivasService = listarUbicacionesInactivasService;
         this.eliminarUbicacionService = eliminarUbicacionService;
+        this.activarUbicacionService = activarUbicacionService;
     }
 
     @GetMapping
     public List<Ubicacion> listar() {
         return listarUbicacionesService.listar();
+    }
+
+    @GetMapping("/inactivas")
+    public List<Ubicacion> listarInactivas() {
+        return listarUbicacionesInactivasService.listar();
     }
 
     @GetMapping("/{id}")
@@ -50,6 +61,11 @@ public class UbicacionController {
     @PutMapping
     public void actualizar(@Valid @RequestBody ActualizarUbicacionRequest request){
         actualizarUbicacionService.actualizar(request);
+    }
+
+    @PatchMapping("/{id}/activar")
+    public void activar(@PathVariable Long id) {
+        activarUbicacionService.activar(id);
     }
 
     @DeleteMapping("/{id}")

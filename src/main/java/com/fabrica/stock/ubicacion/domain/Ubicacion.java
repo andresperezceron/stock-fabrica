@@ -39,6 +39,8 @@ public class Ubicacion {
         this.activo = false;
     }
 
+    public void activar() { this.activo = true; }
+
     public static Ubicacion sistema(String nombre) {
         Ubicacion ubicacion = new Ubicacion(nombre);
         ubicacion.desactivar();

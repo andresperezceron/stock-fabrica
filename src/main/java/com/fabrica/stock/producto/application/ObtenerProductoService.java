@@ -14,12 +14,12 @@ public class ObtenerProductoService {
     }
 
     public Producto obtener(Long id) {
-        return productoRepository.findById(id)
+        return productoRepository.findByIdAndActivoTrue(id)
                 .orElseThrow(() -> new ProductoNoEncontradoException("No existe Producto con id: " + id));
     }
 
     public Producto obtener(String codigo) {
-        return productoRepository.findByCodigo(codigo)
+        return productoRepository.findByCodigoAndActivoTrue(codigo)
                 .orElseThrow(() -> new ProductoNoEncontradoException("No existe Producto con codigo: " + codigo));
     }
 }

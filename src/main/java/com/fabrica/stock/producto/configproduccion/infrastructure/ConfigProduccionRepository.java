@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface ConfigProduccionRepository extends JpaRepository<ConfigProduccion,Long> {
     boolean existsConfigProduccionByProductoId(Long productoId);
+    Optional<ConfigProduccion> findConfigProduccionByProductoId(Long productoId);
 }

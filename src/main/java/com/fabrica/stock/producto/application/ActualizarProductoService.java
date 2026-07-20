@@ -13,24 +13,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActualizarProductoService {
     private final ProductoRepository productoRepository;
-    private final FamiliaRepository familiaRepository;
     private final ObtenerProductoService obtenerProductoService;
     private final ObtenerFamiliaService obtenerFamiliaService;
 
     public ActualizarProductoService(ProductoRepository productoRepository,
-                                     FamiliaRepository familiaRepository,
                                      ObtenerProductoService obtenerProductoService,
                                      ObtenerFamiliaService obtenerFamiliaService)
     {
         this.productoRepository = productoRepository;
-        this.familiaRepository = familiaRepository;
         this.obtenerProductoService = obtenerProductoService;
         this.obtenerFamiliaService = obtenerFamiliaService;
     }
 
     @Transactional
     public void actualizar(Long id, ProductoRequest request) {
-        new ActualizarProductoValidator(request, productoRepository, familiaRepository, id).validate();
+        new ActualizarProductoValidator(request, productoRepository, id).validate();
         Producto anteriorProducto = obtenerProductoService.obtener(id);
         Familia nuevaFamilia = obtenerFamiliaService.obtener(request.familia_id);
         anteriorProducto.actualizar(

@@ -1,6 +1,7 @@
 package com.fabrica.stock.producto.configproduccion.application;
 
 import com.fabrica.stock.producto.configproduccion.domain.ConfigProduccion;
+import com.fabrica.stock.producto.configproduccion.domain.exceptions.ConfigProduccionNoEncontradaException;
 import com.fabrica.stock.producto.configproduccion.infrastructure.ConfigProduccionRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +13,9 @@ public class ObtenerConfigProduccionService {
         this.configProduccionRepository = configProduccionRepository;
     }
 
-    public ConfigProduccion obtener(Long id) {
-        return configProduccionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No se encontro el config produccion"));
+    public ConfigProduccion obtenerPorProducto(Long productoId) {
+        return configProduccionRepository.findConfigProduccionByProductoId(productoId).orElseThrow(() ->
+                new ConfigProduccionNoEncontradaException("No existe configuración produccion " +
+                        "con id: " + productoId));
     }
 }

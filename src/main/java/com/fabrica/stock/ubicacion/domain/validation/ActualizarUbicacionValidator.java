@@ -6,8 +6,6 @@ import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import com.fabrica.stock.ubicacion.domain.exceptions.NombreUbicacionDuplicadoException;
 import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 
-import java.util.Optional;
-
 public class ActualizarUbicacionValidator extends
         RequestValidator<ActualizarUbicacionRequest, Ubicacion, UbicacionRepository> {
     public ActualizarUbicacionValidator(ActualizarUbicacionRequest request, UbicacionRepository repository) {
@@ -21,8 +19,7 @@ public class ActualizarUbicacionValidator extends
 
     @Override
     protected void validateBusinessRules() {
-        Optional<Ubicacion> existente = repository.findByNombre(request.nombre);
-        if(existente.isPresent() && !existente.get().getId().equals(request.id)) {
+        if(repository.existsByNombreAndIdNot(request.nombre, request.id)) {
             throw new NombreUbicacionDuplicadoException("Nombre ubicacion duplicado");
         }
     }
