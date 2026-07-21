@@ -16,6 +16,6 @@ public class ObtenerConfigProduccionService {
     public ConfigProduccion obtenerPorProducto(Long productoId) {
         return configProduccionRepository.findConfigProduccionByProductoId(productoId).orElseThrow(() ->
                 new ConfigProduccionNoEncontradaException("No existe configuración produccion " +
-                        "con id: " + productoId));
+                        "para el producto con id: " + productoId));
     }
 }

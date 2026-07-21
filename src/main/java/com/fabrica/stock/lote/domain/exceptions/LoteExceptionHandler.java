@@ -2,34 +2,38 @@ package com.fabrica.stock.lote.domain.exceptions;
 
 import com.fabrica.stock.shared.response.DomainErrorResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class LoteExceptionHandler {
 
     @ExceptionHandler(LoteNoEncontradoException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public DomainErrorResponse manjarLoteNoEncontrado(DomainErrorResponse response) {
-        return new DomainErrorResponse(response.getMessage());
+    public ResponseEntity<DomainErrorResponse> manjarLoteNoEncontrado(LoteNoEncontradoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(DomainErrorResponse.of(ex.getMessage()));
     }
 
     @ExceptionHandler(CodigoLoteDuplicadoException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public DomainErrorResponse manejarCodigoLoteDuplicado(DomainErrorResponse response) {
-        return new DomainErrorResponse(response.getMessage());
+    public ResponseEntity<DomainErrorResponse> manejarCodigoLoteDuplicado(CodigoLoteDuplicadoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(DomainErrorResponse.of(ex.getMessage()));
     }
 
     @ExceptionHandler(LoteProveedorObligatorioException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public DomainErrorResponse manejarLoteProveedorObligatorio(DomainErrorResponse response) {
-        return new DomainErrorResponse(response.getMessage());
+    public ResponseEntity<DomainErrorResponse> manejarLoteProveedorObligatorio(LoteProveedorObligatorioException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(DomainErrorResponse.of(ex.getMessage()));
     }
 
-    @ExceptionHandler(LoteProveedorIsNotNull.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public DomainErrorResponse manejarLoteProveedorIsNotNull(DomainErrorResponse response) {
-        return new DomainErrorResponse(response.getMessage());
+    @ExceptionHandler(LoteProveedorIsNotNullException.class)
+    public ResponseEntity<DomainErrorResponse> manejarLoteProveedorIsNotNull(LoteProveedorIsNotNullException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(DomainErrorResponse.of(ex.getMessage()));
     }
 }

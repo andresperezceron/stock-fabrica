@@ -2,7 +2,6 @@ package com.fabrica.stock.producto.application;
 
 import com.fabrica.stock.familia.application.ObtenerFamiliaService;
 import com.fabrica.stock.familia.domain.Familia;
-import com.fabrica.stock.familia.infrastructure.FamiliaRepository;
 import com.fabrica.stock.producto.api.dto.ProductoRequest;
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.producto.domain.validation.ActualizarProductoValidator;
@@ -35,6 +34,8 @@ public class ActualizarProductoService {
                 request.descripcion,
                 request.unidad,
                 nuevaFamilia,
-                request.piezasPorCaja);
+                request.piezasPorCaja,
+                request.produccionPropia,
+                request.admiteConfigProduccion);
     }
 }

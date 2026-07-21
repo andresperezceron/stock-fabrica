@@ -15,15 +15,15 @@ public class ObtenerUbicacionInactivaService {
 
     public Ubicacion obtener(Long id) {
         return ubicacionRepository
-                .findByIdAndActivoFalse(id)
-                .orElseThrow(() -> new UbicacionNoEncontradaException("No existe ubicacion Inactiva con id: " + id));
+                .findByIdAndActivoFalseAndSistemaFalse(id)
+                .orElseThrow(() -> new UbicacionNoEncontradaException("No existe ubicación Inactiva con id: " + id));
     }
 
     public Ubicacion obtener(String nombreUbicacion) {
         return ubicacionRepository
-                .findByNombreAndActivoFalse(nombreUbicacion)
+                .findByNombreAndActivoFalseAndSistemaFalse(nombreUbicacion)
                 .orElseThrow(() ->
-                        new UbicacionNoEncontradaException("No existe ubicacion Inactiva con nombre: "
+                        new UbicacionNoEncontradaException("No existe ubicación Inactiva con nombre: "
                                 + nombreUbicacion));
     }
 }

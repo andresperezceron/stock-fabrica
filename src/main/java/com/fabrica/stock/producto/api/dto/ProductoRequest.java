@@ -32,4 +32,10 @@ public class ProductoRequest {
     @NotNull(message = "Piezas por caja es obligatorio.")
     @Min(0)
     public Integer piezasPorCaja;
+
+    @NotNull(message = "Producción propia es obligatoria")
+    public Boolean produccionPropia;
+
+    @NotNull(message = "Admite Configuración de producción es obligatoria")
+    public Boolean admiteConfigProduccion;
 }

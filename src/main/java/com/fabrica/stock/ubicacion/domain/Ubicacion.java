@@ -17,6 +17,9 @@ public class Ubicacion {
     @Column(nullable = false)
     private boolean activo = true;
 
+    @Column(nullable = false)
+    private boolean sistema = false;
+
     protected Ubicacion() {}
 
     public Ubicacion(String nombre) {
@@ -43,7 +46,8 @@ public class Ubicacion {
 
     public static Ubicacion sistema(String nombre) {
         Ubicacion ubicacion = new Ubicacion(nombre);
-        ubicacion.desactivar();
+        ubicacion.activo = false;
+        ubicacion.sistema = true;
         return ubicacion;
     }
 }

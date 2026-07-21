@@ -60,22 +60,28 @@ public class UbicacionController {
     }
 
     @PostMapping
-    public void crear(@Valid @RequestBody CrearUbicacionRequest request) {
+    public ResponseEntity<Void> crear(@Valid @RequestBody CrearUbicacionRequest request) {
         crearUbicacionService.crear(request);
+        return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
-    public void actualizar(@Valid @RequestBody ActualizarUbicacionRequest request){
-        actualizarUbicacionService.actualizar(request);
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> actualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody ActualizarUbicacionRequest request){
+        actualizarUbicacionService.actualizar(id, request);
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/activar")
-    public void activar(@PathVariable Long id) {
+    public ResponseEntity<Void> activar(@PathVariable Long id) {
         activarUbicacionService.activar(id);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id){
+    public ResponseEntity<Void> eliminar(@PathVariable Long id){
         eliminarUbicacionService.eliminar(id);
+        return ResponseEntity.noContent().build();
     }
 }

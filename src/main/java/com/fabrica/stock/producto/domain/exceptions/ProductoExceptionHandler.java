@@ -2,34 +2,38 @@ package com.fabrica.stock.producto.domain.exceptions;
 
 import com.fabrica.stock.shared.response.DomainErrorResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ProductoExceptionHandler {
 
     @ExceptionHandler(ProductoNoEncontradoException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public DomainErrorResponse manejarProductoNoEncontrado(ProductoNoEncontradoException ex) {
-        return new DomainErrorResponse(ex.getMessage());
+    public ResponseEntity<DomainErrorResponse> manejarProductoNoEncontrado(ProductoNoEncontradoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(DomainErrorResponse.of(ex.getMessage()));
     }
 
     @ExceptionHandler(CodigoProductoDuplicadoException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public DomainErrorResponse manejarProductoDuplicado(CodigoProductoDuplicadoException ex) {
-        return new DomainErrorResponse(ex.getMessage());
+    public ResponseEntity<DomainErrorResponse> manejarProductoDuplicado(CodigoProductoDuplicadoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(DomainErrorResponse.of(ex.getMessage()));
     }
 
     @ExceptionHandler(CodigoProductoNoNumericoException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public DomainErrorResponse manejarCodigoProductoNoNumerico(CodigoProductoNoNumericoException ex) {
-        return new DomainErrorResponse(ex.getMessage());
+    public ResponseEntity<DomainErrorResponse> manejarCodigoProductoNoNumerico(CodigoProductoNoNumericoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(DomainErrorResponse.of(ex.getMessage()));
     }
 
     @ExceptionHandler(ProductoNoActivoException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public DomainErrorResponse manejarProductoNoActivo(ProductoNoActivoException ex) {
-        return new DomainErrorResponse(ex.getMessage());
+    public ResponseEntity<DomainErrorResponse> manejarProductoNoActivo(ProductoNoActivoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(DomainErrorResponse.of(ex.getMessage()));
     }
 }

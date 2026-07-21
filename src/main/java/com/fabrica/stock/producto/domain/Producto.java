@@ -30,6 +30,12 @@ public class Producto {
     private int piezasPorCaja;
 
     @Column(nullable = false)
+    private boolean produccionPropia;
+
+    @Column(nullable = false)
+    private boolean admiteConfigProduccion;
+
+    @Column(nullable = false)
     private boolean activo = true;
 
     protected Producto() {}
@@ -39,13 +45,17 @@ public class Producto {
             String descripcion,
             UnidadMedida unidad,
             Familia familia,
-            int piezasPorCaja)
+            int piezasPorCaja,
+            boolean produccionPropia,
+            boolean admiteConfigProduccion)
     {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.unidad = unidad;
         this.familia = familia;
         this.piezasPorCaja = piezasPorCaja;
+        this.produccionPropia = produccionPropia;
+        this.admiteConfigProduccion = admiteConfigProduccion;
     }
 
     public Long getId() {
@@ -68,6 +78,10 @@ public class Producto {
 
     public int getPiezasPorCaja() { return piezasPorCaja; }
 
+    public boolean esProduccionPropia() { return produccionPropia; }
+
+    public boolean admiteConfigProduccion() { return admiteConfigProduccion; }
+
     public boolean estaActivo() { return activo; }
 
     public void activar() { activo = true; }
@@ -78,12 +92,16 @@ public class Producto {
                            String descripcion,
                            UnidadMedida unidad,
                            Familia familia,
-                           int piezasPorCaja)
+                           int piezasPorCaja,
+                           boolean produccionPropia,
+                           boolean admiteConfigProduccion)
     {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.unidad = unidad;
         this.familia = familia;
         this.piezasPorCaja = piezasPorCaja;
+        this.produccionPropia = produccionPropia;
+        this.admiteConfigProduccion = admiteConfigProduccion;
     }
 }
