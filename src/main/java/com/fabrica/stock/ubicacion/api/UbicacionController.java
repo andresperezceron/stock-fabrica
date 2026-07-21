@@ -2,9 +2,12 @@ package com.fabrica.stock.ubicacion.api;
 
 import com.fabrica.stock.ubicacion.api.dto.CrearUbicacionRequest;
 import com.fabrica.stock.ubicacion.api.dto.ActualizarUbicacionRequest;
+import com.fabrica.stock.ubicacion.api.dto.UbicacionesResponse;
+import com.fabrica.stock.ubicacion.api.dto.UbicacionResponse;
 import com.fabrica.stock.ubicacion.application.*;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,18 +42,21 @@ public class UbicacionController {
     }
 
     @GetMapping
-    public List<Ubicacion> listar() {
-        return listarUbicacionesService.listar();
+    public ResponseEntity<UbicacionesResponse> listar() {
+        List<Ubicacion> ubicaciones = listarUbicacionesService.listar();
+        return ResponseEntity.ok(UbicacionesResponse.of(ubicaciones));
     }
 
     @GetMapping("/inactivas")
-    public List<Ubicacion> listarInactivas() {
-        return listarUbicacionesInactivasService.listar();
+    public ResponseEntity<UbicacionesResponse> listarInactivas() {
+        List<Ubicacion> inactivas = listarUbicacionesInactivasService.listar();
+        return ResponseEntity.ok(UbicacionesResponse.of(inactivas));
     }
 
     @GetMapping("/{id}")
-    public Ubicacion obtener(@PathVariable Long id){
-        return obtenerUbicacionService.obtener(id);
+    public ResponseEntity<UbicacionResponse> obtener(@PathVariable Long id) {
+        Ubicacion ubicacion = obtenerUbicacionService.obtener(id);
+        return ResponseEntity.ok(UbicacionResponse.of(ubicacion));
     }
 
     @PostMapping

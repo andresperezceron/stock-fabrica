@@ -1,7 +1,6 @@
 package com.fabrica.stock.producto.configproduccion.api;
 
 import com.fabrica.stock.producto.configproduccion.api.dto.ActualizarConfigProduccionRequest;
-import com.fabrica.stock.producto.configproduccion.api.dto.CrearConfigProduccionRequest;
 import com.fabrica.stock.producto.configproduccion.application.ActualizarConfigProduccionService;
 import com.fabrica.stock.producto.configproduccion.application.CrearConfigProduccionService;
 import com.fabrica.stock.producto.configproduccion.application.ListarConfigProduccionService;
@@ -31,8 +30,8 @@ public class ConfigProduccionController {
     public List<ConfigProduccion> listar() { return listarConfigProduccionService.listar(); }
 
     @PostMapping
-    public void crear(@Valid @RequestBody CrearConfigProduccionRequest request) {
-        crearConfigProduccionService.crear(request);
+    public void crear(@PathVariable Long productoId) {
+        crearConfigProduccionService.crear(productoId);
     }
 
     @PutMapping
