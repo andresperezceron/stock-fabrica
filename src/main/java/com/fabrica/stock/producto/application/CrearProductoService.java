@@ -4,7 +4,7 @@ import com.fabrica.stock.familia.application.ObtenerFamiliaService;
 import com.fabrica.stock.familia.domain.Familia;
 import com.fabrica.stock.familia.infrastructure.FamiliaRepository;
 import com.fabrica.stock.producto.api.dto.ProductoRequest;
-import com.fabrica.stock.producto.configproduccion.application.CrearConfigProduccionService;
+import com.fabrica.stock.producto.configinyeccion.application.CrearConfigInyeccionService;
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.producto.domain.validation.CrearProductoValidator;
 import com.fabrica.stock.producto.infrastructure.ProductoRepository;
@@ -16,17 +16,17 @@ public class CrearProductoService {
     private final ProductoRepository productoRepository;
     private final FamiliaRepository familiaRepository;
     private final ObtenerFamiliaService obtenerFamiliaService;
-    private final CrearConfigProduccionService crearConfigProduccionService;
+    private final CrearConfigInyeccionService crearConfigInyeccionService;
 
     public CrearProductoService(ProductoRepository productoRepository,
                                 FamiliaRepository familiaRepository,
                                 ObtenerFamiliaService obtenerFamiliaService,
-                                CrearConfigProduccionService crearConfigProduccionService)
+                                CrearConfigInyeccionService crearConfigInyeccionService)
     {
         this.productoRepository = productoRepository;
         this.familiaRepository = familiaRepository;
         this.obtenerFamiliaService = obtenerFamiliaService;
-        this.crearConfigProduccionService = crearConfigProduccionService;
+        this.crearConfigInyeccionService = crearConfigInyeccionService;
     }
 
     @Transactional
@@ -43,7 +43,7 @@ public class CrearProductoService {
                 request.admiteConfigProduccion);
         productoRepository.save(nuevoProducto);
         if(nuevoProducto.admiteConfigProduccion()) {
-            crearConfigProduccionService.crear(nuevoProducto);
+            crearConfigInyeccionService.crear(nuevoProducto);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.fabrica.stock.producto.configproduccion.domain;
+package com.fabrica.stock.producto.configinyeccion.domain;
 
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "config_produccion")
-public class ConfigProduccion {
+public class ConfigInyeccion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,9 +33,9 @@ public class ConfigProduccion {
     @Column(nullable = false)
     private boolean activo = true;
 
-    protected ConfigProduccion() {}
+    protected ConfigInyeccion() {}
 
-    public ConfigProduccion(Producto producto) {
+    public ConfigInyeccion(Producto producto) {
         this.producto = producto;
         this.observaciones = "";
     }
@@ -48,15 +48,17 @@ public class ConfigProduccion {
 
     public String getObservaciones() { return observaciones; }
 
+    public boolean estaActivo() { return activo; }
+
     public void agregarMateriaPrima(Producto producto) { materiasPrimas.add(producto); }
 
     public void quitarMateriaPrima(Producto producto) { materiasPrimas.remove(producto); }
-
-    public boolean estaActivo() { return activo; }
 
     public void desactivar() {
         this.activo = false;
     }
 
     public void activar() { this.activo = true; }
+
+    public void actualizarObservaciones(String observaciones) { this.observaciones = observaciones; }
 }

@@ -4,7 +4,6 @@ import com.fabrica.stock.producto.api.dto.ProductoRequest;
 import com.fabrica.stock.producto.api.dto.ProductoResponse;
 import com.fabrica.stock.producto.api.dto.ProductosResponse;
 import com.fabrica.stock.producto.application.*;
-import com.fabrica.stock.producto.configproduccion.application.AgregarMateriaPrimaService;
 import com.fabrica.stock.producto.domain.Producto;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,8 @@ public class ProductoController {
     private final ObtenerProductoService obtenerProductoService;
     private final ActualizarProductoService actualizarProductoService;
     private final EliminarProductoService eliminarProductoService;
-    private final AgregarMateriaPrimaService agregarMateriaPrimaService;
+    private final ActivarProductoService activarProductoService;
+    private final ConfigInyeccionService configInyeccionService;
 
     public ProductoController(CrearProductoService crearProductoService,
                               ListarProductosService listarProductosService,
@@ -29,7 +29,8 @@ public class ProductoController {
                               ObtenerProductoService obtenerProductoService,
                               ActualizarProductoService actualizarProductoService,
                               EliminarProductoService eliminarProductoService,
-                              AgregarMateriaPrimaService agregarMateriaPrimaService)
+                              ActivarProductoService activarProductoService,
+                              ConfigInyeccionService configInyeccionService)
     {
         this.crearProductoService = crearProductoService;
         this.listarProductosService = listarProductosService;
@@ -37,7 +38,8 @@ public class ProductoController {
         this.obtenerProductoService = obtenerProductoService;
         this.actualizarProductoService = actualizarProductoService;
         this.eliminarProductoService = eliminarProductoService;
-        this.agregarMateriaPrimaService = agregarMateriaPrimaService;
+        this.activarProductoService = activarProductoService;
+        this.configInyeccionService = configInyeccionService;
     }
 
     @GetMapping
@@ -58,6 +60,12 @@ public class ProductoController {
         return ResponseEntity.ok(ProductoResponse.of(producto));
     }
 
+    @PostMapping("{id}/activar")
+    public ResponseEntity<Void> activar(@PathVariable Long id) {
+        activarProductoService.activar(id);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping
     public ResponseEntity<Void> crear(@Valid @RequestBody ProductoRequest request) {
         crearProductoService.crear(request);
@@ -72,11 +80,19 @@ public class ProductoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/api/productos/{id}/materias-primas/{materiaPrimaId}")
+    @PutMapping("/{id}/materias-primas/{materiaPrimaId}")
     public ResponseEntity<Void> agregarMateriaPrima(
             @PathVariable Long id,
             @PathVariable Long materiaPrimaId) {
-        agregarMateriaPrimaService.agregar(id, materiaPrimaId);
+        configInyeccionService.agregarMateriaPrima(id, materiaPrimaId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}/materias-primas/{materiaPrimaId}")
+    public ResponseEntity<Void> quitarMateriaPrima(
+            @PathVariable Long id,
+            @PathVariable Long materiaPrimaId) {
+        configInyeccionService.quitarMateriaPrima(id, materiaPrimaId);
         return ResponseEntity.noContent().build();
     }
 
