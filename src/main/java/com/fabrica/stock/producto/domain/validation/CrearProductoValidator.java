@@ -29,11 +29,11 @@ public class CrearProductoValidator extends RequestValidator<ProductoRequest, Pr
     @Override
     protected void validateBusinessRules() {
         if(repository.existsByCodigo(request.codigo)) {
-            throw new CodigoProductoDuplicadoException("Codigo producto duplicado.");
+            throw new CodigoProductoDuplicadoException("Código producto duplicado.");
         }
 
         if(!request.codigo.matches("\\d+")) {
-            throw new CodigoProductoNoNumericoException("Codigo producto solo puede ser seis dígitos.");
+            throw new CodigoProductoNoNumericoException("Código producto solo puede ser seis dígitos.");
         }
 
         if(!familiaRepository.existsById(request.familia_id)) {

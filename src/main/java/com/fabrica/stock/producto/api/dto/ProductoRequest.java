@@ -9,17 +9,17 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class ProductoRequest {
-    @NotBlank(message = "Codigo producto es obligatorio.")
+    @NotBlank(message = "Código producto es obligatorio.")
     @Size(
             max = ProductoConstraints.CODIGO, min = ProductoConstraints.CODIGO,
-            message = "Codigo solo puede ser seis dígitos."
+            message = "Código solo puede ser seis dígitos."
     )
     public String codigo;
 
-    @NotBlank(message = "Descripcion producto es obligatorio")
+    @NotBlank(message = "Descripción producto es obligatorio")
     @Size(
             max = TextoConstraints.MEDIO,
-            message = "Descripcion demasiado larga. Max: " +  TextoConstraints.MEDIO
+            message = "Descripción demasiado larga. Max: " +  TextoConstraints.MEDIO
     )
     public String descripcion;
 
@@ -33,9 +33,9 @@ public class ProductoRequest {
     @Min(0)
     public Integer piezasPorCaja;
 
-    @NotNull(message = "Producción propia es obligatoria")
+    @NotNull(message = "Producción propia es obligatoria.")
     public Boolean produccionPropia;
 
-    @NotNull(message = "Admite Configuración de producción es obligatoria")
+    @NotNull(message = "Admite Configuración de producción es obligatoria.")
     public Boolean admiteConfigProduccion;
 }

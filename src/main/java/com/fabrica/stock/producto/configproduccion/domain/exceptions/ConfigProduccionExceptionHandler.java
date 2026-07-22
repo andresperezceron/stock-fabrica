@@ -8,15 +8,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ConfigProduccionExceptionHandler {
-    @ExceptionHandler(ConfigProduccionDuplicadaException.class)
-    public ResponseEntity<DomainErrorResponse> manejarConfigProduccionDuplicada(ConfigProduccionDuplicadaException ex) {
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(DomainErrorResponse.of(ex.getMessage()));
-    }
-
     @ExceptionHandler(ConfigProduccionNoEncontradaException.class)
-    public ResponseEntity<DomainErrorResponse> manejarConfigProduccionNoEncontrada(ConfigProduccionNoEncontradaException ex) {
+    public ResponseEntity<DomainErrorResponse>
+    manejarConfigProduccionNoEncontrada(ConfigProduccionNoEncontradaException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(DomainErrorResponse.of(ex.getMessage()));
@@ -26,6 +20,12 @@ public class ConfigProduccionExceptionHandler {
     public ResponseEntity<DomainErrorResponse> manejarLoteMateriaPrimaDuplicado(LoteMateriaPrimaDupicadoException ex) {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
+                .body(DomainErrorResponse.of(ex.getMessage()));
+    }
+
+    public ResponseEntity<DomainErrorResponse> manejarNoAdmiteConfigProduccion(NoAdmiteConfigProduccionException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
 }

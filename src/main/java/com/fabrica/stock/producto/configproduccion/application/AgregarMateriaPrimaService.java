@@ -1,7 +1,7 @@
 package com.fabrica.stock.producto.configproduccion.application;
 
 import com.fabrica.stock.producto.application.ObtenerProductoService;
-import com.fabrica.stock.producto.configproduccion.domain.ConfigProduccion;
+import com.fabrica.stock.producto.configproduccion.domain.exceptions.NoAdmiteConfigProduccionException;
 import com.fabrica.stock.producto.domain.Producto;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +17,16 @@ public class AgregarMateriaPrimaService {
         this.obtenerProductoService = obtenerProductoService;
     }
 
-    public void agregar(Long productoId) {
-        ConfigProduccion config = obtenerConfigProduccionService.obtenerPorProducto(productoId);
+    public void agregar(Long productoId, Long materiaPrimaId) {
         Producto producto = obtenerProductoService.obtener(productoId);
-        config.agregarMateriaPrima(producto);
+        Producto materiaPrima = obtenerProductoService.obtener(materiaPrimaId);
+
+        if(!producto.admiteConfigProduccion()) {
+            throw new NoAdmiteConfigProduccionException("Producto: " + producto.getDescripcion() +
+                    " no admite config producción");
+        }
+        obtenerConfigProduccionService
+                .obtenerPorProducto(producto)
+                .agregarMateriaPrima(materiaPrima);
     }
 }

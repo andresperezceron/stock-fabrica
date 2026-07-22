@@ -4,6 +4,7 @@ import com.fabrica.stock.producto.api.dto.ProductoRequest;
 import com.fabrica.stock.producto.api.dto.ProductoResponse;
 import com.fabrica.stock.producto.api.dto.ProductosResponse;
 import com.fabrica.stock.producto.application.*;
+import com.fabrica.stock.producto.configproduccion.application.AgregarMateriaPrimaService;
 import com.fabrica.stock.producto.domain.Producto;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +21,15 @@ public class ProductoController {
     private final ObtenerProductoService obtenerProductoService;
     private final ActualizarProductoService actualizarProductoService;
     private final EliminarProductoService eliminarProductoService;
+    private final AgregarMateriaPrimaService agregarMateriaPrimaService;
 
     public ProductoController(CrearProductoService crearProductoService,
                               ListarProductosService listarProductosService,
                               ListarProductosInactivosService listarProductosInactivosService,
                               ObtenerProductoService obtenerProductoService,
                               ActualizarProductoService actualizarProductoService,
-                              EliminarProductoService eliminarProductoService)
+                              EliminarProductoService eliminarProductoService,
+                              AgregarMateriaPrimaService agregarMateriaPrimaService)
     {
         this.crearProductoService = crearProductoService;
         this.listarProductosService = listarProductosService;
@@ -34,6 +37,7 @@ public class ProductoController {
         this.obtenerProductoService = obtenerProductoService;
         this.actualizarProductoService = actualizarProductoService;
         this.eliminarProductoService = eliminarProductoService;
+        this.agregarMateriaPrimaService = agregarMateriaPrimaService;
     }
 
     @GetMapping
@@ -65,6 +69,14 @@ public class ProductoController {
             @PathVariable Long id,
             @Valid @RequestBody ProductoRequest request) {
         actualizarProductoService.actualizar(id, request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/api/productos/{id}/materias-primas/{materiaPrimaId}")
+    public ResponseEntity<Void> agregarMateriaPrima(
+            @PathVariable Long id,
+            @PathVariable Long materiaPrimaId) {
+        agregarMateriaPrimaService.agregar(id, materiaPrimaId);
         return ResponseEntity.noContent().build();
     }
 

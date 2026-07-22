@@ -4,5 +4,5 @@ public enum UbicacionSistema {
     PRODUCCION,
     VALIDACION,
     PROVEEDOR,
-    EXPEDICION;
+    EXPEDICION
 }

@@ -30,6 +30,9 @@ public class ConfigProduccion {
     @Column(nullable = false, length = TextoConstraints.LARGO)
     String observaciones;
 
+    @Column(nullable = false)
+    private boolean activo = true;
+
     protected ConfigProduccion() {}
 
     public ConfigProduccion(Producto producto) {
@@ -48,4 +51,12 @@ public class ConfigProduccion {
     public void agregarMateriaPrima(Producto producto) { materiasPrimas.add(producto); }
 
     public void quitarMateriaPrima(Producto producto) { materiasPrimas.remove(producto); }
+
+    public boolean estaActivo() { return activo; }
+
+    public void desactivar() {
+        this.activo = false;
+    }
+
+    public void activar() { this.activo = true; }
 }
