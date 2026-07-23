@@ -35,7 +35,8 @@ public class ActualizarProductoService {
                 request.unidad,
                 nuevaFamilia,
                 request.piezasPorCaja,
-                request.produccionPropia,
-                request.admiteConfigProduccion);
+                request.tipo,
+                request.origen,
+                request.proceso);
     }
 }

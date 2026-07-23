@@ -22,7 +22,7 @@ public class ProductoController {
     private final ActualizarProductoService actualizarProductoService;
     private final EliminarProductoService eliminarProductoService;
     private final ActivarProductoService activarProductoService;
-    private final ConfigInyeccionService configInyeccionService;
+    private final ConfigProduccionService configProduccionService;
 
     public ProductoController(CrearProductoService crearProductoService,
                               ListarProductosService listarProductosService,
@@ -31,7 +31,7 @@ public class ProductoController {
                               ActualizarProductoService actualizarProductoService,
                               EliminarProductoService eliminarProductoService,
                               ActivarProductoService activarProductoService,
-                              ConfigInyeccionService configInyeccionService)
+                              ConfigProduccionService configProduccionService)
     {
         this.crearProductoService = crearProductoService;
         this.listarProductosService = listarProductosService;
@@ -40,7 +40,7 @@ public class ProductoController {
         this.actualizarProductoService = actualizarProductoService;
         this.eliminarProductoService = eliminarProductoService;
         this.activarProductoService = activarProductoService;
-        this.configInyeccionService = configInyeccionService;
+        this.configProduccionService = configProduccionService;
     }
 
     @GetMapping
@@ -85,7 +85,7 @@ public class ProductoController {
     public ResponseEntity<Void> agregarMateriaPrima(
             @PathVariable Long id,
             @PathVariable Long materiaPrimaId) {
-        configInyeccionService.agregarMateriaPrima(id, materiaPrimaId);
+        configProduccionService.agregarMateriaPrima(id, materiaPrimaId);
         return ResponseEntity.noContent().build();
     }
 
@@ -93,7 +93,7 @@ public class ProductoController {
     public ResponseEntity<Void> actualizarObservaciones(
             @PathVariable Long id,
             @RequestBody ActualizarObservacionesRequest request) {
-        configInyeccionService.actualizarObservaciones(id, request);
+        configProduccionService.actualizarObservaciones(id, request);
         return ResponseEntity.noContent().build();
     }
 
@@ -101,7 +101,7 @@ public class ProductoController {
     public ResponseEntity<Void> quitarMateriaPrima(
             @PathVariable Long id,
             @PathVariable Long materiaPrimaId) {
-        configInyeccionService.quitarMateriaPrima(id, materiaPrimaId);
+        configProduccionService.quitarMateriaPrima(id, materiaPrimaId);
         return ResponseEntity.noContent().build();
     }
 

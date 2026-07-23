@@ -1,6 +1,8 @@
 package com.fabrica.stock.producto.application;
 
-import com.fabrica.stock.producto.configinyeccion.application.EliminarConfigInyeccionService;
+import com.fabrica.stock.producto.configproduccion.application.EliminarConfigProduccionService;
+import com.fabrica.stock.producto.configproduccion.domain.ConfigProduccion;
+import com.fabrica.stock.producto.configproduccion.infrastructure.ConfigProduccionRepository;
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.producto.infrastructure.ProductoRepository;
 import jakarta.transaction.Transactional;
@@ -11,27 +13,29 @@ public class EliminarProductoService {
     private final ProductoRepository productoRepository;
     private final ObtenerProductoService obtenerProductoService;
     private final ComprobarUsoProductoService comprobarUsoProductoService;
-    private final EliminarConfigInyeccionService eliminarConfigInyeccionService;
+    private final ConfigProduccionRepository configProduccionRepository;
+    private final EliminarConfigProduccionService eliminarConfigProduccionService;
 
     public EliminarProductoService(ProductoRepository productoRepository,
                                    ObtenerProductoService obtenerProductoService,
                                    ComprobarUsoProductoService comprobarUsoProductoService,
-                                   EliminarConfigInyeccionService eliminarConfigInyeccionService)
+                                   ConfigProduccionRepository configProduccionRepository,
+                                   EliminarConfigProduccionService eliminarConfigProduccionService)
     {
         this.productoRepository = productoRepository;
         this.obtenerProductoService = obtenerProductoService;
         this.comprobarUsoProductoService = comprobarUsoProductoService;
-        this.eliminarConfigInyeccionService = eliminarConfigInyeccionService;
+        this.configProduccionRepository = configProduccionRepository;
+        this.eliminarConfigProduccionService = eliminarConfigProduccionService;
     }
 
     @Transactional
     public void eliminar(Long id) {
         Producto producto = obtenerProductoService.obtener(id);
         boolean tieneUso = comprobarUsoProductoService.tieneUso(producto);
+        ConfigProduccion config = configProduccionRepository.findConfigProduccionByProducto(producto);
 
-        if(producto.admiteConfigProduccion()) {
-            eliminarConfigInyeccionService.eliminar(producto, tieneUso);
-        }
+        if(config != null) eliminarConfigProduccionService.eliminar(producto, tieneUso);
 
         if(tieneUso) producto.desactivar();
         else productoRepository.delete(producto);

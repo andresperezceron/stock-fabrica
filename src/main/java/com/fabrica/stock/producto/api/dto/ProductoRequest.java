@@ -1,5 +1,8 @@
 package com.fabrica.stock.producto.api.dto;
 
+import com.fabrica.stock.producto.domain.OrigenProducto;
+import com.fabrica.stock.producto.domain.DestinoProducto;
+import com.fabrica.stock.producto.domain.TipoProducto;
 import com.fabrica.stock.producto.domain.UnidadMedida;
 import com.fabrica.stock.producto.domain.constraints.ProductoConstraints;
 import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
@@ -33,9 +36,12 @@ public class ProductoRequest {
     @Min(0)
     public Integer piezasPorCaja;
 
-    @NotNull(message = "Producción propia es obligatoria.")
-    public Boolean produccionPropia;
+    @NotNull(message = "Tipo de producto es obligatorio.")
+    public TipoProducto tipo;
 
-    @NotNull(message = "Admite Configuración de producción es obligatoria.")
-    public Boolean admiteConfigProduccion;
+    @NotNull(message = "Origen de producto es obligatorio.")
+    public OrigenProducto origen;
+
+    @NotNull(message = "Proceso fabricación de producto es obligatorio.")
+    public DestinoProducto proceso;
 }

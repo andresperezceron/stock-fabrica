@@ -4,7 +4,7 @@ import com.fabrica.stock.familia.application.ObtenerFamiliaService;
 import com.fabrica.stock.familia.domain.Familia;
 import com.fabrica.stock.familia.infrastructure.FamiliaRepository;
 import com.fabrica.stock.producto.api.dto.ProductoRequest;
-import com.fabrica.stock.producto.configinyeccion.application.CrearConfigInyeccionService;
+import com.fabrica.stock.producto.configproduccion.application.CrearConfigProduccionService;
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.producto.domain.validation.CrearProductoValidator;
 import com.fabrica.stock.producto.infrastructure.ProductoRepository;
@@ -16,17 +16,17 @@ public class CrearProductoService {
     private final ProductoRepository productoRepository;
     private final FamiliaRepository familiaRepository;
     private final ObtenerFamiliaService obtenerFamiliaService;
-    private final CrearConfigInyeccionService crearConfigInyeccionService;
+    private final CrearConfigProduccionService crearConfigProduccionService;
 
     public CrearProductoService(ProductoRepository productoRepository,
                                 FamiliaRepository familiaRepository,
                                 ObtenerFamiliaService obtenerFamiliaService,
-                                CrearConfigInyeccionService crearConfigInyeccionService)
+                                CrearConfigProduccionService crearConfigProduccionService)
     {
         this.productoRepository = productoRepository;
         this.familiaRepository = familiaRepository;
         this.obtenerFamiliaService = obtenerFamiliaService;
-        this.crearConfigInyeccionService = crearConfigInyeccionService;
+        this.crearConfigProduccionService = crearConfigProduccionService;
     }
 
     @Transactional
@@ -39,11 +39,9 @@ public class CrearProductoService {
                 request.unidad,
                 familia,
                 request.piezasPorCaja,
-                request.produccionPropia,
-                request.admiteConfigProduccion);
+                request.tipo,
+                request.origen,
+                request.proceso);
         productoRepository.save(nuevoProducto);
-        if(nuevoProducto.admiteConfigProduccion()) {
-            crearConfigInyeccionService.crear(nuevoProducto);
-        }
     }
 }

@@ -1,6 +1,6 @@
 package com.fabrica.stock.producto.application;
 
-import com.fabrica.stock.producto.configinyeccion.application.ObtenerConfigInyeccionService;
+import com.fabrica.stock.producto.configproduccion.application.ObtenerOCrearConfigProduccionService;
 import com.fabrica.stock.producto.domain.Producto;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActivarProductoService {
     private final ObtenerProductoInactivoService obtenerProductoInactivoService;
-    private final ObtenerConfigInyeccionService obtenerConfigInyeccionService;
+    private final ObtenerOCrearConfigProduccionService obtenerOCrearConfigProduccionService;
 
     public ActivarProductoService(ObtenerProductoInactivoService obtenerProductoInactivoService,
-                                  ObtenerConfigInyeccionService obtenerConfigInyeccionService)
+                                  ObtenerOCrearConfigProduccionService obtenerOCrearConfigProduccionService)
     {
         this.obtenerProductoInactivoService = obtenerProductoInactivoService;
-        this.obtenerConfigInyeccionService = obtenerConfigInyeccionService;
+        this.obtenerOCrearConfigProduccionService = obtenerOCrearConfigProduccionService;
     }
 
     @Transactional
@@ -22,7 +22,7 @@ public class ActivarProductoService {
         Producto producto = obtenerProductoInactivoService.obtener(id);
         producto.activar();
         if(producto.admiteConfigProduccion()) {
-            obtenerConfigInyeccionService.obtenerPorProducto(producto).activar();
+            obtenerOCrearConfigProduccionService.obtenerOCrearPorProducto(producto).activar();
         }
 
     }

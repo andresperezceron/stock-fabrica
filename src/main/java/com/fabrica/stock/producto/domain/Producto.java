@@ -29,11 +29,17 @@ public class Producto {
     @Column(nullable = false, unique = true)
     private int piezasPorCaja;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private boolean produccionPropia;
+    private TipoProducto tipo;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private boolean admiteConfigInyeccion;
+    private OrigenProducto origen;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private DestinoProducto destino;
 
     @Column(nullable = false)
     private boolean activo = true;
@@ -46,16 +52,18 @@ public class Producto {
             UnidadMedida unidad,
             Familia familia,
             int piezasPorCaja,
-            boolean produccionPropia,
-            boolean admiteConfigInyeccion)
+            TipoProducto tipo,
+            OrigenProducto origen,
+            DestinoProducto destino)
     {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.unidad = unidad;
         this.familia = familia;
         this.piezasPorCaja = piezasPorCaja;
-        this.produccionPropia = produccionPropia;
-        this.admiteConfigInyeccion = admiteConfigInyeccion;
+        this.tipo = tipo;
+        this.origen = origen;
+        this.destino = destino;
     }
 
     public Long getId() {
@@ -78,11 +86,23 @@ public class Producto {
 
     public int getPiezasPorCaja() { return piezasPorCaja; }
 
-    public boolean esProduccionPropia() { return produccionPropia; }
+    public TipoProducto getTipo() { return tipo; }
 
-    public boolean admiteConfigProduccion() { return admiteConfigInyeccion; }
+    public OrigenProducto getOrigen() { return origen; }
+
+    public DestinoProducto getDestino() { return destino; }
 
     public boolean estaActivo() { return activo; }
+
+    public boolean esDestinoInyeccion() {
+        return destino == DestinoProducto.INYECCION ||
+                destino == DestinoProducto.INYECCION_O_EXTRUSION;
+    }
+
+    public boolean esDestinoExtrusion() {
+        return destino == DestinoProducto.EXTRUSION ||
+                destino == DestinoProducto.INYECCION_O_EXTRUSION;
+    }
 
     public void activar() { activo = true; }
 
@@ -93,15 +113,17 @@ public class Producto {
                            UnidadMedida unidad,
                            Familia familia,
                            int piezasPorCaja,
-                           boolean produccionPropia,
-                           boolean admiteConfigInyeccion)
+                           TipoProducto tipo,
+                           OrigenProducto origen,
+                           DestinoProducto proceso)
     {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.unidad = unidad;
         this.familia = familia;
         this.piezasPorCaja = piezasPorCaja;
-        this.produccionPropia = produccionPropia;
-        this.admiteConfigInyeccion = admiteConfigInyeccion;
+        this.tipo = tipo;
+        this.origen = origen;
+        this.destino = proceso;
     }
 }
