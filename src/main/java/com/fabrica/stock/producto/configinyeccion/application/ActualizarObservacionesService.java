@@ -1,5 +1,6 @@
 package com.fabrica.stock.producto.configinyeccion.application;
 
+import com.fabrica.stock.producto.api.dto.ActualizarObservacionesRequest;
 import com.fabrica.stock.producto.domain.Producto;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,8 @@ public class ActualizarObservacionesService {
     }
 
     public void actualizar(Producto producto, String observaciones) {
-
+        obtenerConfigInyeccionService
+                .obtenerPorProducto(producto)
+                .actualizarObservaciones(observaciones);
     }
 }

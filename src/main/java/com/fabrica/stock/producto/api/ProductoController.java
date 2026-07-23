@@ -1,5 +1,6 @@
 package com.fabrica.stock.producto.api;
 
+import com.fabrica.stock.producto.api.dto.ActualizarObservacionesRequest;
 import com.fabrica.stock.producto.api.dto.ProductoRequest;
 import com.fabrica.stock.producto.api.dto.ProductoResponse;
 import com.fabrica.stock.producto.api.dto.ProductosResponse;
@@ -85,6 +86,14 @@ public class ProductoController {
             @PathVariable Long id,
             @PathVariable Long materiaPrimaId) {
         configInyeccionService.agregarMateriaPrima(id, materiaPrimaId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/observaciones")
+    public ResponseEntity<Void> actualizarObservaciones(
+            @PathVariable Long id,
+            @RequestBody ActualizarObservacionesRequest request) {
+        configInyeccionService.actualizarObservaciones(id, request);
         return ResponseEntity.noContent().build();
     }
 

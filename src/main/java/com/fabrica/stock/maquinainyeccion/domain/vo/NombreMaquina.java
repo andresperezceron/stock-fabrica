@@ -1,20 +1,17 @@
 package com.fabrica.stock.maquinainyeccion.domain.vo;
 
 import com.fabrica.stock.maquinainyeccion.domain.constraints.MaquinaInyeccionConstraints;
+import com.fabrica.stock.maquinainyeccion.domain.exceptions.NombreMaquinaNoValidoException;
 
 import java.util.Objects;
 
 public final class NombreMaquina {
-
     private final String valor;
 
     public NombreMaquina(String valor) {
-
         if (!MaquinaInyeccionConstraints.nombreValido(valor)) {
-            throw new IllegalArgumentException(
-                    "Nombre de máquina inválido: " + valor);
+            throw new NombreMaquinaNoValidoException("Nombre de máquina no válido: " + valor);
         }
-
         this.valor = valor;
     }
 
@@ -29,8 +26,8 @@ public final class NombreMaquina {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof NombreMaquina other)) return false;
+        if(this == o) return true;
+        if(!(o instanceof NombreMaquina other)) return false;
         return Objects.equals(valor, other.valor);
     }
 

@@ -1,5 +1,6 @@
 package com.fabrica.stock.producto.application;
 
+import com.fabrica.stock.producto.api.dto.ActualizarObservacionesRequest;
 import com.fabrica.stock.producto.configinyeccion.application.ActualizarObservacionesService;
 import com.fabrica.stock.producto.configinyeccion.application.AgregarMateriaPrimaService;
 import com.fabrica.stock.producto.configinyeccion.application.QuitarMateriaPrimaService;
@@ -36,8 +37,8 @@ public class ConfigInyeccionService {
         quitarMateriaPrimaService.quitar(producto, materiaPrima);
     }
 
-    public void actualizarObservaciones(Long productoId, String observaciones) {
+    public void actualizarObservaciones(Long productoId, ActualizarObservacionesRequest request) {
         Producto producto = obtenerProductoService.obtener(productoId);
-        actualizarObservacionesService.actualizar(producto, observaciones);
+        actualizarObservacionesService.actualizar(producto, request.observaciones());
     }
 }
