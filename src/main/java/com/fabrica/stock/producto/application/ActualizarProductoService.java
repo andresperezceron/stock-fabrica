@@ -37,6 +37,6 @@ public class ActualizarProductoService {
                 request.piezasPorCaja,
                 request.tipo,
                 request.origen,
-                request.proceso);
+                request.destino);
     }
 }

@@ -8,7 +8,7 @@ import jakarta.persistence.Converter;
 public class NombreMaquinaConverter implements AttributeConverter<NombreMaquina, String> {
     @Override
     public String convertToDatabaseColumn(NombreMaquina nombre) {
-        return nombre == null ? null : nombre.getValor();
+        return nombre == null ? null : nombre.valor();
     }
 
     @Override

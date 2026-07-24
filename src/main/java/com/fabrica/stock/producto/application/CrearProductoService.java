@@ -41,7 +41,7 @@ public class CrearProductoService {
                 request.piezasPorCaja,
                 request.tipo,
                 request.origen,
-                request.proceso);
+                request.destino);
         productoRepository.save(nuevoProducto);
     }
 }

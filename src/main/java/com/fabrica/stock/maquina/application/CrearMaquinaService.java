@@ -19,10 +19,10 @@ public class CrearMaquinaService {
     }
 
     public void crear(MaquinaRequest request) {
-        Ubicacion ubicacion = obtenerUbicacionService.obtener(request.ubicacionId);
+        Ubicacion ubicacion = obtenerUbicacionService.obtener(request.ubicacionId());
         maquinaRepository.save(new Maquina(
-                request.tipo,
-                new NombreMaquina(request.nombre),
+                request.tipo(),
+                new NombreMaquina(request.nombre()),
                 ubicacion
         ));
     }

@@ -64,7 +64,7 @@ public class ProductoController {
     @PostMapping("{id}/activar")
     public ResponseEntity<Void> activar(@PathVariable Long id) {
         activarProductoService.activar(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping

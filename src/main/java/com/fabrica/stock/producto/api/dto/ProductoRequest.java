@@ -43,5 +43,5 @@ public class ProductoRequest {
     public OrigenProducto origen;
 
     @NotNull(message = "Proceso fabricación de producto es obligatorio.")
-    public DestinoProducto proceso;
+    public DestinoProducto destino;
 }

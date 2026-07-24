@@ -19,7 +19,6 @@ public class EliminarConfigProduccionService {
 
     public void eliminar(Producto producto, boolean tieneUso) {
         ConfigProduccion config = obtenerOCrearConfigProduccionService.obtenerOCrearPorProducto(producto);
-        if(tieneUso) config.desactivar();
-        else configProduccionRepository.delete(config);
+        if(tieneUso) configProduccionRepository.delete(config);
     }
 }
