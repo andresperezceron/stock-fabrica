@@ -115,7 +115,7 @@ public class Producto {
                            int piezasPorCaja,
                            TipoProducto tipo,
                            OrigenProducto origen,
-                           DestinoProducto proceso)
+                           DestinoProducto destino)
     {
         this.codigo = codigo;
         this.descripcion = descripcion;
@@ -124,6 +124,6 @@ public class Producto {
         this.piezasPorCaja = piezasPorCaja;
         this.tipo = tipo;
         this.origen = origen;
-        this.destino = proceso;
+        this.destino = destino;
     }
 }

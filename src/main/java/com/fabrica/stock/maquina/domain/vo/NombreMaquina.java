@@ -9,7 +9,7 @@ public final class NombreMaquina {
     private final String valor;
 
     public NombreMaquina(String valor) {
-        if (!MaquinaConstraints.nombreValido(valor)) {
+        if(!MaquinaConstraints.nombreValido(valor)) {
             throw new NombreMaquinaNoValidoException("Nombre de máquina no válido: " + valor);
         }
         this.valor = valor;

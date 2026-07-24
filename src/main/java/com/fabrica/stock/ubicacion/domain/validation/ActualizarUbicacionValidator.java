@@ -8,8 +8,15 @@ import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 
 public class ActualizarUbicacionValidator extends
         RequestValidator<ActualizarUbicacionRequest, Ubicacion, UbicacionRepository> {
-    public ActualizarUbicacionValidator(ActualizarUbicacionRequest request, UbicacionRepository repository) {
+    private final Long ubicacionId;
+
+    public ActualizarUbicacionValidator(
+            ActualizarUbicacionRequest request,
+            UbicacionRepository repository,
+            Long ubicacionId)
+    {
         super(request, repository);
+        this.ubicacionId = ubicacionId;
     }
 
     @Override
@@ -19,7 +26,7 @@ public class ActualizarUbicacionValidator extends
 
     @Override
     protected void validateBusinessRules() {
-        if(repository.existsByNombreAndIdNot(request.nombre, request.id)) {
+        if(repository.existsByNombreAndIdNot(request.nombre, ubicacionId)) {
             throw new NombreUbicacionDuplicadoException("Nombre ubicacion duplicado");
         }
     }

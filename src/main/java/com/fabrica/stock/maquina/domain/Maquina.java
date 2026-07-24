@@ -1,6 +1,7 @@
 package com.fabrica.stock.maquina.domain;
 
 import com.fabrica.stock.maquina.domain.constraints.MaquinaConstraints;
+import com.fabrica.stock.maquina.domain.vo.NombreMaquina;
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
@@ -18,7 +19,7 @@ public class Maquina {
     private TipoMaquina tipo;
 
     @Column(nullable = false, length = MaquinaConstraints.NOMBRE)
-    private String nombre;
+    private NombreMaquina nombre;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "ubicacion_id")
@@ -33,7 +34,7 @@ public class Maquina {
 
     protected Maquina() {}
 
-    public Maquina(TipoMaquina tipo, String nombre, Ubicacion ubicacion) {
+    public Maquina(TipoMaquina tipo, NombreMaquina nombre, Ubicacion ubicacion) {
         this.tipo = tipo;
         this.nombre = nombre;
         this.ubicacion = ubicacion;
@@ -44,7 +45,7 @@ public class Maquina {
 
     public TipoMaquina getTipo() { return tipo; }
 
-    public String getNombre() { return nombre; }
+    public NombreMaquina getNombre() { return nombre; }
 
     public Ubicacion getUbicacion() { return ubicacion; }
 

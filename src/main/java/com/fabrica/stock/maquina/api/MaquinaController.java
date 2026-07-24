@@ -1,10 +1,8 @@
-package com.fabrica.stock.produccion.api;
+package com.fabrica.stock.maquina.api;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/produccion")
-public class ProduccionController {
-
-}
+@RequestMapping("/api/maquinas")
+public class MaquinaController {}

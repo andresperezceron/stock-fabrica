@@ -20,7 +20,7 @@ public class ActualizarUbicacionService {
 
     @Transactional
     public void actualizar(Long id, ActualizarUbicacionRequest request) {
-        new ActualizarUbicacionValidator(request, ubicacionRepository).validate();
+        new ActualizarUbicacionValidator(request, ubicacionRepository, id).validate();
         Ubicacion ubicacion = obtenerUbicacionService.obtener(id);
         ubicacion.modificarNombre(request.nombre);
     }
