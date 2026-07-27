@@ -18,7 +18,7 @@ public class ActualizarProductoValidator extends RequestValidator<ProductoReques
     @Override
     protected void validateBusinessRules() {
         if(repository.existsByCodigoAndIdNot(new CodigoProducto(request.codigo()), productoId)) {
-            throw new ProductoCodigoDuplicadoException("Codigo duplicado");
+            throw new ProductoCodigoDuplicadoException("Código duplicado");
         }
     }
 }

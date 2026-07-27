@@ -30,4 +30,11 @@ public class MaquinaExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
+
+    @ExceptionHandler(MaquinaNoAptaProduccionException.class)
+    public ResponseEntity<DomainErrorResponse> manejarNoAptaProduccion(MaquinaNoAptaProduccionException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(DomainErrorResponse.of(ex.getMessage()));
+    }
 }

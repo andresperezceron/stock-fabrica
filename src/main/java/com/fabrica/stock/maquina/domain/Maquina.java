@@ -46,6 +46,7 @@ public class Maquina implements EntidadActivable {
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         descripcion = "";
+        estado = EstadoMaquina.APTA_PRODUCCION;
     }
 
     public Long getId() { return id; }
@@ -60,7 +61,11 @@ public class Maquina implements EntidadActivable {
 
     public String getDescripcion() { return descripcion; }
 
+    public EstadoMaquina getEstado() { return estado; }
+
     public void asignarProductoActivo(Producto productoActivo) { this.productoActivo = productoActivo; }
+
+    public void quitarProductoActivo() { this.productoActivo = null; }
 
     public boolean esMiProductoActivo(Producto producto) {
         return this.productoActivo.mismaEntidadQue(producto);
@@ -74,9 +79,9 @@ public class Maquina implements EntidadActivable {
         return estado == EstadoMaquina.FUERA_SERVICIO;
     }
 
-    public boolean estaCambioMolde() {
-        return estado == EstadoMaquina.CAMBIO_MOLDE;
-    }
+    public boolean estaCambioMolde() { return estado == EstadoMaquina.CAMBIO_MOLDE; }
+
+    public boolean estaAptaProduccion() { return estado == EstadoMaquina.APTA_PRODUCCION; }
 
     public void asignarEstadoCambioMolde() {
         this.estado = EstadoMaquina.CAMBIO_MOLDE;
@@ -85,6 +90,8 @@ public class Maquina implements EntidadActivable {
     public void asignarEstadoFueraServicio() {
         this.estado = EstadoMaquina.FUERA_SERVICIO;
     }
+
+    public void asignarEstadoAptaProduccion() { this.estado = EstadoMaquina.APTA_PRODUCCION; }
 
     @Override
     public boolean estaActiva() { return activo; }

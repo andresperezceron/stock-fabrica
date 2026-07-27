@@ -23,9 +23,25 @@ public class ConfigProduccionExceptionHandler {
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
 
+    @ExceptionHandler(MateriaPrimaNoValidaException.class)
     public ResponseEntity<DomainErrorResponse> manejarMateriaPrimaNoValida(MateriaPrimaNoValidaException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
+                .body(DomainErrorResponse.of(ex.getMessage()));
+    }
+
+    @ExceptionHandler(ProductoActivoNoAsignadoException.class)
+    public ResponseEntity<DomainErrorResponse>
+    manejarProductoActivoNoAsignadoException(ProductoActivoNoAsignadoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .body(DomainErrorResponse.of(ex.getMessage()));
+    }
+
+    @ExceptionHandler(ConfigProduccionNoValidaException.class)
+    public ResponseEntity<DomainErrorResponse> manejarConfigProduccionNoValida(ConfigProduccionNoValidaException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
 }

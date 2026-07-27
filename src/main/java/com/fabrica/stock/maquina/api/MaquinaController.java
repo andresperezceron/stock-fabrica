@@ -1,7 +1,7 @@
 package com.fabrica.stock.maquina.api;
 
-import com.fabrica.stock.maquina.application.AsignarProductoActivoService;
-import com.fabrica.stock.maquina.application.ListarProductosInyecExtruService;
+import com.fabrica.stock.maquina.application.*;
+import com.fabrica.stock.maquina.domain.EstadoMaquina;
 import com.fabrica.stock.producto.api.dto.ProductosInyecExtruResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.*;
 public class MaquinaController {
     private final ListarProductosInyecExtruService listarProductosInyecExtruService;
     private final AsignarProductoActivoService asignarProductoActivoService;
+    private final AsignarEstadoService asignarEstadoService;
 
     public MaquinaController(ListarProductosInyecExtruService listarProductosInyecExtruService,
-                             AsignarProductoActivoService asignarProductoActivoService)
+                             AsignarProductoActivoService asignarProductoActivoService,
+                             AsignarEstadoService asignarEstadoService)
     {
         this.listarProductosInyecExtruService = listarProductosInyecExtruService;
         this.asignarProductoActivoService = asignarProductoActivoService;
+        this.asignarEstadoService = asignarEstadoService;
     }
 
     @GetMapping
@@ -29,6 +32,24 @@ public class MaquinaController {
             @PathVariable Long id,
             @PathVariable Long productoActivoId) {
         asignarProductoActivoService.asignar(id, productoActivoId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("{id}/fuera-servicio")
+    public ResponseEntity<Void> asignarEstadoFueraServicio(@PathVariable Long id) {
+        asignarEstadoService.asignar(id, EstadoMaquina.FUERA_SERVICIO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("{id}/cambio-molde")
+    public ResponseEntity<Void> asignarEstadoCambioMolde(@PathVariable Long id) {
+        asignarEstadoService.asignar(id, EstadoMaquina.CAMBIO_MOLDE);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("{id}/apta-produccion")
+    public ResponseEntity<Void> asignarEstadoAptaProduccion(@PathVariable Long id) {
+        asignarEstadoService.asignar(id, EstadoMaquina.APTA_PRODUCCION);
         return ResponseEntity.noContent().build();
     }
 }

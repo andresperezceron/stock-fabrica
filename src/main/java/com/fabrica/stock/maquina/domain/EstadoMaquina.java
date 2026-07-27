@@ -1,8 +1,7 @@
 package com.fabrica.stock.maquina.domain;
 
 public enum EstadoMaquina {
-    CONFIGURADA,
-    NO_CONFIGURADA,
+    APTA_PRODUCCION,
     CAMBIO_MOLDE,
     FUERA_SERVICIO
 }
