@@ -14,7 +14,12 @@ public class CrearConfigProduccionService {
     }
 
     public void crearPorProducto(Producto producto) {
-        if(!configProduccionRepository.existsConfigProduccionByProducto(producto))
+        if(!configProduccionRepository.existsConfigProduccionByProducto(producto)) {
             configProduccionRepository.save(new ConfigProduccion(producto));
+            //aqui lanzariamos una excepcion, es totalmente natural pensar que como se ha creado por
+            //primera vez, es una manera muy interesante de recordale al operario que tiene que
+            //configurar las materias primas. Si no la crea directamente le pasa la responsbilidad a
+            //configproducion.
+        }
     }
 }

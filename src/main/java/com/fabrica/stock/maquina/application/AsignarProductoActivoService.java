@@ -31,6 +31,9 @@ public class AsignarProductoActivoService {
         if(!maquina.getTipo().puedeFabricar(producto)) {
             throw new ProductoActivoNoValidoException("Producto incompatible con la maquina: " + maquina.getNombre());
         }
+
+        //aqui estaría la validacion del palet si no hay palet. lanzo excepcion. fin.
+
         maquina.asignarProductoActivo(producto);
         configProduccionService.crearSinoExiste(producto);
     }

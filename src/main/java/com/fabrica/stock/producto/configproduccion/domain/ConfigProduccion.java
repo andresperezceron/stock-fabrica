@@ -62,6 +62,10 @@ public class ConfigProduccion {
 
     public void actualizarObservaciones(String observaciones) { this.observaciones = observaciones; }
 
+    public boolean esValida() {
+        return !materiasPrimas.isEmpty();
+    }
+
     @PrePersist
     void alCrear() {
         LocalDateTime ahora = LocalDateTime.now();
