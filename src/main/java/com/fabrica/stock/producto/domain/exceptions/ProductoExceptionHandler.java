@@ -1,6 +1,6 @@
 package com.fabrica.stock.producto.domain.exceptions;
 
-import com.fabrica.stock.shared.response.DomainErrorResponse;
+import com.fabrica.stock.shared.domain.DomainErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,22 +16,22 @@ public class ProductoExceptionHandler {
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
 
-    @ExceptionHandler(CodigoProductoDuplicadoException.class)
-    public ResponseEntity<DomainErrorResponse> manejarProductoDuplicado(CodigoProductoDuplicadoException ex) {
+    @ExceptionHandler(ProductoCodigoDuplicadoException.class)
+    public ResponseEntity<DomainErrorResponse> manejarProductoCodigoDuplicado(ProductoCodigoDuplicadoException ex) {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
 
-    @ExceptionHandler(CodigoProductoNoNumericoException.class)
-    public ResponseEntity<DomainErrorResponse> manejarCodigoProductoNoNumerico(CodigoProductoNoNumericoException ex) {
+    @ExceptionHandler(ProductoCodigoNoValidoException.class)
+    public ResponseEntity<DomainErrorResponse> manejarCodigoProductoNoValido(ProductoCodigoNoValidoException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
 
-    @ExceptionHandler(ProductoNoActivoException.class)
-    public ResponseEntity<DomainErrorResponse> manejarProductoNoActivo(ProductoNoActivoException ex) {
+    @ExceptionHandler(ProductoActivoEnMaquinaException.class)
+    public ResponseEntity<DomainErrorResponse> manejarProductoActivoEnMaquina(ProductoActivoEnMaquinaException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(DomainErrorResponse.of(ex.getMessage()));

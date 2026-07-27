@@ -4,7 +4,7 @@ import com.fabrica.stock.familia.api.dto.CrearFamiliaRequest;
 import com.fabrica.stock.familia.domain.Familia;
 import com.fabrica.stock.familia.domain.exceptions.NombreFamiliaDuplicadoException;
 import com.fabrica.stock.familia.infrastructure.FamiliaRepository;
-import com.fabrica.stock.shared.validation.RequestValidator;
+import com.fabrica.stock.shared.domain.validation.RequestValidator;
 
 public class CrearFamiliaValidator extends RequestValidator<CrearFamiliaRequest, Familia, FamiliaRepository> {
     public CrearFamiliaValidator(CrearFamiliaRequest request, FamiliaRepository repository) {

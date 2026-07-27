@@ -1,4 +1,4 @@
-package com.fabrica.stock.shared.validation;
+package com.fabrica.stock.shared.domain.validation;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

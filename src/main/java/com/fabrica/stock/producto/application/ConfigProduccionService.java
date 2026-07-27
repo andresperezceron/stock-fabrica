@@ -1,10 +1,7 @@
 package com.fabrica.stock.producto.application;
 
 import com.fabrica.stock.producto.api.dto.ActualizarObservacionesRequest;
-import com.fabrica.stock.producto.configproduccion.application.ActualizarObservacionesService;
-import com.fabrica.stock.producto.configproduccion.application.AgregarMateriaPrimaService;
-import com.fabrica.stock.producto.configproduccion.application.CrearConfigProduccionService;
-import com.fabrica.stock.producto.configproduccion.application.QuitarMateriaPrimaService;
+import com.fabrica.stock.producto.configproduccion.application.*;
 import com.fabrica.stock.producto.domain.Producto;
 import org.springframework.stereotype.Service;
 
@@ -13,25 +10,31 @@ public class ConfigProduccionService {
     private final AgregarMateriaPrimaService agregarMateriaPrimaService;
     private final QuitarMateriaPrimaService quitarMateriaPrimaService;
     private final ObtenerProductoService obtenerProductoService;
-    private final ActualizarObservacionesService actualizarObservacionesService;
+    private final ObtenerConfigProduccionService obtenerConfigProduccionService;
+    private final EliminarConfigProduccionService eliminarConfigProduccionService;
     private final CrearConfigProduccionService crearConfigProduccionService;
 
     public ConfigProduccionService(AgregarMateriaPrimaService agregarMateriaPrimaService,
                                    QuitarMateriaPrimaService quitarMateriaPrimaService,
                                    ObtenerProductoService obtenerProductoService,
-                                   ActualizarObservacionesService actualizarObservacionesService,
+                                   ObtenerConfigProduccionService obtenerConfigProduccionService,
+                                   EliminarConfigProduccionService eliminarConfigProduccionService,
                                    CrearConfigProduccionService crearConfigProduccionService)
     {
         this.agregarMateriaPrimaService = agregarMateriaPrimaService;
         this.quitarMateriaPrimaService = quitarMateriaPrimaService;
         this.obtenerProductoService = obtenerProductoService;
-        this.actualizarObservacionesService = actualizarObservacionesService;
+        this.obtenerConfigProduccionService = obtenerConfigProduccionService;
+        this.eliminarConfigProduccionService = eliminarConfigProduccionService;
         this.crearConfigProduccionService = crearConfigProduccionService;
     }
 
-    public void crearConfigProduccion(Long productoId) {
-        Producto producto = obtenerProductoService.obtener(productoId);
-        crearConfigProduccionService.crear(producto);
+    public void crearSinoExiste(Producto producto) {
+        crearConfigProduccionService.crearPorProducto(producto);
+    }
+
+    public void eliminarPorProducto(Producto producto,  boolean productoTieneUso) {
+        eliminarConfigProduccionService.eliminarPorProducto(producto, productoTieneUso);
     }
 
     public void agregarMateriaPrima(Long productoId, Long materiaPrimaId) {
@@ -48,6 +51,8 @@ public class ConfigProduccionService {
 
     public void actualizarObservaciones(Long productoId, ActualizarObservacionesRequest request) {
         Producto producto = obtenerProductoService.obtener(productoId);
-        actualizarObservacionesService.actualizar(producto, request.observaciones());
+        obtenerConfigProduccionService
+                .obtenerPorProducto(producto)
+                .actualizarObservaciones(request.observaciones());
     }
 }

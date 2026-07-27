@@ -21,7 +21,7 @@ public enum TipoMaquina {
         @Override
         public boolean puedeFabricar(Producto producto) {
             // El molino no fabrica productos registrados; transforma material recuperado.
-            return false;
+            return true;
         }
     };
 

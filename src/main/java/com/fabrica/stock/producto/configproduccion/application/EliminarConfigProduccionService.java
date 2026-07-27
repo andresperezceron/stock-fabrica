@@ -5,20 +5,18 @@ import com.fabrica.stock.producto.configproduccion.infrastructure.ConfigProducci
 import com.fabrica.stock.producto.domain.Producto;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class EliminarConfigProduccionService {
     private final ConfigProduccionRepository configProduccionRepository;
-    private final ObtenerOCrearConfigProduccionService obtenerOCrearConfigProduccionService;
 
-    public EliminarConfigProduccionService(ConfigProduccionRepository configProduccionRepository,
-                                           ObtenerOCrearConfigProduccionService obtenerOCrearConfigProduccionService)
-    {
+    public EliminarConfigProduccionService(ConfigProduccionRepository configProduccionRepository) {
         this.configProduccionRepository = configProduccionRepository;
-        this.obtenerOCrearConfigProduccionService = obtenerOCrearConfigProduccionService;
     }
 
-    public void eliminar(Producto producto, boolean tieneUso) {
-        ConfigProduccion config = obtenerOCrearConfigProduccionService.obtenerOCrearPorProducto(producto);
-        if(tieneUso) configProduccionRepository.delete(config);
+    public void eliminarPorProducto(Producto producto, boolean tieneUso) {
+        Optional<ConfigProduccion> config = configProduccionRepository.findConfigProduccionByProducto(producto);
+        if(config.isPresent() && !tieneUso) configProduccionRepository.delete(config.get());
     }
 }

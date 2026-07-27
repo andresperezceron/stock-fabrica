@@ -5,6 +5,7 @@ import com.fabrica.stock.familia.domain.Familia;
 import com.fabrica.stock.producto.api.dto.ProductoRequest;
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.producto.domain.validation.ActualizarProductoValidator;
+import com.fabrica.stock.producto.domain.vo.CodigoProducto;
 import com.fabrica.stock.producto.infrastructure.ProductoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -28,15 +29,15 @@ public class ActualizarProductoService {
     public void actualizar(Long id, ProductoRequest request) {
         new ActualizarProductoValidator(request, productoRepository, id).validate();
         Producto anteriorProducto = obtenerProductoService.obtener(id);
-        Familia nuevaFamilia = obtenerFamiliaService.obtener(request.familia_id);
+        Familia nuevaFamilia = obtenerFamiliaService.obtener(request.familia_id());
         anteriorProducto.actualizar(
-                request.codigo,
-                request.descripcion,
-                request.unidad,
+                CodigoProducto.of(request.codigo()),
+                request.descripcion(),
+                request.unidad(),
                 nuevaFamilia,
-                request.piezasPorCaja,
-                request.tipo,
-                request.origen,
-                request.destino);
+                request.piezasPorCaja(),
+                request.tipo(),
+                request.origen(),
+                request.destino());
     }
 }

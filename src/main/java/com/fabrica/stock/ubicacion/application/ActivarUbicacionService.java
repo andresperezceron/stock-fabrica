@@ -1,20 +1,16 @@
 package com.fabrica.stock.ubicacion.application;
 
-import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ActivarUbicacionService {
-    private final ObtenerUbicacionInactivaService obtenerUbicacionInactivaService;
+    private final ObtenerUbicacionNoActivaService obtenerUbicacionNoActivaService;
 
-    public ActivarUbicacionService(ObtenerUbicacionInactivaService obtenerUbicacionInactivaService) {
-        this.obtenerUbicacionInactivaService = obtenerUbicacionInactivaService;
+    public ActivarUbicacionService(ObtenerUbicacionNoActivaService obtenerUbicacionNoActivaService) {
+        this.obtenerUbicacionNoActivaService = obtenerUbicacionNoActivaService;
     }
 
     @Transactional
-    public void activar(Long id) {
-        Ubicacion ubicacion = obtenerUbicacionInactivaService.obtener(id);
-        ubicacion.activar();
-    }
+    public void activar(Long id) { obtenerUbicacionNoActivaService.obtener(id).activar(); }
 }

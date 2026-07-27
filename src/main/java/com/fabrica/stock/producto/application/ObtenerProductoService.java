@@ -2,6 +2,7 @@ package com.fabrica.stock.producto.application;
 
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.producto.domain.exceptions.ProductoNoEncontradoException;
+import com.fabrica.stock.producto.domain.vo.CodigoProducto;
 import com.fabrica.stock.producto.infrastructure.ProductoRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class ObtenerProductoService {
     }
 
     public Producto obtener(String codigo) {
-        return productoRepository.findByCodigoAndActivoTrue(codigo)
+        return productoRepository.findByCodigoAndActivoTrue(new CodigoProducto(codigo))
                 .orElseThrow(() -> new ProductoNoEncontradoException("No existe Producto con codigo: " + codigo));
     }
 }

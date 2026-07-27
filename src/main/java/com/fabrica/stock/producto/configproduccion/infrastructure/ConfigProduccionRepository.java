@@ -4,7 +4,9 @@ import com.fabrica.stock.producto.configproduccion.domain.ConfigProduccion;
 import com.fabrica.stock.producto.domain.Producto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface ConfigProduccionRepository extends JpaRepository<ConfigProduccion,Long> {
-    ConfigProduccion findConfigProduccionByProducto(Producto producto);
+    Optional<ConfigProduccion> findConfigProduccionByProducto(Producto producto);
     boolean existsConfigProduccionByProducto(Producto producto);
 }

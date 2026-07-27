@@ -6,10 +6,10 @@ import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ObtenerUbicacionInactivaService {
+public class ObtenerUbicacionNoActivaService {
     private final UbicacionRepository ubicacionRepository;
 
-    public ObtenerUbicacionInactivaService(UbicacionRepository ubicacionRepository) {
+    public ObtenerUbicacionNoActivaService(UbicacionRepository ubicacionRepository) {
         this.ubicacionRepository = ubicacionRepository;
     }
 

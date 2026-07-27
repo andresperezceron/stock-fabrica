@@ -15,7 +15,7 @@ public class MovimientoResponse {
 
     public MovimientoResponse(MovimientoStock movimiento) {
         fecha = movimiento.getFecha();
-        codigoProducto = movimiento.getProducto().getCodigo();
+        codigoProducto = "";
         descripcionProducto = movimiento.getProducto().getDescripcion();
         cantidad = movimiento.getCantidad();
         origen =  movimiento.getOrigen().getNombre();

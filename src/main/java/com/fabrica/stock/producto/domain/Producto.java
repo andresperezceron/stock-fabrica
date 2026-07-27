@@ -2,6 +2,7 @@ package com.fabrica.stock.producto.domain;
 
 import com.fabrica.stock.familia.domain.Familia;
 import com.fabrica.stock.producto.domain.constraints.ProductoConstraints;
+import com.fabrica.stock.producto.domain.vo.CodigoProducto;
 import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
 import jakarta.persistence.*;
 
@@ -12,8 +13,8 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = ProductoConstraints.CODIGO)
-    private String codigo;
+    @Column(unique = true, length = ProductoConstraints.CODIGO)
+    private CodigoProducto codigo;
 
     @Column(nullable = false, length = TextoConstraints.MEDIO)
     private String descripcion;
@@ -26,7 +27,7 @@ public class Producto {
     @JoinColumn(name = "familia_id")
     private Familia familia;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private int piezasPorCaja;
 
     @Enumerated(EnumType.STRING)
@@ -47,7 +48,7 @@ public class Producto {
     protected Producto() {}
 
     public Producto(
-            String codigo,
+            CodigoProducto codigo,
             String descripcion,
             UnidadMedida unidad,
             Familia familia,
@@ -70,7 +71,7 @@ public class Producto {
         return id;
     }
 
-    public String getCodigo() {
+    public CodigoProducto getCodigo() {
         return codigo;
     }
 
@@ -104,11 +105,21 @@ public class Producto {
                 destino == DestinoProducto.INYECCION_O_EXTRUSION;
     }
 
+    public boolean esDestinoInyeccionOExtrusion() {
+        return destino == DestinoProducto.INYECCION_O_EXTRUSION;
+    }
+
+    public boolean esMateriaPrima() { return tipo == TipoProducto.MATERIA_PRIMA; }
+
     public void activar() { activo = true; }
 
     public void desactivar() { activo = false; }
 
-    public void actualizar(String codigo,
+    public boolean mismaEntidadQue(Producto producto) {
+        return producto != null && this.id.equals(producto.getId());
+    }
+
+    public void actualizar(CodigoProducto codigo,
                            String descripcion,
                            UnidadMedida unidad,
                            Familia familia,

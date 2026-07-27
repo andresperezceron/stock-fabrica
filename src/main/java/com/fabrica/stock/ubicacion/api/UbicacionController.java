@@ -19,7 +19,7 @@ public class UbicacionController {
     private final ObtenerUbicacionService obtenerUbicacionService;
     private final ActualizarUbicacionService actualizarUbicacionService;
     private final ListarUbicacionesService listarUbicacionesService;
-    private final ListarUbicacionesInactivasService listarUbicacionesInactivasService;
+    private final ListarUbicacionesNoActivasService listarUbicacionesNoActivasService;
     private final EliminarUbicacionService eliminarUbicacionService;
     private final ActivarUbicacionService activarUbicacionService;
 
@@ -28,7 +28,7 @@ public class UbicacionController {
             ObtenerUbicacionService obtenerUbicacionService,
             ActualizarUbicacionService actualizarUbicacionService,
             ListarUbicacionesService listarUbicacionesService,
-            ListarUbicacionesInactivasService listarUbicacionesInactivasService,
+            ListarUbicacionesNoActivasService listarUbicacionesNoActivasService,
             EliminarUbicacionService eliminarUbicacionService,
             ActivarUbicacionService activarUbicacionService)
     {
@@ -36,7 +36,7 @@ public class UbicacionController {
         this.obtenerUbicacionService = obtenerUbicacionService;
         this.actualizarUbicacionService = actualizarUbicacionService;
         this.listarUbicacionesService = listarUbicacionesService;
-        this.listarUbicacionesInactivasService = listarUbicacionesInactivasService;
+        this.listarUbicacionesNoActivasService = listarUbicacionesNoActivasService;
         this.eliminarUbicacionService = eliminarUbicacionService;
         this.activarUbicacionService = activarUbicacionService;
     }
@@ -49,7 +49,7 @@ public class UbicacionController {
 
     @GetMapping("/inactivas")
     public ResponseEntity<UbicacionesResponse> listarInactivas() {
-        List<Ubicacion> inactivas = listarUbicacionesInactivasService.listar();
+        List<Ubicacion> inactivas = listarUbicacionesNoActivasService.listar();
         return ResponseEntity.ok(UbicacionesResponse.of(inactivas));
     }
 

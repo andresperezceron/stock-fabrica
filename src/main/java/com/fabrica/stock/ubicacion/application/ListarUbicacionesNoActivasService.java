@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ListarUbicacionesInactivasService {
+public class ListarUbicacionesNoActivasService {
     private final UbicacionRepository ubicacionRepository;
 
-    public ListarUbicacionesInactivasService(UbicacionRepository ubicacionRepository) {
+    public ListarUbicacionesNoActivasService(UbicacionRepository ubicacionRepository) {
         this.ubicacionRepository = ubicacionRepository;
     }
 

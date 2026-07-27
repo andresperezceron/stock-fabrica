@@ -54,4 +54,8 @@ public class Maquina {
     public String getObservaciones() { return observaciones; }
 
     public void asignarProductoActivo(Producto productoActivo) { this.productoActivo = productoActivo; }
+
+    public boolean esMiProductoActivo(Producto producto) {
+        return this.productoActivo.mismaEntidadQue(producto);
+    }
 }

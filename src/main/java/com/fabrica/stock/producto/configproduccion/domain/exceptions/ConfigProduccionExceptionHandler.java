@@ -1,6 +1,6 @@
 package com.fabrica.stock.producto.configproduccion.domain.exceptions;
 
-import com.fabrica.stock.shared.response.DomainErrorResponse;
+import com.fabrica.stock.shared.domain.DomainErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,10 +23,9 @@ public class ConfigProduccionExceptionHandler {
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
 
-    @ExceptionHandler(ExisteConfigProduccionException.class)
-    public ResponseEntity<DomainErrorResponse> manejarConfigProduccionSiExiste(ExisteConfigProduccionException ex) {
+    public ResponseEntity<DomainErrorResponse> manejarMateriaPrimaNoValida(MateriaPrimaNoValidaException ex) {
         return ResponseEntity
-                .status(HttpStatus.CONFLICT)
+                .status(HttpStatus.BAD_REQUEST)
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
 }

@@ -1,6 +1,6 @@
 package com.fabrica.stock.ubicacion.domain.exceptions;
 
-import com.fabrica.stock.shared.response.DomainErrorResponse;
+import com.fabrica.stock.shared.domain.DomainErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

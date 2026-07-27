@@ -1,6 +1,5 @@
 package com.fabrica.stock.producto.application;
 
-import com.fabrica.stock.producto.domain.Producto;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ public class ActivarProductoService {
 
     @Transactional
     public void activar(Long id) {
-        Producto producto = obtenerProductoInactivoService.obtener(id);
-        producto.activar();
+        obtenerProductoInactivoService.obtener(id).activar();
     }
 }

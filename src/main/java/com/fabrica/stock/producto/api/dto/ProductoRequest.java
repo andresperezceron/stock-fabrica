@@ -4,44 +4,41 @@ import com.fabrica.stock.producto.domain.OrigenProducto;
 import com.fabrica.stock.producto.domain.DestinoProducto;
 import com.fabrica.stock.producto.domain.TipoProducto;
 import com.fabrica.stock.producto.domain.UnidadMedida;
-import com.fabrica.stock.producto.domain.constraints.ProductoConstraints;
 import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
-public class ProductoRequest {
+public record ProductoRequest(
     @NotBlank(message = "Código producto es obligatorio.")
-    @Size(
-            max = ProductoConstraints.CODIGO, min = ProductoConstraints.CODIGO,
-            message = "Código solo puede ser seis dígitos."
-    )
-    public String codigo;
+    String codigo,
 
     @NotBlank(message = "Descripción producto es obligatorio")
     @Size(
             max = TextoConstraints.MEDIO,
             message = "Descripción demasiado larga. Max: " +  TextoConstraints.MEDIO
     )
-    public String descripcion;
+    String descripcion,
 
     @NotNull(message = "Unidad no puede ser nula.")
-    public UnidadMedida unidad;
+    UnidadMedida unidad,
 
     @NotNull(message = "Familia producto es obligatorio.")
-    public Long familia_id;
+    @Positive(message = "ID familia no puede ser negativo.")
+    Long familia_id,
 
     @NotNull(message = "Piezas por caja es obligatorio.")
-    @Min(0)
-    public Integer piezasPorCaja;
+    @PositiveOrZero
+    Integer piezasPorCaja,
 
     @NotNull(message = "Tipo de producto es obligatorio.")
-    public TipoProducto tipo;
+    TipoProducto tipo,
 
     @NotNull(message = "Origen de producto es obligatorio.")
-    public OrigenProducto origen;
+    OrigenProducto origen,
 
     @NotNull(message = "Proceso fabricación de producto es obligatorio.")
-    public DestinoProducto destino;
+    DestinoProducto destino
+){
+    public ProductoRequest {
+        descripcion = descripcion.trim();
+    }
 }
