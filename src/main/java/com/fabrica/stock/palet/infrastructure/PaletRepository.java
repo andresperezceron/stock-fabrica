@@ -1,5 +1,6 @@
 package com.fabrica.stock.palet.infrastructure;
 
+import com.fabrica.stock.estacion.domain.Estacion;
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
@@ -21,4 +22,11 @@ public interface PaletRepository extends JpaRepository<Palet, Long> {
       )
 """)
     boolean existsProcesoProduccionActivo(@Param("maquina") Maquina maquina);
+
+    @Query("""
+    SELECT COUNT(p) > 0
+    FROM Palet p
+    WHERE p.localizacion = :estacion
+""")
+    boolean existsProcesoProduccionActivo2(@Param("estacion") Estacion estacion);
 }

@@ -13,6 +13,8 @@ public class EstacionOcupadaService {
     }
 
     public boolean estaOcupda(Estacion estacion) {
-        return estacionRepository.existsByEstacion(estacion);
+        //return estacionRepository.existsByLocalizacion(estacion);
+        //return false;
+        return false;
     }
 }

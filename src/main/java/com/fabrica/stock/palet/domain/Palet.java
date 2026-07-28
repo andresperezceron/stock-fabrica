@@ -3,8 +3,6 @@ package com.fabrica.stock.palet.domain;
 import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
 import com.fabrica.stock.estacion.domain.Estacion;
 import com.fabrica.stock.maquina.domain.Maquina;
-import com.fabrica.stock.ubicacion.domain.Ubicacion;
-import com.fabrica.stock.ubicacion.domain.UbicacionSistema;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -30,7 +28,7 @@ public class Palet {
     private EstadoPalet estado;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "estacion_id", nullable = false)
+    @JoinColumn(name = "ubicacion_id", nullable = false)
     private Estacion estacion;
 
     @OneToMany(mappedBy = "palet")
@@ -53,11 +51,13 @@ public class Palet {
         return id;
     }
 
-    public Estacion getEstacion() { return estacion; }
+    public Estacion getLocalizacion() { return estacion; }
 
     public TipoPalet getTipo() { return tipo; }
 
     public EstadoPalet getEstado() { return estado; }
+
+    public Maquina getMaquina() { return maquina; }
 
     public List<ContenidoPalet> getContenidos() { return contenidos; }
 

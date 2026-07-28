@@ -18,7 +18,7 @@ public class MovimientoResponse {
         codigoProducto = "";
         descripcionProducto = movimiento.getProducto().getDescripcion();
         cantidad = movimiento.getCantidad();
-        origen =  movimiento.getOrigen().getNombre();
-        destino = movimiento.getDestino().getNombre();
+        //origen =  movimiento.getOrigen().getNombre();
+        //destino = movimiento.getDestino().getNombre();
     }
 }
