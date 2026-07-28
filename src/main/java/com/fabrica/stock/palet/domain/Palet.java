@@ -1,7 +1,10 @@
 package com.fabrica.stock.palet.domain;
 
 import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
+import com.fabrica.stock.estacion.domain.Estacion;
+import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
+import com.fabrica.stock.ubicacion.domain.UbicacionSistema;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -14,21 +17,21 @@ public class Palet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "ubicacion_id", nullable = false)
-    private Ubicacion ubicacion;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoPalet tipo;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ConfiguracionPalet configuracion;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "maquina_id")
+    private Maquina maquina;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EstadoPalet estado;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "estacion_id", nullable = false)
+    private Estacion estacion;
 
     @OneToMany(mappedBy = "palet")
     private final List<ContenidoPalet> contenidos = new ArrayList<>();
@@ -36,11 +39,11 @@ public class Palet {
     @Column(nullable = false)
     private LocalDateTime fechaCreacion;
 
-    public Palet(Ubicacion ubicacion, TipoPalet tipo, ConfiguracionPalet configuracion, EstadoPalet estado) {
-        this.ubicacion = ubicacion;
+    public Palet(Maquina maquina, TipoPalet tipo) {
+        this.estacion = maquina.getEstacion();
         this.tipo = tipo;
-        this.configuracion = configuracion;
-        this.estado = estado;
+        this.maquina = maquina;
+        this.estado = EstadoPalet.ABIERTO;
         fechaCreacion = LocalDateTime.now();
     }
 
@@ -50,37 +53,25 @@ public class Palet {
         return id;
     }
 
-    public Ubicacion getUbicacion() {
-        return ubicacion;
-    }
+    public Estacion getEstacion() { return estacion; }
 
     public TipoPalet getTipo() { return tipo; }
 
-    public ConfiguracionPalet getConfiguracion() { return configuracion; }
-
-    public EstadoPalet getEstado() {
-        return estado;
-    }
+    public EstadoPalet getEstado() { return estado; }
 
     public List<ContenidoPalet> getContenidos() { return contenidos; }
 
     public LocalDateTime getFechaCreacion() { return fechaCreacion; }
 
-    public boolean estaAbierto() {
-        return estado == EstadoPalet.ABIERTO;
-    }
+    public boolean estaAbierto() { return estado == EstadoPalet.ABIERTO; }
 
-    public boolean estaCerrado() {
-        return estado == EstadoPalet.CERRADO;
-    }
+    public boolean estaCerrado() { return estado == EstadoPalet.CERRADO; }
 
     public boolean estaFinalizado() { return estado == EstadoPalet.FINALIZADO; }
 
     public boolean estaValidado() { return estado == EstadoPalet.VALIDADO; }
 
     public void setEstado(EstadoPalet estado) { this.estado = estado; }
-
-    public void setUbicacion(Ubicacion ubicacion) { this.ubicacion = ubicacion; }
 
     public void incorporarContenidoPalet(ContenidoPalet contenido) { this.contenidos.add(contenido); }
 }

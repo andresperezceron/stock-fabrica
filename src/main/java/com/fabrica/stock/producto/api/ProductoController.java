@@ -55,13 +55,13 @@ public class ProductoController {
         return ResponseEntity.ok(ProductosResponse.of(productos));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{maquinaId}")
     public ResponseEntity<ProductoResponse> obtener(@PathVariable Long id) {
         Producto producto = obtenerProductoService.obtener(id);
         return ResponseEntity.ok(ProductoResponse.of(producto));
     }
 
-    @PostMapping("{id}/activar")
+    @PostMapping("{maquinaId}/activar")
     public ResponseEntity<Void> activar(@PathVariable Long id) {
         activarProductoService.activar(id);
         return ResponseEntity.noContent().build();
@@ -73,7 +73,7 @@ public class ProductoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{maquinaId}")
     public ResponseEntity<Void> actualizar(
             @PathVariable Long id,
             @Valid @RequestBody ProductoRequest request) {
@@ -81,7 +81,7 @@ public class ProductoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}/materias-primas/{materiaPrimaId}")
+    @PutMapping("/{maquinaId}/materias-primas/{materiaPrimaId}")
     public ResponseEntity<Void> agregarMateriaPrima(
             @PathVariable Long id,
             @PathVariable Long materiaPrimaId) {
@@ -89,7 +89,7 @@ public class ProductoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/observaciones")
+    @PatchMapping("/{maquinaId}/observaciones")
     public ResponseEntity<Void> actualizarObservaciones(
             @PathVariable Long id,
             @RequestBody ActualizarObservacionesRequest request) {
@@ -97,7 +97,7 @@ public class ProductoController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}/materias-primas/{materiaPrimaId}")
+    @DeleteMapping("/{maquinaId}/materias-primas/{materiaPrimaId}")
     public ResponseEntity<Void> quitarMateriaPrima(
             @PathVariable Long id,
             @PathVariable Long materiaPrimaId) {
@@ -105,7 +105,7 @@ public class ProductoController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{maquinaId}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         eliminarProductoService.eliminar(id);
         return ResponseEntity.noContent().build();

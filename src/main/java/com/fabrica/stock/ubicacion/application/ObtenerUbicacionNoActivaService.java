@@ -16,7 +16,7 @@ public class ObtenerUbicacionNoActivaService {
     public Ubicacion obtener(Long id) {
         return ubicacionRepository
                 .findByIdAndActivoFalseAndSistemaFalse(id)
-                .orElseThrow(() -> new UbicacionNoEncontradaException("No existe ubicación Inactiva con id: " + id));
+                .orElseThrow(() -> new UbicacionNoEncontradaException("No existe ubicación Inactiva con maquinaId: " + id));
     }
 
     public Ubicacion obtener(String nombreUbicacion) {

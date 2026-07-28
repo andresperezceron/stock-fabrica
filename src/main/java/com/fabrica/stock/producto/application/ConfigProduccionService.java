@@ -1,5 +1,6 @@
 package com.fabrica.stock.producto.application;
 
+import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.producto.api.dto.ActualizarObservacionesRequest;
 import com.fabrica.stock.producto.configproduccion.application.*;
 import com.fabrica.stock.producto.domain.Producto;
@@ -13,13 +14,15 @@ public class ConfigProduccionService {
     private final ObtenerConfigProduccionService obtenerConfigProduccionService;
     private final EliminarConfigProduccionService eliminarConfigProduccionService;
     private final CrearConfigProduccionService crearConfigProduccionService;
+    private final ValidarMaquinaParaProduccionService validarMaquinaParaProduccionService;
 
     public ConfigProduccionService(AgregarMateriaPrimaService agregarMateriaPrimaService,
                                    QuitarMateriaPrimaService quitarMateriaPrimaService,
                                    ObtenerProductoService obtenerProductoService,
                                    ObtenerConfigProduccionService obtenerConfigProduccionService,
                                    EliminarConfigProduccionService eliminarConfigProduccionService,
-                                   CrearConfigProduccionService crearConfigProduccionService)
+                                   CrearConfigProduccionService crearConfigProduccionService,
+                                   ValidarMaquinaParaProduccionService validarMaquinaParaProduccionService)
     {
         this.agregarMateriaPrimaService = agregarMateriaPrimaService;
         this.quitarMateriaPrimaService = quitarMateriaPrimaService;
@@ -27,6 +30,11 @@ public class ConfigProduccionService {
         this.obtenerConfigProduccionService = obtenerConfigProduccionService;
         this.eliminarConfigProduccionService = eliminarConfigProduccionService;
         this.crearConfigProduccionService = crearConfigProduccionService;
+        this.validarMaquinaParaProduccionService = validarMaquinaParaProduccionService;
+    }
+
+    public void validarMaquinaParaProduccion(Maquina maquina) {
+        validarMaquinaParaProduccionService.validar(maquina);
     }
 
     public void crearSinoExiste(Producto producto) {

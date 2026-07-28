@@ -1,12 +1,24 @@
 package com.fabrica.stock.palet.infrastructure;
 
+import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
 public interface PaletRepository extends JpaRepository<Palet, Long> {
-    Optional<Palet> findById(long id);
-    boolean existsByUbicacion(Ubicacion ubicacion);
+
+    @Query("""
+    SELECT COUNT(p) > 0
+    FROM Palet p
+    WHERE p.maquina = :maquina
+      AND p.estado NOT IN (
+            com.fabrica.stock.palet.domain.EstadoPalet.FINALIZADO,
+            com.fabrica.stock.palet.domain.EstadoPalet.VALIDADO
+      )
+""")
+    boolean existsProcesoProduccionActivo(@Param("maquina") Maquina maquina);
 }

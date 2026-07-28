@@ -13,7 +13,7 @@ public class MovimientoController {
         this.consultarTrazabilidadLoteService = consultarTrazabilidadLoteService;
     }
 
-    @GetMapping("/lotes/{id}")
+    @GetMapping("/lotes/{maquinaId}")
     public ConsultarTrazabilidadLoteResponse consultar(@PathVariable Long id) {
         return consultarTrazabilidadLoteService.consultar(id);
     }

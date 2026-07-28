@@ -53,7 +53,7 @@ public class UbicacionController {
         return ResponseEntity.ok(UbicacionesResponse.of(inactivas));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{maquinaId}")
     public ResponseEntity<UbicacionResponse> obtener(@PathVariable Long id) {
         Ubicacion ubicacion = obtenerUbicacionService.obtener(id);
         return ResponseEntity.ok(UbicacionResponse.of(ubicacion));
@@ -65,7 +65,7 @@ public class UbicacionController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{maquinaId}")
     public ResponseEntity<Void> actualizar(
             @PathVariable Long id,
             @Valid @RequestBody ActualizarUbicacionRequest request){
@@ -73,13 +73,13 @@ public class UbicacionController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/activar")
+    @PatchMapping("/{maquinaId}/activar")
     public ResponseEntity<Void> activar(@PathVariable Long id) {
         activarUbicacionService.activar(id);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{maquinaId}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id){
         eliminarUbicacionService.eliminar(id);
         return ResponseEntity.noContent().build();

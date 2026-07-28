@@ -18,8 +18,7 @@ public class ComprobarUsoUbicacionService {
     }
 
     public boolean tieneUso(Ubicacion ubicacion) {
-        return paletRepository.existsByUbicacion(ubicacion)
-                || movimientoStockRepository.existsByOrigen(ubicacion)
+        return movimientoStockRepository.existsByOrigen(ubicacion)
                 || movimientoStockRepository.existsByDestino(ubicacion);
     }
 }

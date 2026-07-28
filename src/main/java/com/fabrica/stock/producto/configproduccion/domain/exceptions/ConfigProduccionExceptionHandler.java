@@ -34,14 +34,14 @@ public class ConfigProduccionExceptionHandler {
     public ResponseEntity<DomainErrorResponse>
     manejarProductoActivoNoAsignadoException(ProductoActivoNoAsignadoException ex) {
         return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
+                .status(HttpStatus.BAD_REQUEST)
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
 
     @ExceptionHandler(ConfigProduccionNoValidaException.class)
     public ResponseEntity<DomainErrorResponse> manejarConfigProduccionNoValida(ConfigProduccionNoValidaException ex) {
         return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
+                .status(HttpStatus.BAD_REQUEST)
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
 }

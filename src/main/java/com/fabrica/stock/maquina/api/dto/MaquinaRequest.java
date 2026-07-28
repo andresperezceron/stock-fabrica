@@ -13,14 +13,5 @@ public record MaquinaRequest(
 
         @NotBlank(message = "Nombre máquina es obligatorio.")
         @Size(max = MaquinaConstraints.NOMBRE)
-        String nombre,
-
-        @NotNull(message = "Ubicación es obligatoria.")
-        Long ubicacionId,
-
-        @Size(
-                max = TextoConstraints.LARGO,
-                message = "Observaciones demasiado larga. Max: " +  TextoConstraints.LARGO
-        )
-        String observaciones
+        String nombre
 ) {}

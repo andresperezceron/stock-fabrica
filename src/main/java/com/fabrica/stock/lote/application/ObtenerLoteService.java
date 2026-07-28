@@ -15,6 +15,6 @@ public class ObtenerLoteService {
 
     public Lote obtener(Long id) {
         return loteRepository.findById(id)
-                .orElseThrow(() -> new LoteNoEncontradoException("No existe Lote con id: " + id));
+                .orElseThrow(() -> new LoteNoEncontradoException("No existe Lote con maquinaId: " + id));
     }
 }

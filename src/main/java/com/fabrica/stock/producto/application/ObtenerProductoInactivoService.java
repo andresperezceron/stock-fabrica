@@ -16,7 +16,7 @@ public class ObtenerProductoInactivoService {
 
     public Producto obtener(Long id) {
         return productoRepository.findByIdAndActivoFalse(id).orElseThrow(() ->
-                new ProductoNoEncontradoException("No existe Producto Inactivo con id: " + id));
+                new ProductoNoEncontradoException("No existe Producto Inactivo con maquinaId: " + id));
     }
 
     public Producto obtener(String codigo) {

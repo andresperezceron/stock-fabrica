@@ -15,6 +15,6 @@ public class ObtenerFamiliaService {
 
     public Familia obtener(Long id) {
         return familiaRepository.findById(id).orElseThrow(() ->
-                new FamiliaNoEncontradaException("No existe familia con id " + id));
+                new FamiliaNoEncontradaException("No existe familia con maquinaId " + id));
     }
 }

@@ -2,7 +2,9 @@ package com.fabrica.stock.maquina.application;
 
 import com.fabrica.stock.maquina.domain.EstadoMaquina;
 import com.fabrica.stock.maquina.domain.Maquina;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AsignarEstadoService {
     private final ObtenerMaquinaService obtenerMaquinaService;
 
