@@ -3,12 +3,9 @@ package com.fabrica.stock.palet.infrastructure;
 import com.fabrica.stock.estacion.domain.Estacion;
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.palet.domain.Palet;
-import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-import java.util.Optional;
 
 public interface PaletRepository extends JpaRepository<Palet, Long> {
 
@@ -28,5 +25,5 @@ public interface PaletRepository extends JpaRepository<Palet, Long> {
     FROM Palet p
     WHERE p.localizacion = :estacion
 """)
-    boolean existsProcesoProduccionActivo2(@Param("estacion") Estacion estacion);
+    boolean existsByLocalizacion(@Param("estacion") Estacion estacion);
 }

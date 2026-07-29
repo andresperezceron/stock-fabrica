@@ -21,6 +21,9 @@ public class ConfigProduccion {
     private Producto producto;
 
     @Column(nullable = false)
+    private int cajasPorPalet;
+
+    @Column(nullable = false)
     private LocalDateTime fechaCreacion;
 
     @Column(nullable = false)
@@ -41,7 +44,8 @@ public class ConfigProduccion {
 
     public ConfigProduccion(Producto producto) {
         this.producto = producto;
-        this.observaciones = "";
+        cajasPorPalet = 0;
+        observaciones = "";
     }
 
     public Long getId() { return id; }
@@ -54,16 +58,20 @@ public class ConfigProduccion {
 
     public List<Producto> getMateriasPrimas() { return Collections.unmodifiableList(materiasPrimas); }
 
+    public int getCajasPorPalet() { return cajasPorPalet; }
+
     public String getObservaciones() { return observaciones; }
 
     public void agregarMateriaPrima(Producto producto) { materiasPrimas.add(producto); }
 
     public void quitarMateriaPrima(Producto producto) { materiasPrimas.remove(producto); }
 
+    public void actualizarCajasPorPalet(int cajasPorPalet) {  this.cajasPorPalet = cajasPorPalet; }
+
     public void actualizarObservaciones(String observaciones) { this.observaciones = observaciones; }
 
     public boolean esValida() {
-        return !materiasPrimas.isEmpty();
+        return !materiasPrimas.isEmpty() && cajasPorPalet > 0;
     }
 
     @PrePersist

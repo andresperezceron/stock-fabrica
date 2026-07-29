@@ -9,12 +9,12 @@ import com.fabrica.stock.producto.configproduccion.domain.exceptions.ProductoAct
 import org.springframework.stereotype.Service;
 
 @Service
-public class ValidarMaquinaParaProduccionService {
+public class ValidarProcesoProduccionService {
     private final ObtenerConfigProduccionService obtenerConfigProduccionService;
     private final EstacionOcupadaService estacionOcupadaService;
 
-    public ValidarMaquinaParaProduccionService(ObtenerConfigProduccionService obtenerConfigProduccionService,
-                                               EstacionOcupadaService estacionOcupadaService) {
+    public ValidarProcesoProduccionService(ObtenerConfigProduccionService obtenerConfigProduccionService,
+                                           EstacionOcupadaService estacionOcupadaService) {
         this.obtenerConfigProduccionService = obtenerConfigProduccionService;
         this.estacionOcupadaService = estacionOcupadaService;
     }
@@ -29,7 +29,7 @@ public class ValidarMaquinaParaProduccionService {
             throw new ProductoActivoNoAsignadoException("Producto activo no asignado.");
         }
 
-        if(estacionOcupadaService.estaOcupda(maquina.getEstacion())) {
+        if(estacionOcupadaService.estaOcupada(maquina.getEstacion())) {
             throw new EstacionOcupadaException("Estación ocupada.");
         }
 

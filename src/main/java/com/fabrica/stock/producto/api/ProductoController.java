@@ -55,13 +55,13 @@ public class ProductoController {
         return ResponseEntity.ok(ProductosResponse.of(productos));
     }
 
-    @GetMapping("/{maquinaId}")
+    @GetMapping("/{id}")
     public ResponseEntity<ProductoResponse> obtener(@PathVariable Long id) {
         Producto producto = obtenerProductoService.obtener(id);
         return ResponseEntity.ok(ProductoResponse.of(producto));
     }
 
-    @PostMapping("{maquinaId}/activar")
+    @PostMapping("{id}/activar")
     public ResponseEntity<Void> activar(@PathVariable Long id) {
         activarProductoService.activar(id);
         return ResponseEntity.noContent().build();
@@ -73,7 +73,7 @@ public class ProductoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{maquinaId}")
+    @PutMapping("/{id}")
     public ResponseEntity<Void> actualizar(
             @PathVariable Long id,
             @Valid @RequestBody ProductoRequest request) {
@@ -81,7 +81,7 @@ public class ProductoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{maquinaId}/materias-primas/{materiaPrimaId}")
+    @PutMapping("/{id}/materias-primas/{materiaPrimaId}")
     public ResponseEntity<Void> agregarMateriaPrima(
             @PathVariable Long id,
             @PathVariable Long materiaPrimaId) {
@@ -89,7 +89,7 @@ public class ProductoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{maquinaId}/observaciones")
+    @PatchMapping("/{id}/observaciones")
     public ResponseEntity<Void> actualizarObservaciones(
             @PathVariable Long id,
             @RequestBody ActualizarObservacionesRequest request) {
@@ -97,7 +97,15 @@ public class ProductoController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{maquinaId}/materias-primas/{materiaPrimaId}")
+    @PatchMapping("/{paletId}/cajas-por-palet/{cajasPorPalet}")
+    public ResponseEntity<Void> actualizarCajasPorPalet(
+            @PathVariable Long paletId,
+            @PathVariable Integer cajasPorPalet) {
+        configProduccionService.actualizarCajasPorPalet(paletId, cajasPorPalet);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}/materias-primas/{materiaPrimaId}")
     public ResponseEntity<Void> quitarMateriaPrima(
             @PathVariable Long id,
             @PathVariable Long materiaPrimaId) {
@@ -105,7 +113,7 @@ public class ProductoController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{maquinaId}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         eliminarProductoService.eliminar(id);
         return ResponseEntity.noContent().build();

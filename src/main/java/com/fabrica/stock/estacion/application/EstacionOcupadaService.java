@@ -1,20 +1,18 @@
 package com.fabrica.stock.estacion.application;
 
 import com.fabrica.stock.estacion.domain.Estacion;
-import com.fabrica.stock.estacion.infrastructure.EstacionRepository;
+import com.fabrica.stock.palet.infrastructure.PaletRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EstacionOcupadaService {
-    private final EstacionRepository estacionRepository;
+    private final PaletRepository paletRepository;
 
-    public EstacionOcupadaService(EstacionRepository estacionRepository) {
-        this.estacionRepository = estacionRepository;
+    public EstacionOcupadaService(PaletRepository paletRepository) {
+        this.paletRepository = paletRepository;
     }
 
-    public boolean estaOcupda(Estacion estacion) {
-        //return estacionRepository.existsByLocalizacion(estacion);
-        //return false;
-        return false;
+    public boolean estaOcupada(Estacion estacion) {
+        return paletRepository.existsByLocalizacion(estacion);
     }
 }

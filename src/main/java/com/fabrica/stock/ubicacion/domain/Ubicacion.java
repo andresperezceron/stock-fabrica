@@ -1,9 +1,7 @@
 package com.fabrica.stock.ubicacion.domain;
 
-
 import com.fabrica.stock.shared.domain.EntidadActivable;
 import com.fabrica.stock.shared.domain.Localizacion;
-import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
 import jakarta.persistence.*;
 
 @Entity

@@ -44,4 +44,11 @@ public class ConfigProduccionExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
+
+    @ExceptionHandler(CajasPorPaletNoValidoException.class)
+    public ResponseEntity<DomainErrorResponse> manejarCajasPorPalet(CajasPorPaletNoValidoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(DomainErrorResponse.of(ex.getMessage()));
+    }
 }

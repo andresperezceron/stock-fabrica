@@ -1,26 +1,21 @@
 package com.fabrica.stock.palet.api;
 
-import com.fabrica.stock.palet.api.dto.PaletRequest;
-import com.fabrica.stock.palet.application.CrearPaletService;
-import jakarta.validation.Valid;
+import com.fabrica.stock.palet.application.CrearPaletCajaService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/palets")
 public class PaletController {
-    private final CrearPaletService crearPaletService;
+    private final CrearPaletCajaService crearPaletCajaService;
 
-    public PaletController(CrearPaletService crearPaletService) {
-        this.crearPaletService = crearPaletService;
+    public PaletController(CrearPaletCajaService crearPaletCajaService) {
+        this.crearPaletCajaService = crearPaletCajaService;
     }
 
     @PostMapping
-    public ResponseEntity<Void> crear(@Valid @RequestBody PaletRequest request) {
-        crearPaletService.crear(request);
+    public ResponseEntity<Void> crear(@PathVariable Long maquinaId) {
+        crearPaletCajaService.crear(maquinaId);
         return ResponseEntity.noContent().build();
     }
 }
