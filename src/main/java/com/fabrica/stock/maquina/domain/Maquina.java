@@ -1,6 +1,7 @@
 package com.fabrica.stock.maquina.domain;
 
 import com.fabrica.stock.estacion.domain.Estacion;
+import com.fabrica.stock.lote.application.LoteGenerado;
 import com.fabrica.stock.maquina.domain.constraints.MaquinaConstraints;
 import com.fabrica.stock.maquina.domain.vo.NombreMaquina;
 import com.fabrica.stock.producto.domain.Producto;
@@ -14,6 +15,9 @@ public class Maquina implements EntidadActivable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Version
+    private Long version;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -90,6 +94,10 @@ public class Maquina implements EntidadActivable {
     }
 
     public void asignarEstadoAptaProduccion() { this.estado = EstadoMaquina.APTA_PRODUCCION; }
+
+    public LoteGenerado getGeneradorDeLotes() {
+        return new LoteGenerado(nombre);
+    }
 
     @Override
     public boolean estaActiva() { return activo; }

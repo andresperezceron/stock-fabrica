@@ -1,9 +1,7 @@
 package com.fabrica.stock.producto.application;
 
-import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.palet.application.ObtenerPaletService;
 import com.fabrica.stock.palet.domain.Palet;
-import com.fabrica.stock.palet.domain.TipoPalet;
 import com.fabrica.stock.producto.api.dto.ActualizarObservacionesRequest;
 import com.fabrica.stock.producto.configproduccion.application.*;
 import com.fabrica.stock.producto.domain.Producto;
@@ -19,7 +17,6 @@ public class ConfigProduccionService {
     private final EliminarConfigProduccionService eliminarConfigProduccionService;
     private final CrearConfigProduccionService crearConfigProduccionService;
     private final ActualizarCajasPorPaletService actualizarCajasPorPaletService;
-    private final ValidarProcesoProduccionService validarProcesoProduccionService;
 
     public ConfigProduccionService(AgregarMateriaPrimaService agregarMateriaPrimaService,
                                    QuitarMateriaPrimaService quitarMateriaPrimaService,
@@ -28,8 +25,7 @@ public class ConfigProduccionService {
                                    ObtenerPaletService obtenerPaletService,
                                    EliminarConfigProduccionService eliminarConfigProduccionService,
                                    CrearConfigProduccionService crearConfigProduccionService,
-                                   ActualizarCajasPorPaletService actualizarCajasPorPaletService,
-                                   ValidarProcesoProduccionService validarProcesoProduccionService)
+                                   ActualizarCajasPorPaletService actualizarCajasPorPaletService)
     {
         this.agregarMateriaPrimaService = agregarMateriaPrimaService;
         this.quitarMateriaPrimaService = quitarMateriaPrimaService;
@@ -39,18 +35,15 @@ public class ConfigProduccionService {
         this.eliminarConfigProduccionService = eliminarConfigProduccionService;
         this.crearConfigProduccionService = crearConfigProduccionService;
         this.actualizarCajasPorPaletService = actualizarCajasPorPaletService;
-        this.validarProcesoProduccionService = validarProcesoProduccionService;
     }
 
     public void actualizarCajasPorPalet(Long paletId, Integer cajasPorPalet) {
         Palet palet = obtenerPaletService.obtener(paletId);
-        Producto producto = palet.getMaquina().getProductoActivo();
-        TipoPalet tipoPalet = palet.getTipo();
-        actualizarCajasPorPaletService.actualizar(producto, cajasPorPalet, tipoPalet);
+        actualizarCajasPorPaletService.actualizar(palet, cajasPorPalet);
     }
 
-    public void validarProcesoDeProduccion(Maquina maquina) {
-        validarProcesoProduccionService.validar(maquina);
+    public boolean esValida(Producto producto) {
+        return obtenerConfigProduccionService.obtenerPorProducto(producto).esValida();
     }
 
     public void crearSinoExiste(Producto producto) {

@@ -14,7 +14,7 @@ public class ConsultarTrazabilidadLoteResponse {
 
     public ConsultarTrazabilidadLoteResponse(Lote lote, List<MovimientoResponse> movimientos) {
         this.codigoLote = lote.getCodigoLote();
-        this.maquina = lote.getMaquina().name();
+        this.maquina = lote.getMaquina().getNombre().valor();
         this.fechaProduccion = lote.getFechaCreacion();
         this.turno = lote.getTurno().getCodigo();
         this.movimientos = movimientos;

@@ -1,6 +1,9 @@
 package com.fabrica.stock.lote.domain;
 
 import com.fabrica.stock.lote.domain.constraints.LoteConstraints;
+import com.fabrica.stock.lote.domain.vo.CodigoLote;
+import com.fabrica.stock.maquina.domain.Maquina;
+import com.fabrica.stock.producto.domain.Producto;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -13,7 +16,7 @@ public class Lote {
     private Long id;
 
     @Column(nullable = false, unique = true, length = LoteConstraints.CODIGO_LOTE)
-    private String codigoLote;
+    private CodigoLote codigoLote;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -25,24 +28,27 @@ public class Lote {
     @Column(nullable = false)
     private LocalDateTime fechaCreacion;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private MaquinaProduccion maquina;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "maquina_id")
+    private Maquina maquina;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "producto_id")
+    private Producto producto;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TurnoProduccion turno;
 
-    protected Lote() {
-        // JPA
-    }
+    protected Lote() {}
 
     public Lote(
-            String codigoLote,
+            CodigoLote codigoLote,
             OrigenLote origen,
             String loteProveedor,
             LocalDateTime fechaCreacion,
-            MaquinaProduccion maquina,
+            Maquina maquina,
+            Producto producto,
             TurnoProduccion turno
     ) {
         this.codigoLote = codigoLote;
@@ -50,6 +56,7 @@ public class Lote {
         this.loteProveedor = loteProveedor;
         this.fechaCreacion = fechaCreacion;
         this.maquina = maquina;
+        this.producto = producto;
         this.turno = turno;
     }
 
@@ -57,7 +64,7 @@ public class Lote {
         return id;
     }
 
-    public String getCodigoLote() {
+    public CodigoLote getCodigoLote() {
         return codigoLote;
     }
 
@@ -73,7 +80,9 @@ public class Lote {
         return fechaCreacion;
     }
 
-    public MaquinaProduccion getMaquina() { return maquina; }
+    public Maquina getMaquina() { return maquina; }
+
+    public Producto getProducto() { return producto; }
 
     public TurnoProduccion getTurno() { return turno; }
 }

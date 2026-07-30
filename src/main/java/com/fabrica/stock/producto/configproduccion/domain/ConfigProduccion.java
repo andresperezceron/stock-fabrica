@@ -16,6 +16,9 @@ public class ConfigProduccion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Version
+    private Long version;
+
     @OneToOne(optional = false)
     @JoinColumn(name = "producto_id", unique = true)
     private Producto producto;

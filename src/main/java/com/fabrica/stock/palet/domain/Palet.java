@@ -55,6 +55,10 @@ public class Palet {
 
     public TipoPalet getTipo() { return tipo; }
 
+    public boolean esTipoGranel() { return tipo == TipoPalet.GRANEL; }
+
+    public boolean esTipoCaja() { return tipo == TipoPalet.CAJA; }
+
     public EstadoPalet getEstado() { return estado; }
 
     public Maquina getMaquina() { return maquina; }
