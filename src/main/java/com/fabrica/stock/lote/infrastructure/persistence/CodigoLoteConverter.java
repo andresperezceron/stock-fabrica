@@ -7,12 +7,12 @@ import jakarta.persistence.Converter;
 @Converter(autoApply = true)
 public class CodigoLoteConverter implements AttributeConverter<CodigoLote, String> {
     @Override
-    public String convertToDatabaseColumn(CodigoLote codigoLote) {
-        return "";
+    public String convertToDatabaseColumn(CodigoLote codigo) {
+        return codigo == null ? null : codigo.valor() ;
     }
 
     @Override
     public CodigoLote convertToEntityAttribute(String valor) {
-        return null;
+        return valor == null ? null : new CodigoLote(valor);
     }
 }

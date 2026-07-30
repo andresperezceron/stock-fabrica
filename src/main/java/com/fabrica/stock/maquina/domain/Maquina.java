@@ -1,13 +1,15 @@
 package com.fabrica.stock.maquina.domain;
 
 import com.fabrica.stock.estacion.domain.Estacion;
-import com.fabrica.stock.lote.application.LoteGenerado;
+import com.fabrica.stock.lote.domain.TurnoProduccion;
 import com.fabrica.stock.maquina.domain.constraints.MaquinaConstraints;
 import com.fabrica.stock.maquina.domain.vo.NombreMaquina;
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.shared.domain.EntidadActivable;
 import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "maquina_inyeccion")
@@ -95,9 +97,7 @@ public class Maquina implements EntidadActivable {
 
     public void asignarEstadoAptaProduccion() { this.estado = EstadoMaquina.APTA_PRODUCCION; }
 
-    public LoteGenerado getGeneradorDeLotes() {
-        return new LoteGenerado(nombre);
-    }
+    public LoteGenerado obtenerLoteGenerado() { return new LoteGenerado(this.nombre); }
 
     @Override
     public boolean estaActiva() { return activo; }
@@ -107,4 +107,28 @@ public class Maquina implements EntidadActivable {
 
     @Override
     public void desactivar() { activo = false; }
+
+    public static final class LoteGenerado {
+        private final LocalDateTime fechaCreacion;
+        private final TurnoProduccion turnoProduccion;
+        private final String codigo;
+
+        private LoteGenerado(NombreMaquina nombreMaquina) {
+            fechaCreacion = LocalDateTime.now();
+            turnoProduccion = TurnoProduccion.obtener(fechaCreacion);
+
+            String primerDigitoYear = String.valueOf(fechaCreacion.getYear()).substring(0,1);
+            String ultimoDigitoYear = String.valueOf(fechaCreacion.getYear()).substring(3);
+            String dia = String.format("%03d", fechaCreacion.getDayOfYear());
+            codigo =  nombreMaquina.valor() + "-"
+                    + primerDigitoYear + dia + ultimoDigitoYear + "-"
+                    + turnoProduccion.getCodigo();
+        }
+
+        public String getCodigo() { return codigo; }
+
+        public LocalDateTime getFechaCreacion() { return fechaCreacion; }
+
+        public TurnoProduccion getTurnoProduccion() { return turnoProduccion; }
+    }
 }

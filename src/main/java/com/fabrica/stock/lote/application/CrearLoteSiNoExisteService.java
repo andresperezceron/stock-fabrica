@@ -1,13 +1,13 @@
 package com.fabrica.stock.lote.application;
 
 import com.fabrica.stock.lote.domain.Lote;
-import com.fabrica.stock.lote.domain.MaquinaProduccion;
 import com.fabrica.stock.lote.domain.OrigenLote;
+import com.fabrica.stock.lote.domain.vo.CodigoLote;
 import com.fabrica.stock.lote.infrastructure.LoteRepository;
 import com.fabrica.stock.maquina.domain.Maquina;
+import com.fabrica.stock.producto.domain.Producto;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -18,17 +18,17 @@ public class CrearLoteSiNoExisteService {
         this.loteRepository = loteRepository;
     }
 
-    public Lote crearSiNoExiste(OrigenLote origenLote, String loteProveedor, Maquina maquina) {
-        LoteGenerado loteGenerado = maquina.getGeneradorDeLotes();
-        Optional<Lote> existente = loteRepository.findByCodigoLote(loteGenerado.getCodigoLote());
-
+    public Lote crearSiNoExiste(OrigenLote origenLote, String loteProveedor, Maquina maquina, Producto producto) {
+        Maquina.LoteGenerado loteGenerado = maquina.obtenerLoteGenerado();
+        Optional<Lote> existente = loteRepository.findByCodigoLote(loteGenerado.getCodigo());
         return existente.orElseGet(() -> loteRepository.save(new Lote(
-                loteGenerado.getCodigoLote(),
+                CodigoLote.of(loteGenerado.getCodigo()),
                 origenLote,
                 loteProveedor,
-                loteGenerado.getFecha(),
+                loteGenerado.getFechaCreacion(),
                 maquina,
-                loteGenerado.getTurno()
+                producto,
+                loteGenerado.getTurnoProduccion()
         )));
     }
 }
