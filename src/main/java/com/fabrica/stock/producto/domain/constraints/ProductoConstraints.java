@@ -5,6 +5,5 @@ public final class ProductoConstraints {
 
     private ProductoConstraints() {}
     public static boolean codigoProductoValido(String codigo) {
-        return codigo.matches("\\d{6}");
-    }
+        return codigo.matches("\\d{"+CODIGO+"}"); }
 }

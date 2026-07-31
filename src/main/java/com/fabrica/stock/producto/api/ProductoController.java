@@ -81,11 +81,11 @@ public class ProductoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}/materias-primas/{materiaPrimaId}")
+    @PutMapping("/{maquinaId}/materias-primas/{materiaPrimaId}")
     public ResponseEntity<Void> agregarMateriaPrima(
-            @PathVariable Long id,
+            @PathVariable Long maquinaId,
             @PathVariable Long materiaPrimaId) {
-        configProduccionService.agregarMateriaPrima(id, materiaPrimaId);
+        configProduccionService.agregarMateriaPrima(maquinaId, materiaPrimaId);
         return ResponseEntity.noContent().build();
     }
 
@@ -105,11 +105,11 @@ public class ProductoController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}/materias-primas/{materiaPrimaId}")
+    @DeleteMapping("/{maquinaId}/materias-primas/{materiaPrimaId}")
     public ResponseEntity<Void> quitarMateriaPrima(
-            @PathVariable Long id,
+            @PathVariable Long maquinaId,
             @PathVariable Long materiaPrimaId) {
-        configProduccionService.quitarMateriaPrima(id, materiaPrimaId);
+        configProduccionService.quitarMateriaPrima(maquinaId, materiaPrimaId);
         return ResponseEntity.noContent().build();
     }
 

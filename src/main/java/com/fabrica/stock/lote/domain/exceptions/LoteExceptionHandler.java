@@ -36,4 +36,11 @@ public class LoteExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
+
+    @ExceptionHandler(CodigoLoteNoValidoException.class)
+    public ResponseEntity<DomainErrorResponse> manejarCodigoLoteNoValido(CodigoLoteNoValidoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(DomainErrorResponse.of(ex.getMessage()));
+    }
 }

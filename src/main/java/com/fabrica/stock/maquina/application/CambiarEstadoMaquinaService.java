@@ -5,25 +5,30 @@ import com.fabrica.stock.maquina.domain.Maquina;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AsignarEstadoService {
+public class CambiarEstadoMaquinaService {
     private final ObtenerMaquinaService obtenerMaquinaService;
 
-    public AsignarEstadoService(ObtenerMaquinaService obtenerMaquinaService) {
+    public CambiarEstadoMaquinaService(ObtenerMaquinaService obtenerMaquinaService) {
         this.obtenerMaquinaService = obtenerMaquinaService;
     }
 
-    public void asignar(Long id, EstadoMaquina estado) {
+    public void cambiar(Long id, EstadoMaquina estado) {
         Maquina maquina = obtenerMaquinaService.obtener(id);
         switch(estado) {
             case CAMBIO_MOLDE -> {
-                maquina.asignarEstadoCambioMolde();
+                maquina.cambiarEstadoACambioMolde();
                 maquina.quitarProductoActivo();
             }
             case FUERA_SERVICIO -> {
-                maquina.asignarEstadoFueraServicio();
+                maquina.cambiarEstadoAFueraServicio();
                 maquina.quitarProductoActivo();
             }
-            case APTA_PRODUCCION ->  maquina.asignarEstadoAptaProduccion();
+            case MANTENIMIENTO -> {
+                maquina.cambiarEstadoAMantenimiento();
+                maquina.quitarProductoActivo();
+            }
+            case APTA ->  maquina.cambiarEstadoAptaProduccion();
+            case CONFIGURADA -> maquina.configurada();
         }
     }
 }

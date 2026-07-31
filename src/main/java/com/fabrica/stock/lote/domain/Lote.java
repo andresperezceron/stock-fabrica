@@ -4,6 +4,7 @@ import com.fabrica.stock.lote.domain.constraints.LoteConstraints;
 import com.fabrica.stock.lote.domain.vo.CodigoLote;
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.producto.domain.Producto;
+import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -15,14 +16,14 @@ public class Lote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = LoteConstraints.CODIGO_LOTE)
+    @Column(nullable = false, unique = true)
     private CodigoLote codigoLote;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OrigenLote origen;
 
-    @Column(length = LoteConstraints.CODIGO_LOTE_PROVEEDOR)
+    @Column(length = TextoConstraints.CORTO)
     private String loteProveedor;
 
     @Column(nullable = false)

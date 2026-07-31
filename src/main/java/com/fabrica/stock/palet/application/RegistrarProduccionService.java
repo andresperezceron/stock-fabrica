@@ -4,28 +4,34 @@ import com.fabrica.stock.lote.application.CrearLoteSiNoExisteService;
 import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.lote.domain.OrigenLote;
 import com.fabrica.stock.maquina.application.ObtenerMaquinaService;
-import com.fabrica.stock.palet.domain.Palet;
-import com.fabrica.stock.palet.domain.exceptions.EstadoPaletInvalidoException;
+import com.fabrica.stock.maquina.domain.Maquina;
+import com.fabrica.stock.maquina.domain.exceptions.EstadoMaquinaNoValidoException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RegistrarProduccionService {
-    private final ObtenerPaletService obtenerPaletService;
     private final ObtenerMaquinaService obtenerMaquinaService;
     private final CrearLoteSiNoExisteService crearLoteSiNoExisteService;
 
-    public RegistrarProduccionService(ObtenerPaletService obtenerPaletService,
-                                      ObtenerMaquinaService obtenerMaquinaService,
+    public RegistrarProduccionService(ObtenerMaquinaService obtenerMaquinaService,
                                       CrearLoteSiNoExisteService crearLoteSiNoExisteService)
     {
-        this.obtenerPaletService = obtenerPaletService;
         this.obtenerMaquinaService = obtenerMaquinaService;
         this.crearLoteSiNoExisteService = crearLoteSiNoExisteService;
     }
 
-    public void Registrar(Long maquinaId,  Long paletId) {
-        Palet palet = obtenerPaletService.obtener(paletId);
-        if(!palet.estaAbierto()) throw new EstadoPaletInvalidoException("El palet no está abierto.");
-        Lote lote;
+    public void registrar(Long maquinaId, Long paletId) {
+        Maquina maquina = obtenerMaquinaService.obtener(maquinaId);
+        if(!maquina.estaEnProduccion()) {
+            throw new EstadoMaquinaNoValidoException("No se puede registrar producción con la maquina en estado: " +
+                    maquina.getEstado());
+        }
+
+        Lote lote = crearLoteSiNoExisteService.crearSiNoExiste(
+                OrigenLote.PRODUCCION,
+                null,
+                maquina,
+                maquina.getProductoActivo()
+        );
     }
 }

@@ -2,30 +2,31 @@ package com.fabrica.stock.palet.application;
 
 import com.fabrica.stock.maquina.application.ObtenerMaquinaService;
 import com.fabrica.stock.maquina.domain.Maquina;
+import com.fabrica.stock.maquina.domain.exceptions.EstadoMaquinaNoValidoException;
 import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.palet.domain.TipoPalet;
 import com.fabrica.stock.palet.infrastructure.PaletRepository;
-import com.fabrica.stock.shared.application.InicioProcesoProduccionService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CrearPaletCajaService {
+public class IniciarProduccionCajaService {
     private final ObtenerMaquinaService obtenerMaquinaService;
     private final PaletRepository paletRepository;
-    private final InicioProcesoProduccionService inicioProcesoProduccionService;
 
-    public CrearPaletCajaService(ObtenerMaquinaService obtenerMaquinaService,
-                                 PaletRepository paletRepository,
-                                 InicioProcesoProduccionService inicioProcesoProduccionService)
+    public IniciarProduccionCajaService(ObtenerMaquinaService obtenerMaquinaService,
+                                        PaletRepository paletRepository)
     {
         this.obtenerMaquinaService = obtenerMaquinaService;
         this.paletRepository = paletRepository;
-        this.inicioProcesoProduccionService = inicioProcesoProduccionService;
     }
 
-    public void crear(Long maquinaId) {
+    public void iniciar(Long maquinaId) {
         Maquina maquina = obtenerMaquinaService.obtener(maquinaId);
-        inicioProcesoProduccionService.validarCreacionDePalet(maquina);
+        if(!maquina.estaConfigurada()) {
+            throw new EstadoMaquinaNoValidoException("No se puede iniciar la producción con la maquina en estado: " +
+                    maquina.getEstado());
+        }
         paletRepository.save(new Palet(maquina, TipoPalet.CAJA));
+        maquina.enProduccion();
     }
 }

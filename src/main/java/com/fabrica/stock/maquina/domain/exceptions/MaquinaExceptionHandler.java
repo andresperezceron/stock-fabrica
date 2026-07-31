@@ -37,4 +37,11 @@ public class MaquinaExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
+
+    @ExceptionHandler(EstadoMaquinaNoValidoException.class)
+    public ResponseEntity<DomainErrorResponse> manejarEstadoMaquinaNoValido(EstadoMaquinaNoValidoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(DomainErrorResponse.of(ex.getMessage()));
+    }
 }

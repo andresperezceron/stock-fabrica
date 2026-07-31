@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ActualizarCajasPorPaletService {
-
     @Transactional
     public void actualizar(Palet palet, Integer cajasPorPalet) {
         if(cajasPorPalet == null || cajasPorPalet <= 0) {

@@ -52,7 +52,7 @@ public class Maquina implements EntidadActivable {
         this.nombre = nombre;
         this.estacion = estacion;
         descripcion = "";
-        estado = EstadoMaquina.APTA_PRODUCCION;
+        estado = EstadoMaquina.APTA;
     }
 
     public Long getId() { return id; }
@@ -79,23 +79,29 @@ public class Maquina implements EntidadActivable {
 
     public boolean tieneProductoActivo() { return productoActivo != null; }
 
-    public boolean estaFueraServicio() {
-        return estado == EstadoMaquina.FUERA_SERVICIO;
-    }
-
     public boolean estaCambioMolde() { return estado == EstadoMaquina.CAMBIO_MOLDE; }
 
-    public boolean estaAptaProduccion() { return estado == EstadoMaquina.APTA_PRODUCCION; }
+    public boolean estaAptaProduccion() { return estado == EstadoMaquina.APTA; }
 
-    public void asignarEstadoCambioMolde() {
+    public boolean estaConfigurada() { return estado == EstadoMaquina.CONFIGURADA; }
+
+    public boolean estaEnProduccion() { return estado == EstadoMaquina.EN_PRODUCCION; }
+
+    public void enProduccion() { estado = EstadoMaquina.EN_PRODUCCION; }
+
+    public void configurada() { estado = EstadoMaquina.CONFIGURADA; }
+
+    public void cambiarEstadoACambioMolde() {
         this.estado = EstadoMaquina.CAMBIO_MOLDE;
     }
 
-    public void asignarEstadoFueraServicio() {
+    public void cambiarEstadoAFueraServicio() {
         this.estado = EstadoMaquina.FUERA_SERVICIO;
     }
 
-    public void asignarEstadoAptaProduccion() { this.estado = EstadoMaquina.APTA_PRODUCCION; }
+    public void cambiarEstadoAMantenimiento() { this.estado = EstadoMaquina.MANTENIMIENTO; }
+
+    public void cambiarEstadoAptaProduccion() { this.estado = EstadoMaquina.APTA; }
 
     public LoteGenerado obtenerLoteGenerado() { return new LoteGenerado(this.nombre); }
 
