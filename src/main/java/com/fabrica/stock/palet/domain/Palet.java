@@ -2,9 +2,12 @@ package com.fabrica.stock.palet.domain;
 
 import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
 import com.fabrica.stock.estacion.domain.Estacion;
+import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.maquina.domain.Maquina;
+import com.fabrica.stock.producto.domain.Producto;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +62,6 @@ public class Palet {
 
     public boolean esTipoCaja() { return tipo == TipoPalet.CAJA; }
 
-    public EstadoPalet getEstado() { return estado; }
-
     public Maquina getMaquina() { return maquina; }
 
     public List<ContenidoPalet> getContenidos() { return contenidos; }
@@ -79,8 +80,7 @@ public class Palet {
 
     public boolean estaValidado() { return estado == EstadoPalet.VALIDADO; }
 
-    public void setEstado(EstadoPalet estado) {
-        this.estado = estado; }
-
-    public void incorporarContenidoPalet(ContenidoPalet contenido) { this.contenidos.add(contenido); }
+    public ContenidoPalet registrarContenido(Lote lote, BigDecimal cantidad) {
+        return new ContenidoPalet(this, lote, cantidad);
+    }
 }

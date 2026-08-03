@@ -1,7 +1,10 @@
 package com.fabrica.stock.palet.api.dto;
 
+import java.math.BigDecimal;
+
 public record RegistrarProduccionRequest(
         Long maquinaId,
-        Long paletId
+        Long paletId,
+        BigDecimal cantidad
 ) {
 }

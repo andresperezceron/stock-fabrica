@@ -28,7 +28,6 @@ public class CambiarEstadoMaquinaService {
                 maquina.quitarProductoActivo();
             }
             case APTA ->  maquina.cambiarEstadoAptaProduccion();
-            case CONFIGURADA -> maquina.configurada();
         }
     }
 }
