@@ -48,12 +48,8 @@ public class ConfigProduccionService {
         actualizarCajasPorPaletService.actualizar(palet, cajasPorPalet);
     }
 
-    public boolean esValida(Producto producto) {
-        return obtenerConfigProduccionService.obtenerPorProducto(producto).esValida();
-    }
-
-    public void crearSinoExiste(Producto producto) {
-        crearConfigProduccionService.crearPorProducto(producto);
+    public ConfigProduccion crearSinoExiste(Producto producto) {
+        return crearConfigProduccionService.crearPorProducto(producto);
     }
 
     public void eliminarPorProducto(Producto producto,  boolean productoTieneUso) {
@@ -68,7 +64,6 @@ public class ConfigProduccionService {
 
     public void quitarMateriaPrima(Long maquinaId, Long materiaPrimaId) {
         Maquina maquina = obtenerMaquinaService.obtener(maquinaId);
-        Producto producto = maquina.getProductoActivo();
         Producto materiaPrima = obtenerProductoService.obtener(materiaPrimaId);
         quitarMateriaPrimaService.quitar(maquina, materiaPrima);
     }

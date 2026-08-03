@@ -67,6 +67,10 @@ public class Palet {
 
     public LocalDateTime getFechaCreacion() { return fechaCreacion; }
 
+    public void abrir() { estado = EstadoPalet.ABIERTO; }
+
+    public void cerrar() { estado = EstadoPalet.CERRADO; }
+
     public boolean estaAbierto() { return estado == EstadoPalet.ABIERTO; }
 
     public boolean estaCerrado() { return estado == EstadoPalet.CERRADO; }
@@ -75,7 +79,8 @@ public class Palet {
 
     public boolean estaValidado() { return estado == EstadoPalet.VALIDADO; }
 
-    public void setEstado(EstadoPalet estado) { this.estado = estado; }
+    public void setEstado(EstadoPalet estado) {
+        this.estado = estado; }
 
     public void incorporarContenidoPalet(ContenidoPalet contenido) { this.contenidos.add(contenido); }
 }

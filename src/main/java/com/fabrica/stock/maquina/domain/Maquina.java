@@ -81,15 +81,23 @@ public class Maquina implements EntidadActivable {
 
     public boolean estaCambioMolde() { return estado == EstadoMaquina.CAMBIO_MOLDE; }
 
+    public boolean estaFueraServicio() { return estado == EstadoMaquina.FUERA_SERVICIO; }
+
+    public boolean estaMantenimiento() { return estado == EstadoMaquina.MANTENIMIENTO; }
+
     public boolean estaAptaProduccion() { return estado == EstadoMaquina.APTA; }
 
     public boolean estaConfigurada() { return estado == EstadoMaquina.CONFIGURADA; }
 
-    public boolean estaEnProduccion() { return estado == EstadoMaquina.EN_PRODUCCION; }
+    public boolean estaProduccion() { return estado == EstadoMaquina.EN_PRODUCCION; }
+
+    public boolean estaConfiguracion() { return estado == EstadoMaquina.EN_CONFIGURACION; }
 
     public void enProduccion() { estado = EstadoMaquina.EN_PRODUCCION; }
 
     public void configurada() { estado = EstadoMaquina.CONFIGURADA; }
+
+    public void enConfiguracion() { estado = EstadoMaquina.EN_CONFIGURACION; }
 
     public void cambiarEstadoACambioMolde() {
         this.estado = EstadoMaquina.CAMBIO_MOLDE;

@@ -14,36 +14,32 @@ public class AsignarProductoActivoService {
     private final ObtenerMaquinaService obtenerMaquinaService;
     private final ObtenerProductoService obtenerProductoService;
     private final ConfigProduccionService configProduccionService;
-    private final CambiarEstadoMaquinaService cambiarEstadoMaquinaService;
 
     public AsignarProductoActivoService(ObtenerMaquinaService obtenerMaquinaService,
                                         ObtenerProductoService obtenerProductoService,
-                                        ConfigProduccionService configProduccionService,
-                                        CambiarEstadoMaquinaService cambiarEstadoMaquinaService)
+                                        ConfigProduccionService configProduccionService)
     {
         this.obtenerMaquinaService = obtenerMaquinaService;
         this.obtenerProductoService = obtenerProductoService;
         this.configProduccionService = configProduccionService;
-        this.cambiarEstadoMaquinaService = cambiarEstadoMaquinaService;
     }
 
     @Transactional
     public void asignar(Long id, Long productoActivoId) {
         Maquina maquina = obtenerMaquinaService.obtener(id);
-        if(!maquina.estaAptaProduccion()) {
-            throw new EstadoMaquinaNoValidoException("No se puede asignar producto activo con máquina en estado: " +
-                    maquina.getEstado());
-        }
+
+        if(maquina.estaProduccion()) throw new EstadoMaquinaNoValidoException("Máquina está en producción.");
+        else if(maquina.estaMantenimiento() || maquina.estaCambioMolde() || maquina.estaFueraServicio())
+            throw new EstadoMaquinaNoValidoException("No se puede asignar producto activo. " +
+                    "Estado máquina: " + maquina.getEstado());
 
         Producto producto = obtenerProductoService.obtener(productoActivoId);
-        if(!maquina.getTipo().puedeFabricar(producto)) {
-            throw new ProductoActivoNoValidoException("Producto incompatible con la máquina.");
-        }
+        if(!maquina.getTipo().puedeFabricar(producto))
+            throw new ProductoActivoNoValidoException("La máquina no puede fabricar: " + producto.getDescripcion());
 
         maquina.asignarProductoActivo(producto);
-        configProduccionService.crearSinoExiste(producto);
-
-        if(configProduccionService.esValida(producto))
+        if(configProduccionService.crearSinoExiste(producto).esValida())
             maquina.configurada();
+        else maquina.enConfiguracion();
     }
 }

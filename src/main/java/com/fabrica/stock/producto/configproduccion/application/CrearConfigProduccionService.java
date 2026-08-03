@@ -13,8 +13,9 @@ public class CrearConfigProduccionService {
         this.configProduccionRepository = configProduccionRepository;
     }
 
-    public void crearPorProducto(Producto producto) {
-        if(!configProduccionRepository.existsConfigProduccionByProducto(producto))
-            configProduccionRepository.save(new ConfigProduccion(producto));
+    public ConfigProduccion crearPorProducto(Producto producto) {
+        return configProduccionRepository
+                .findConfigProduccionByProducto(producto)
+                .orElseGet(() -> configProduccionRepository.save(new ConfigProduccion(producto)));
     }
 }

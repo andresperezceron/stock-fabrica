@@ -5,6 +5,7 @@ public enum EstadoMaquina {
     MANTENIMIENTO,
     CAMBIO_MOLDE,
     APTA,
+    EN_CONFIGURACION,
     CONFIGURADA,
     EN_PRODUCCION
 }

@@ -22,7 +22,7 @@ public class RegistrarProduccionService {
 
     public void registrar(Long maquinaId, Long paletId) {
         Maquina maquina = obtenerMaquinaService.obtener(maquinaId);
-        if(!maquina.estaEnProduccion()) {
+        if(!maquina.estaProduccion()) {
             throw new EstadoMaquinaNoValidoException("No se puede registrar producción con la maquina en estado: " +
                     maquina.getEstado());
         }
