@@ -15,8 +15,9 @@ public class ObtenerUbicacionSistemaService {
     }
 
     public Ubicacion obtener(UbicacionSistema ubicacionSistema) {
-        return ubicacionRepository.findByNombreAndSistemaTrue(ubicacionSistema.name())
+        /*return ubicacionRepository.findByNombreAndSistemaTrue(ubicacionSistema.name())
                 .orElseThrow(() -> new UbicacionNoEncontradaException("Ubicacion de sistema: "
-                        + ubicacionSistema.name() + " no encontrada"));
+                        + ubicacionSistema.name() + " no encontrada")); */
+        return null;
     }
 }

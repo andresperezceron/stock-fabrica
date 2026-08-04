@@ -13,7 +13,7 @@ public class ConsultarTrazabilidadLoteResponse {
     public List<MovimientoResponse> movimientos;
 
     public ConsultarTrazabilidadLoteResponse(Lote lote, List<MovimientoResponse> movimientos) {
-        this.codigoLote = lote.getCodigoLote();
+        this.codigoLote = lote.getCodigoLote().valor();
         this.maquina = lote.getMaquina().getNombre().valor();
         this.fechaProduccion = lote.getFechaCreacion();
         this.turno = lote.getTurno().getCodigo();

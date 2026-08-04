@@ -21,4 +21,11 @@ public class EstacionExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
+
+    @ExceptionHandler(EstacionNoEncontradaException.class)
+    public ResponseEntity<DomainErrorResponse> manejarEstacionNoEncontrada(EstacionNoEncontradaException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(DomainErrorResponse.of(ex.getMessage()));
+    }
 }

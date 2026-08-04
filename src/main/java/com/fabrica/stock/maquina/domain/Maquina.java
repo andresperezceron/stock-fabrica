@@ -99,17 +99,21 @@ public class Maquina implements EntidadActivable {
 
     public void enConfiguracion() { estado = EstadoMaquina.EN_CONFIGURACION; }
 
-    public void cambiarEstadoACambioMolde() {
+    public void cambiarACambioMolde() {
         this.estado = EstadoMaquina.CAMBIO_MOLDE;
     }
 
-    public void cambiarEstadoAFueraServicio() {
+    public void cambiarAFueraServicio() {
         this.estado = EstadoMaquina.FUERA_SERVICIO;
     }
 
-    public void cambiarEstadoAMantenimiento() { this.estado = EstadoMaquina.MANTENIMIENTO; }
+    public void cambiarAMantenimiento() { this.estado = EstadoMaquina.MANTENIMIENTO; }
 
-    public void cambiarEstadoAptaProduccion() { this.estado = EstadoMaquina.APTA; }
+    public void cambiarAAptaProduccion() { this.estado = EstadoMaquina.APTA; }
+
+    public void cambiarAConfigurada() { this.estado = EstadoMaquina.CONFIGURADA; }
+
+    public void cambiarAEnProduccion() { this.estado = EstadoMaquina.EN_PRODUCCION; }
 
     public LoteGenerado obtenerLoteGenerado() { return new LoteGenerado(this.nombre); }
 

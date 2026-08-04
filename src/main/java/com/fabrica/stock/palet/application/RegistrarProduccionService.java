@@ -10,6 +10,7 @@ import com.fabrica.stock.maquina.domain.exceptions.EstadoMaquinaNoValidoExceptio
 import com.fabrica.stock.palet.api.dto.RegistrarProduccionRequest;
 import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.palet.domain.exceptions.EstadoPaletInvalidoException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class RegistrarProduccionService {
     private final ObtenerPaletService obtenerPaletService;
     private final CrearLoteSiNoExisteService crearLoteSiNoExisteService;
     private final ContenidoPaletRepository contenidoPaletRepository;
+
     public RegistrarProduccionService(ObtenerMaquinaService obtenerMaquinaService,
                                       ObtenerPaletService obtenerPaletService,
                                       CrearLoteSiNoExisteService crearLoteSiNoExisteService,
@@ -29,6 +31,7 @@ public class RegistrarProduccionService {
         this.contenidoPaletRepository = contenidoPaletRepository;
     }
 
+    @Transactional
     public void registrar(RegistrarProduccionRequest request) {
         Maquina maquina = obtenerMaquinaService.obtener(request.maquinaId());
         Palet palet = obtenerPaletService.obtener(request.paletId());
@@ -46,5 +49,6 @@ public class RegistrarProduccionService {
 
         contenidoPaletRepository.save(palet.registrarContenido(lote, request.cantidad()));
         palet.cerrar();
+        maquina.cambiarAConfigurada();
     }
 }

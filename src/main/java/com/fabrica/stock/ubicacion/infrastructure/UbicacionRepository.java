@@ -10,10 +10,6 @@ public interface UbicacionRepository extends JpaRepository<Ubicacion, Long> {
     boolean existsByNombre(String nombreUbicacion);
     boolean existsByNombreAndIdNot(String nombreUbicacion, Long id);
     List<Ubicacion> findAllByActivoTrueOrderByNombreAsc();
-    List<Ubicacion> findAllByActivoFalseAndSistemaFalseOrderByNombreAsc();
     Optional<Ubicacion> findByIdAndActivoTrue(Long id);
     Optional<Ubicacion> findByNombreAndActivoTrue(String nombreUbicacion);
-    Optional<Ubicacion> findByIdAndActivoFalseAndSistemaFalse(Long id);
-    Optional<Ubicacion> findByNombreAndActivoFalseAndSistemaFalse(String nombreUbicacion);
-    Optional<Ubicacion> findByNombreAndSistemaTrue(String nombreUbicacion);
 }

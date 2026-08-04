@@ -15,6 +15,6 @@ public class ListarUbicacionesNoActivasService {
     }
 
     public List<Ubicacion> listar() {
-        return ubicacionRepository.findAllByActivoFalseAndSistemaFalseOrderByNombreAsc();
+        return null;
     }
 }

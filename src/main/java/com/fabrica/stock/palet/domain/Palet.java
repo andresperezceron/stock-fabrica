@@ -2,9 +2,10 @@ package com.fabrica.stock.palet.domain;
 
 import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
 import com.fabrica.stock.estacion.domain.Estacion;
+import com.fabrica.stock.estacion.domain.EstacionesSistema;
 import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.maquina.domain.Maquina;
-import com.fabrica.stock.producto.domain.Producto;
+import com.fabrica.stock.shared.domain.Localizacion;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -31,8 +32,8 @@ public class Palet {
     private EstadoPalet estado;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "ubicacion_id", nullable = false)
-    private Estacion estacion;
+    @JoinColumn(name = "localizacion_id", nullable = false)
+    private Localizacion localizacion;
 
     @OneToMany(mappedBy = "palet")
     private final List<ContenidoPalet> contenidos = new ArrayList<>();
@@ -41,7 +42,7 @@ public class Palet {
     private LocalDateTime fechaCreacion;
 
     public Palet(Maquina maquina, TipoPalet tipo) {
-        this.estacion = maquina.getEstacion();
+        this.localizacion = null;
         this.tipo = tipo;
         this.maquina = maquina;
         this.estado = EstadoPalet.ABIERTO;
@@ -54,7 +55,7 @@ public class Palet {
         return id;
     }
 
-    public Estacion getLocalizacion() { return estacion; }
+    public Estacion getLocalizacion() { return null; }
 
     public TipoPalet getTipo() { return tipo; }
 
@@ -72,13 +73,17 @@ public class Palet {
 
     public void cerrar() { estado = EstadoPalet.CERRADO; }
 
+    public void cambiarAPendienteValidacion() { estado = EstadoPalet.PENDIENTE_VALIDACION; }
+
     public boolean estaAbierto() { return estado == EstadoPalet.ABIERTO; }
 
     public boolean estaCerrado() { return estado == EstadoPalet.CERRADO; }
 
-    public boolean estaFinalizado() { return estado == EstadoPalet.FINALIZADO; }
+    public boolean estaPendienteValidacion() { return estado == EstadoPalet.PENDIENTE_VALIDACION; }
 
     public boolean estaValidado() { return estado == EstadoPalet.VALIDADO; }
+
+    public boolean estaVacio() { return contenidos.isEmpty(); }
 
     public ContenidoPalet registrarContenido(Lote lote, BigDecimal cantidad) {
         return new ContenidoPalet(this, lote, cantidad);

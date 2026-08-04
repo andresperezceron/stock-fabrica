@@ -1,6 +1,5 @@
 package com.fabrica.stock.palet.application;
 
-import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.palet.domain.exceptions.PaletNoEncontradoException;
 import com.fabrica.stock.palet.infrastructure.PaletRepository;
@@ -16,10 +15,5 @@ public class ObtenerPaletService {
 
     public Palet obtener(Long id){
         return paletRepository.findById(id).orElseThrow(() -> new PaletNoEncontradoException("Palet no encontrado."));
-    }
-
-    public Palet obtenerPorMaquina(Maquina maquina) {
-        return paletRepository.findPaletByMaquina(maquina).orElseThrow(() ->
-                new PaletNoEncontradoException("Palet no encontrado."));
     }
 }

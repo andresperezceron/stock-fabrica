@@ -14,16 +14,18 @@ public class ObtenerUbicacionNoActivaService {
     }
 
     public Ubicacion obtener(Long id) {
-        return ubicacionRepository
+        /* return ubicacionRepository
                 .findByIdAndActivoFalseAndSistemaFalse(id)
-                .orElseThrow(() -> new UbicacionNoEncontradaException("No existe ubicación Inactiva con maquinaId: " + id));
+                .orElseThrow(() -> new UbicacionNoEncontradaException("No existe ubicación Inactiva con maquinaId: " + id)); */
+        return null;
     }
 
     public Ubicacion obtener(String nombreUbicacion) {
-        return ubicacionRepository
+        /*return ubicacionRepository
                 .findByNombreAndActivoFalseAndSistemaFalse(nombreUbicacion)
                 .orElseThrow(() ->
                         new UbicacionNoEncontradaException("No existe ubicación Inactiva con nombre: "
-                                + nombreUbicacion));
+                                + nombreUbicacion)); */
+        return null;
     }
 }

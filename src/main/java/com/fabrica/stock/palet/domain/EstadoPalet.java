@@ -3,6 +3,6 @@ package com.fabrica.stock.palet.domain;
 public enum EstadoPalet {
     ABIERTO,
     CERRADO,
-    FINALIZADO,
+    PENDIENTE_VALIDACION,
     VALIDADO
 }

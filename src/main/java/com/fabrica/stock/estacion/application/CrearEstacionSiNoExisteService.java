@@ -14,7 +14,7 @@ public class CrearEstacionSiNoExisteService {
     }
 
     public Estacion crear(String nombre) {
-        if(!estacionRepository.existsByNombre(nombre)) {
+        if(estacionRepository.existsByNombre(nombre)) {
             return estacionRepository.save(new Estacion(nombre));
         } else throw new NombreEstacionDuplicadoException("Ya existe una estación con el nombre: " + nombre);
     }

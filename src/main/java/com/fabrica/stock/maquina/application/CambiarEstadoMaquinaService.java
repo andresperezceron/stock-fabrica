@@ -16,18 +16,18 @@ public class CambiarEstadoMaquinaService {
         Maquina maquina = obtenerMaquinaService.obtener(id);
         switch(estado) {
             case CAMBIO_MOLDE -> {
-                maquina.cambiarEstadoACambioMolde();
+                maquina.cambiarACambioMolde();
                 maquina.quitarProductoActivo();
             }
             case FUERA_SERVICIO -> {
-                maquina.cambiarEstadoAFueraServicio();
+                maquina.cambiarAFueraServicio();
                 maquina.quitarProductoActivo();
             }
             case MANTENIMIENTO -> {
-                maquina.cambiarEstadoAMantenimiento();
+                maquina.cambiarAMantenimiento();
                 maquina.quitarProductoActivo();
             }
-            case APTA ->  maquina.cambiarEstadoAptaProduccion();
+            case APTA ->  maquina.cambiarAAptaProduccion();
         }
     }
 }

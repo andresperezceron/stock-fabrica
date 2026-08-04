@@ -4,7 +4,6 @@ import com.fabrica.stock.maquina.api.dto.IniciarProduccionRequest;
 import com.fabrica.stock.maquina.application.*;
 import com.fabrica.stock.maquina.domain.EstadoMaquina;
 import com.fabrica.stock.producto.api.dto.ProductosInyecExtruResponse;
-import com.fabrica.stock.shared.application.InicioProcesoProduccionService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +52,7 @@ public class MaquinaController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("{id}/fuera-servicio")
+    @PutMapping("{id}/mantenimiento")
     public ResponseEntity<Void> asignarEstadoMantenimiento(@PathVariable Long id) {
         cambiarEstadoMaquinaService.cambiar(id, EstadoMaquina.MANTENIMIENTO);
         return ResponseEntity.noContent().build();

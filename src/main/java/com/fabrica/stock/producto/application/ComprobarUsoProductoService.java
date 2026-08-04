@@ -32,7 +32,7 @@ public class ComprobarUsoProductoService {
                 throw new ProductoActivoEnMaquinaException("Producto activo: " + producto.getDescripcion() +
                         " en máquina: " + maquina.getNombre());
 
-        return movimientoStockRepository.existsByProducto(producto) ||
-                contenidoPaletRepository.existsByProducto(producto);
+        return movimientoStockRepository.existsByProducto(producto); //||
+                //contenidoPaletRepository.existsByProducto(producto);
     }
 }
