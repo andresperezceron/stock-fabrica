@@ -2,7 +2,7 @@ package com.fabrica.stock.palet.domain;
 
 import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
 import com.fabrica.stock.estacion.domain.Estacion;
-import com.fabrica.stock.estacion.domain.EstacionesSistema;
+import com.fabrica.stock.estacion.domain.Estaciones;
 import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.shared.domain.Localizacion;
@@ -41,8 +41,8 @@ public class Palet {
     @Column(nullable = false)
     private LocalDateTime fechaCreacion;
 
-    public Palet(Maquina maquina, TipoPalet tipo) {
-        this.localizacion = null;
+    public Palet(Maquina maquina, TipoPalet tipo, Estacion estacionProduccion) {
+        this.localizacion = estacionProduccion;
         this.tipo = tipo;
         this.maquina = maquina;
         this.estado = EstadoPalet.ABIERTO;
@@ -55,7 +55,7 @@ public class Palet {
         return id;
     }
 
-    public Estacion getLocalizacion() { return null; }
+    public Localizacion getLocalizacion() { return localizacion; }
 
     public TipoPalet getTipo() { return tipo; }
 

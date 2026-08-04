@@ -1,5 +1,9 @@
 package com.fabrica.stock.maquina.application;
 
+import com.fabrica.stock.estacion.domain.Estacion;
+import com.fabrica.stock.estacion.domain.Estaciones;
+import com.fabrica.stock.estacion.domain.exceptions.EstacionNoEncontradaException;
+import com.fabrica.stock.estacion.infrastructure.EstacionRepository;
 import com.fabrica.stock.maquina.api.dto.IniciarProduccionRequest;
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.maquina.domain.exceptions.EstadoMaquinaNoValidoException;
@@ -12,9 +16,15 @@ import org.springframework.stereotype.Service;
 public class IniciarProduccionService {
     private final ObtenerMaquinaService obtenerMaquinaService;
     private final PaletRepository paletRepository;
-    public IniciarProduccionService(ObtenerMaquinaService obtenerMaquinaService, PaletRepository paletRepository) {
+    private final EstacionRepository estacionRepository;
+
+    public IniciarProduccionService(ObtenerMaquinaService obtenerMaquinaService,
+                                    PaletRepository paletRepository,
+                                    EstacionRepository estacionRepository)
+    {
         this.obtenerMaquinaService = obtenerMaquinaService;
         this.paletRepository = paletRepository;
+        this.estacionRepository = estacionRepository;
     }
 
     @Transactional
@@ -25,7 +35,11 @@ public class IniciarProduccionService {
         else if(!maquina.estaConfigurada()) throw new EstadoMaquinaNoValidoException("No se puede iniciar la " +
                 "producción si no está configurada: " + maquina.getEstado());
 
-        paletRepository.save(new Palet(maquina, request.tipoPalet()));
+        Estacion estacionProduccion = estacionRepository
+                .findByNombre(Estaciones.PRODUCCION)
+                .orElseThrow(() -> new EstacionNoEncontradaException("Fallo de sistema."));
+
+        paletRepository.save(new Palet(maquina, request.tipoPalet(), estacionProduccion));
         maquina.enProduccion();
     }
 }

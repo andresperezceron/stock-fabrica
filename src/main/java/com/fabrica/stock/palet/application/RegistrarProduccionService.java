@@ -39,7 +39,7 @@ public class RegistrarProduccionService {
         if(!maquina.estaProduccion()) {
             throw new EstadoMaquinaNoValidoException("No se puede registrar producción con la maquina en estado: " +
                     maquina.getEstado());
-        } else if(palet.estaCerrado()) throw new EstadoPaletInvalidoException("El palet está cerrado.");
+        }else if(palet.estaCerrado()) throw new EstadoPaletInvalidoException("El palet está cerrado.");
 
         Lote lote = crearLoteSiNoExisteService.crearSiNoExiste(
                 OrigenLote.PRODUCCION,

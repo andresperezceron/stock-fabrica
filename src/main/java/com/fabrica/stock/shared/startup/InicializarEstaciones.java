@@ -1,7 +1,7 @@
 package com.fabrica.stock.shared.startup;
 
 import com.fabrica.stock.estacion.domain.Estacion;
-import com.fabrica.stock.estacion.domain.EstacionesSistema;
+import com.fabrica.stock.estacion.domain.Estaciones;
 import com.fabrica.stock.estacion.infrastructure.EstacionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -16,11 +16,7 @@ public class InicializarEstaciones implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        crearSiNoExiste(EstacionesSistema.PRODUCCION);
-        crearSiNoExiste(EstacionesSistema.VALIDACION);
-        crearSiNoExiste(EstacionesSistema.PROVEEDOR);
-        crearSiNoExiste(EstacionesSistema.EXPEDICION);
-        crearSiNoExiste(EstacionesSistema.CORRECCION);
+        Estaciones.todas().forEach(this::crearSiNoExiste);
     }
 
     private void crearSiNoExiste(String nombre) {
