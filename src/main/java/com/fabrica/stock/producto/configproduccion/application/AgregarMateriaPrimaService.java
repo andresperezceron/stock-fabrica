@@ -1,7 +1,6 @@
 package com.fabrica.stock.producto.configproduccion.application;
 
 import com.fabrica.stock.maquina.domain.Maquina;
-import com.fabrica.stock.palet.application.ExisteContenidoAbiertoService;
 import com.fabrica.stock.palet.domain.EstadoProcesoPalet;
 import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.palet.domain.exceptions.EstadoPaletInvalidoException;
@@ -39,7 +38,7 @@ public class AgregarMateriaPrimaService {
                     .findByMaquinaAndProceso(maquina, EstadoProcesoPalet.PAUSADO)
                     .orElseThrow(() -> new EstadoPaletInvalidoException("El palet no esta cerrado."));
             config.agregarMateriaPrima(materiaPrima);
-            if(config.esValida()) palet.procesoIniciado();
+            if(config.esValida()) palet.iniciarProceso();
         }else config.agregarMateriaPrima(materiaPrima);
     }
 }

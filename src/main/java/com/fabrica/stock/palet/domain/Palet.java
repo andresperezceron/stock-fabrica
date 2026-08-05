@@ -75,11 +75,13 @@ public class Palet {
 
     public void abrir() { estado = EstadoPalet.ABIERTO; }
 
-    public void cerrar() { estado = EstadoPalet.CERRADO; proceso = EstadoProcesoPalet.PAUSADO; }
+    public void cerrar() { estado = EstadoPalet.CERRADO; }
 
-    public void procesoIniciado() { proceso = EstadoProcesoPalet.INICIADO; }
+    public void iniciarProceso() { proceso = EstadoProcesoPalet.INICIADO; }
 
-    public void procesoPausado() { proceso = EstadoProcesoPalet.PAUSADO; }
+    public void pausarProceso() { proceso = EstadoProcesoPalet.PAUSADO; }
+
+    public void finalizarProceso() { proceso = EstadoProcesoPalet.FINALIZADO; }
 
     public boolean procesoEstaPausado() { return proceso == EstadoProcesoPalet.PAUSADO; }
 
@@ -94,6 +96,10 @@ public class Palet {
     public boolean estaValidado() { return estado == EstadoPalet.VALIDADO; }
 
     public boolean estaVacio() { return contenidos.isEmpty(); }
+
+    public void moverA(Localizacion localizacion) {
+        this.localizacion = localizacion;
+    }
 
     public ContenidoPalet registrarContenido(Lote lote, BigDecimal cantidad) {
         return new ContenidoPalet(this, lote, cantidad);

@@ -70,15 +70,15 @@ public class Movimiento {
         return crearMovimientos(palet, TipoMovimiento.ENTRADA, origen, destino);
     }
 
-    private static List<Movimiento> crearMovimientos(Palet palet,
+    private static List<Movimiento> crearMovimientos(
+            Palet palet,
             TipoMovimiento tipo,
             Localizacion origen,
             Localizacion destino)
     {
         List<Movimiento> movimientos = new ArrayList<>();
-        for(ContenidoPalet contenido : palet.getContenidos()) {
+        for(ContenidoPalet contenido : palet.getContenidos())
             movimientos.add(new Movimiento(contenido, tipo,  origen, destino));
-        }
         return movimientos;
     }
 }

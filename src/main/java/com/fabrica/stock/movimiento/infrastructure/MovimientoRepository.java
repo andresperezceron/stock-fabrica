@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface MovimientoStockRepository extends JpaRepository<Movimiento, Long> {
+public interface MovimientoRepository extends JpaRepository<Movimiento, Long> {
     List<Movimiento> findByLoteId(Long loteId);
     List<Movimiento> findAllByLoteOrderByFechaAsc(Lote lote);
     boolean existsByOrigen(Ubicacion origen);
