@@ -2,7 +2,6 @@ package com.fabrica.stock.palet.domain;
 
 import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
 import com.fabrica.stock.estacion.domain.Estacion;
-import com.fabrica.stock.estacion.domain.Estaciones;
 import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.shared.domain.Localizacion;
@@ -31,6 +30,10 @@ public class Palet {
     @Column(nullable = false)
     private EstadoPalet estado;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EstadoProcesoPalet proceso;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "localizacion_id", nullable = false)
     private Localizacion localizacion;
@@ -45,7 +48,8 @@ public class Palet {
         this.localizacion = estacionProduccion;
         this.tipo = tipo;
         this.maquina = maquina;
-        this.estado = EstadoPalet.ABIERTO;
+        estado = EstadoPalet.ABIERTO;
+        proceso = EstadoProcesoPalet.INICIADO;
         fechaCreacion = LocalDateTime.now();
     }
 
@@ -71,7 +75,13 @@ public class Palet {
 
     public void abrir() { estado = EstadoPalet.ABIERTO; }
 
-    public void cerrar() { estado = EstadoPalet.CERRADO; }
+    public void cerrar() { estado = EstadoPalet.CERRADO; proceso = EstadoProcesoPalet.PAUSADO; }
+
+    public void procesoIniciado() { proceso = EstadoProcesoPalet.INICIADO; }
+
+    public void procesoPausado() { proceso = EstadoProcesoPalet.PAUSADO; }
+
+    public boolean procesoEstaPausado() { return proceso == EstadoProcesoPalet.PAUSADO; }
 
     public void cambiarAPendienteValidacion() { estado = EstadoPalet.PENDIENTE_VALIDACION; }
 

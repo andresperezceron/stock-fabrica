@@ -1,6 +1,6 @@
 package com.fabrica.stock.stock.application;
 
-import com.fabrica.stock.movimiento.domain.MovimientoStock;
+import com.fabrica.stock.movimiento.domain.Movimiento;
 import com.fabrica.stock.movimiento.domain.TipoMovimiento;
 import com.fabrica.stock.movimiento.infrastructure.MovimientoStockRepository;
 import org.springframework.stereotype.Service;
@@ -18,10 +18,10 @@ public class StockService {
     }
 
     public BigDecimal calcularStockPorLote(Long loteId) {
-        List<MovimientoStock> movimientos = movimientoRepo.findByLoteId(loteId);
+        List<Movimiento> movimientos = movimientoRepo.findByLoteId(loteId);
         BigDecimal stock = BigDecimal.ZERO;
 
-        for(MovimientoStock m : movimientos) {
+        for(Movimiento m : movimientos) {
             if (m.getTipo() == TipoMovimiento.ENTRADA) {
                 stock = stock.add(m.getCantidad());
             } else {

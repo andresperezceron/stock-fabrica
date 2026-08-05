@@ -1,6 +1,6 @@
 package com.fabrica.stock.movimiento.api.dto;
 
-import com.fabrica.stock.movimiento.domain.MovimientoStock;
+import com.fabrica.stock.movimiento.domain.Movimiento;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ public class MovimientoResponse {
     public String origen;
     public String destino;
 
-    public MovimientoResponse(MovimientoStock movimiento) {
+    public MovimientoResponse(Movimiento movimiento) {
         fecha = movimiento.getFecha();
         codigoProducto = "";
         descripcionProducto = movimiento.getProducto().getDescripcion();

@@ -2,7 +2,10 @@ package com.fabrica.stock.producto.configproduccion.application;
 
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.palet.application.ExisteContenidoAbiertoService;
+import com.fabrica.stock.palet.domain.EstadoProcesoPalet;
+import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.palet.domain.exceptions.EstadoPaletInvalidoException;
+import com.fabrica.stock.palet.infrastructure.PaletRepository;
 import com.fabrica.stock.producto.configproduccion.domain.ConfigProduccion;
 import com.fabrica.stock.producto.configproduccion.domain.exceptions.MateriaPrimaDupicadaException;
 import com.fabrica.stock.producto.configproduccion.domain.exceptions.MateriaPrimaNoValidaException;
@@ -13,13 +16,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class AgregarMateriaPrimaService {
     private final ObtenerConfigProduccionService obtenerConfigProduccionService;
-    private final ExisteContenidoAbiertoService existeContenidoAbiertoService;
+    private final PaletRepository paletRepository;
 
     public AgregarMateriaPrimaService(ObtenerConfigProduccionService obtenerConfigProduccionService,
-                                      ExisteContenidoAbiertoService existeContenidoAbiertoService)
+                                      PaletRepository paletRepository)
     {
         this.obtenerConfigProduccionService = obtenerConfigProduccionService;
-        this.existeContenidoAbiertoService = existeContenidoAbiertoService;
+        this.paletRepository = paletRepository;
     }
 
     @Transactional
@@ -31,13 +34,12 @@ public class AgregarMateriaPrimaService {
                 .stream()
                 .anyMatch(mp -> mp.getId().equals(materiaPrima.getId()))
         ) throw new MateriaPrimaDupicadaException("La materia prima ya está agregada.");
-        else if(maquina.estaProduccion() && existeContenidoAbiertoService.existe(maquina))
-            throw new EstadoPaletInvalidoException( "No se puede modificar la configuración mientras " +
-                    "exista un contenido abierto.");
-
-        config.agregarMateriaPrima(materiaPrima);
-        if(config.esValida())
-            maquina.configurada();
-        else maquina.enConfiguracion();
+        else if(maquina.estaProduccion()) {
+            Palet palet = paletRepository
+                    .findByMaquinaAndProceso(maquina, EstadoProcesoPalet.PAUSADO)
+                    .orElseThrow(() -> new EstadoPaletInvalidoException("El palet no esta cerrado."));
+            config.agregarMateriaPrima(materiaPrima);
+            if(config.esValida()) palet.procesoIniciado();
+        }else config.agregarMateriaPrima(materiaPrima);
     }
 }

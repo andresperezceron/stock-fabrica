@@ -49,6 +49,5 @@ public class RegistrarProduccionService {
 
         contenidoPaletRepository.save(palet.registrarContenido(lote, request.cantidad()));
         palet.cerrar();
-        maquina.cambiarAConfigurada();
     }
 }

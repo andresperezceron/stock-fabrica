@@ -1,6 +1,5 @@
 package com.fabrica.stock.palet.application;
 
-import com.fabrica.stock.maquina.domain.exceptions.EstadoMaquinaNoValidoException;
 import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.palet.domain.exceptions.EstadoPaletInvalidoException;
 import jakarta.transaction.Transactional;
@@ -17,12 +16,8 @@ public class AbrirPaletService {
     @Transactional
     public void abrir(Long id) {
         Palet palet = obtenerPaletService.obtener(id);
-
         if(!palet.estaCerrado()) throw new EstadoPaletInvalidoException("El palet no está cerrado.");
-        else if(!palet.getMaquina().estaConfigurada())
-            throw new EstadoMaquinaNoValidoException("La máquina no está configurada.");
-
+        else if(palet.procesoEstaPausado()) throw new EstadoPaletInvalidoException("La configuracion actual de produccion no es valida.") ;
         palet.abrir();
-        palet.getMaquina().cambiarAEnProduccion();
     }
 }
