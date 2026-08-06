@@ -26,6 +26,8 @@ public class EliminarUbicacionService {
 
         if(comprobarUsoUbicacionService.tieneUso(ubicacion)) {
             ubicacion.desactivar();
-        } else ubicacionRepository.delete(ubicacion);
+            return;
+        }
+        ubicacionRepository.delete(ubicacion);
     }
 }

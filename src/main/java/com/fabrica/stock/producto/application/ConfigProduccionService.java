@@ -48,8 +48,8 @@ public class ConfigProduccionService {
         actualizarCajasPorPaletService.actualizar(palet, cajasPorPalet);
     }
 
-    public ConfigProduccion obtenerConfigPorProducto(Producto producto) {
-        return obtenerConfigProduccionService.obtenerPorProducto(producto);
+    public boolean validarConfigPorProducto(Producto producto) {
+        return obtenerConfigProduccionService.obtenerPorProducto(producto).esValida();
     }
 
     public ConfigProduccion crearSinoExiste(Producto producto) {

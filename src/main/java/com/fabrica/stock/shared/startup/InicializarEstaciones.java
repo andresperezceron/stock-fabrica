@@ -15,11 +15,11 @@ public class InicializarEstaciones implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
-        Estaciones.todas().forEach(this::crearSiNoExiste);
+    public void run(String... args) {
+        Estaciones.todas().forEach(this::crearEstacionSiNoExiste);
     }
 
-    private void crearSiNoExiste(String nombre) {
+    private void crearEstacionSiNoExiste(String nombre) {
         if(!estacionRepository.existsByNombre(nombre)) {
             estacionRepository.save(new Estacion(nombre));
         }

@@ -14,17 +14,17 @@ public class ObtenerEstacionService {
         this.estacionRepository = estacionRepository;
     }
 
-    public Estacion obtenerProduccion() { return obtener(Estaciones.PRODUCCION); }
+    public Estacion obtenerProduccion() { return obtenerPorNombre(Estaciones.PRODUCCION); }
 
-    public Estacion obtenerValidacion() { return obtener(Estaciones.VALIDACION); }
+    public Estacion obtenerValidacion() { return obtenerPorNombre(Estaciones.VALIDACION); }
 
-    public Estacion obtenerExpedicion() { return obtener(Estaciones.EXPEDICION); }
+    public Estacion obtenerExpedicion() { return obtenerPorNombre(Estaciones.EXPEDICION); }
 
-    public Estacion obtenerProveedor() { return obtener(Estaciones.PROVEEDOR); }
+    public Estacion obtenerProveedor() { return obtenerPorNombre(Estaciones.PROVEEDOR); }
 
-    public Estacion obtenerCorreccion() { return obtener(Estaciones.CORRECCION); }
+    public Estacion obtenerCorreccion() { return obtenerPorNombre(Estaciones.CORRECCION); }
 
-    private Estacion obtener(String nombre) {
+    private Estacion obtenerPorNombre(String nombre) {
         return estacionRepository.findByNombre(nombre)
                 .orElseThrow(() -> new EstacionNoEncontradaException("Estación no encontrada: " + nombre));
     }

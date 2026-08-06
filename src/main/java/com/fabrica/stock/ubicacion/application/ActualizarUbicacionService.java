@@ -3,6 +3,7 @@ package com.fabrica.stock.ubicacion.application;
 import com.fabrica.stock.ubicacion.api.dto.ActualizarUbicacionRequest;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import com.fabrica.stock.ubicacion.domain.validation.ActualizarUbicacionValidator;
+import com.fabrica.stock.ubicacion.domain.vo.NombreUbicacion;
 import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,6 @@ public class ActualizarUbicacionService {
     public void actualizar(Long id, ActualizarUbicacionRequest request) {
         new ActualizarUbicacionValidator(request, ubicacionRepository, id).validate();
         Ubicacion ubicacion = obtenerUbicacionService.obtener(id);
-        ubicacion.modificarNombre(request.nombre);
+        ubicacion.modificarNombre(NombreUbicacion.of(request.nombre()));
     }
 }

@@ -4,6 +4,7 @@ import com.fabrica.stock.shared.domain.validation.RequestValidator;
 import com.fabrica.stock.ubicacion.api.dto.ActualizarUbicacionRequest;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import com.fabrica.stock.ubicacion.domain.exceptions.NombreUbicacionDuplicadoException;
+import com.fabrica.stock.ubicacion.domain.vo.NombreUbicacion;
 import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 
 public class ActualizarUbicacionValidator extends
@@ -20,13 +21,9 @@ public class ActualizarUbicacionValidator extends
     }
 
     @Override
-    protected void normalize() {
-        request.nombre = request.nombre.trim().toUpperCase();
-    }
-
-    @Override
     protected void validateBusinessRules() {
-        if(repository.existsByNombreAndIdNot(request.nombre, ubicacionId)) {
+        NombreUbicacion nombre = NombreUbicacion.of(request.nombre());
+        if(repository.existsByNombreAndIdNot(nombre.valor(), ubicacionId)) {
             throw new NombreUbicacionDuplicadoException("Nombre ubicacion duplicado");
         }
     }

@@ -1,6 +1,7 @@
 package com.fabrica.stock.producto.configproduccion.application;
 
 import com.fabrica.stock.maquina.domain.Maquina;
+import com.fabrica.stock.palet.domain.EstadoPalet;
 import com.fabrica.stock.palet.domain.EstadoProcesoPalet;
 import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.palet.domain.exceptions.EstadoPaletInvalidoException;
@@ -31,14 +32,10 @@ public class AgregarMateriaPrimaService {
         if(!materiaPrima.esMateriaPrima()) throw new MateriaPrimaNoValidaException("El producto no es materia prima.");
         else if(config.getMateriasPrimas()
                 .stream()
-                .anyMatch(mp -> mp.getId().equals(materiaPrima.getId()))
-        ) throw new MateriaPrimaDupicadaException("La materia prima ya está agregada.");
-        else if(maquina.estaProduccion()) {
-            Palet palet = paletRepository
-                    .findByMaquinaAndProceso(maquina, EstadoProcesoPalet.PAUSADO)
-                    .orElseThrow(() -> new EstadoPaletInvalidoException("El palet no esta cerrado."));
-            config.agregarMateriaPrima(materiaPrima);
-            if(config.esValida()) palet.iniciarProceso();
-        }else config.agregarMateriaPrima(materiaPrima);
+                .anyMatch(mp -> mp.getId().equals(materiaPrima.getId())))
+            throw new MateriaPrimaDupicadaException("La materia prima ya está agregada.");
+        else if(maquina.estaProduccion() && paletRepository.existsByMaquinaAndEstado(maquina, EstadoPalet.ABIERTO))
+            throw new EstadoPaletInvalidoException("El palet no esta cerrado.");
+        else config.agregarMateriaPrima(materiaPrima);
     }
 }

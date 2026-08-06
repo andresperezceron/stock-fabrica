@@ -2,6 +2,7 @@ package com.fabrica.stock.maquina.application;
 
 import com.fabrica.stock.maquina.domain.EstadoMaquina;
 import com.fabrica.stock.maquina.domain.Maquina;
+import com.fabrica.stock.maquina.domain.exceptions.EstadoMaquinaNoValidoException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,7 @@ public class CambiarEstadoMaquinaService {
 
     public void cambiar(Long id, EstadoMaquina estado) {
         Maquina maquina = obtenerMaquinaService.obtener(id);
+        if(maquina.estaProduccion()) throw new EstadoMaquinaNoValidoException("Máquina está en producción.");
         switch(estado) {
             case CAMBIO_MOLDE -> {
                 maquina.cambiarACambioMolde();

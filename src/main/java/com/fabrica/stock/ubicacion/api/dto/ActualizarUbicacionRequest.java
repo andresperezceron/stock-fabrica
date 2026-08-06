@@ -2,7 +2,7 @@ package com.fabrica.stock.ubicacion.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class ActualizarUbicacionRequest {
+public record ActualizarUbicacionRequest(
     @NotBlank
-    public String nombre;
-}
+    String nombre
+){}

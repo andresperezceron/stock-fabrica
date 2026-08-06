@@ -2,6 +2,7 @@ package com.fabrica.stock.ubicacion.application;
 
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import com.fabrica.stock.ubicacion.domain.exceptions.UbicacionNoEncontradaException;
+import com.fabrica.stock.ubicacion.domain.vo.NombreUbicacion;
 import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +17,13 @@ public class ObtenerUbicacionService {
     public Ubicacion obtener(Long id) {
         return ubicacionRepository
                 .findByIdAndActivoTrue(id)
-                .orElseThrow(() -> new UbicacionNoEncontradaException("No existe ubicacion con maquinaId: " + id));
+                .orElseThrow(() -> new UbicacionNoEncontradaException("No existe ubicacion con id: " + id));
     }
 
-    public Ubicacion obtener(String nombreUbicacion) {
+    public Ubicacion obtener(NombreUbicacion nombre) {
         return ubicacionRepository
-                .findByNombreAndActivoTrue(nombreUbicacion)
+                .findByNombreAndActivoTrue(nombre.valor())
                 .orElseThrow(() ->
-                        new UbicacionNoEncontradaException("No existe ubicacion con nombre: " + nombreUbicacion));
+                        new UbicacionNoEncontradaException("No existe ubicacion con nombre: " + nombre.valor()));
     }
 }

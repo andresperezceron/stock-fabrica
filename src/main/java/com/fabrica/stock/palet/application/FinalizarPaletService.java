@@ -2,6 +2,7 @@ package com.fabrica.stock.palet.application;
 
 import com.fabrica.stock.estacion.application.ObtenerEstacionService;
 import com.fabrica.stock.estacion.domain.Estacion;
+import com.fabrica.stock.maquina.domain.exceptions.EstadoMaquinaNoValidoException;
 import com.fabrica.stock.movimiento.domain.Movimiento;
 import com.fabrica.stock.movimiento.infrastructure.MovimientoRepository;
 import com.fabrica.stock.palet.domain.Palet;
@@ -31,12 +32,13 @@ public class FinalizarPaletService {
     @Transactional
     public void finalizar(Long id) {
         Palet palet = obtenerPaletService.obtener(id);
-        if(!palet.estaCerrado()) throw new EstadoPaletInvalidoException("El palet no está cerrado.");
+
+        if(!palet.getMaquina().estaProduccion()) throw new EstadoMaquinaNoValidoException("No hay producción activa.");
+        else if(!palet.estaCerrado()) throw new EstadoPaletInvalidoException("El palet no está cerrado.");
 
         if(!palet.estaVacio()) {
             Estacion origen = obtenerEstacionService.obtenerProduccion();
             Estacion destino = obtenerEstacionService.obtenerValidacion();
-            palet.finalizarProceso();
             palet.cambiarAPendienteValidacion();
             palet.moverA(destino);
             palet.getMaquina().cambiarAConfigurada();

@@ -18,7 +18,8 @@ public class ComprobarUsoUbicacionService {
     }
 
     public boolean tieneUso(Ubicacion ubicacion) {
-        return movimientoRepository.existsByOrigen(ubicacion)
+        return paletRepository.existsByLocalizacion(ubicacion)
+                || movimientoRepository.existsByOrigen(ubicacion)
                 || movimientoRepository.existsByDestino(ubicacion);
     }
 }

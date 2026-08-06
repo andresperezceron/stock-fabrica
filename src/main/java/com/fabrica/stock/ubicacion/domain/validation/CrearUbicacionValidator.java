@@ -4,6 +4,7 @@ import com.fabrica.stock.shared.domain.validation.RequestValidator;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import com.fabrica.stock.ubicacion.domain.exceptions.NombreUbicacionDuplicadoException;
 import com.fabrica.stock.ubicacion.api.dto.CrearUbicacionRequest;
+import com.fabrica.stock.ubicacion.domain.vo.NombreUbicacion;
 import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 
 public class CrearUbicacionValidator extends RequestValidator<CrearUbicacionRequest, Ubicacion, UbicacionRepository> {
@@ -12,16 +13,10 @@ public class CrearUbicacionValidator extends RequestValidator<CrearUbicacionRequ
     }
 
     @Override
-    protected void normalize() {
-        request.nombre = request.nombre.trim().toUpperCase();
-    }
-
-    @Override
     protected void validateBusinessRules() {
-        if(repository.existsByNombre(request.nombre)) {
-            throw new NombreUbicacionDuplicadoException(
-                    "Ya existe una ubicación con el nombre: "
-                            + request.nombre);
+        NombreUbicacion nombre = NombreUbicacion.of(request.nombre());
+        if(repository.existsByNombre(nombre.valor())) {
+            throw new NombreUbicacionDuplicadoException("Ya existe una ubicación con el nombre: " + nombre.valor());
         }
     }
 }
