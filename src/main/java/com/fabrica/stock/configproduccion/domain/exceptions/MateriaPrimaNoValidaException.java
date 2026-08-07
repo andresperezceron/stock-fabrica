@@ -1,4 +1,4 @@
-package com.fabrica.stock.producto.configproduccion.domain.exceptions;
+package com.fabrica.stock.configproduccion.domain.exceptions;
 
 public class MateriaPrimaNoValidaException extends RuntimeException {
     public MateriaPrimaNoValidaException(String message) {

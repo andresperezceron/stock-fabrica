@@ -20,7 +20,7 @@ public class Ubicacion extends Localizacion implements EntidadActivable {
 
     public String getNombre() { return super.getNombre(); }
 
-    public void modificarNombre(NombreUbicacion nombre) { super.setNombre(nombre.valor()); }
+    public void actualizarNombre(NombreUbicacion nombre) { super.setNombre(nombre.valor()); }
 
     @Override
     public boolean estaActiva() {

@@ -14,8 +14,8 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     boolean existsByCodigoAndIdNot(CodigoProducto codigo, Long id);
     Optional<Producto> findByIdAndActivoTrue(Long id);
     Optional<Producto> findByIdAndActivoFalse(Long id);
-    Optional<Producto> findByCodigoAndActivoTrue(CodigoProducto  codigo);
-    Optional<Producto> findByCodigoAndActivoFalse(CodigoProducto  codigo);
+    Optional<Producto> findByCodigoAndActivoTrue(CodigoProducto codigo);
+    Optional<Producto> findByCodigoAndActivoFalse(CodigoProducto codigo);
     List<Producto> findAllByActivoTrueOrderByDescripcionAsc();
     List<Producto> findAllByActivoFalseOrderByDescripcionDesc();
 

@@ -22,7 +22,7 @@ public class ObtenerUbicacionNoActivaService {
 
     public Ubicacion obtener(NombreUbicacion nombre) {
         return ubicacionRepository
-                .findByNombreAndActivoFalse(nombre.valor())
+                .findByNombreAndActivoFalse(nombre)
                 .orElseThrow(() ->
                         new UbicacionNoEncontradaException("No existe ubicación Inactiva con nombre: "
                                 + nombre.valor()));

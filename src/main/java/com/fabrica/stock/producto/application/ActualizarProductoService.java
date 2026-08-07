@@ -4,34 +4,33 @@ import com.fabrica.stock.familia.application.ObtenerFamiliaService;
 import com.fabrica.stock.familia.domain.Familia;
 import com.fabrica.stock.producto.api.dto.ProductoRequest;
 import com.fabrica.stock.producto.domain.Producto;
-import com.fabrica.stock.producto.domain.validation.ActualizarProductoValidator;
 import com.fabrica.stock.producto.domain.vo.CodigoProducto;
-import com.fabrica.stock.producto.infrastructure.ProductoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ActualizarProductoService {
-    private final ProductoRepository productoRepository;
     private final ObtenerProductoService obtenerProductoService;
     private final ObtenerFamiliaService obtenerFamiliaService;
+    private final ValidarCodigoProductoService validarCodigoProductoService;
 
-    public ActualizarProductoService(ProductoRepository productoRepository,
-                                     ObtenerProductoService obtenerProductoService,
-                                     ObtenerFamiliaService obtenerFamiliaService)
+    public ActualizarProductoService(ObtenerProductoService obtenerProductoService,
+                                     ObtenerFamiliaService obtenerFamiliaService,
+                                     ValidarCodigoProductoService validarCodigoProductoService)
     {
-        this.productoRepository = productoRepository;
         this.obtenerProductoService = obtenerProductoService;
         this.obtenerFamiliaService = obtenerFamiliaService;
+        this.validarCodigoProductoService = validarCodigoProductoService;
     }
 
     @Transactional
     public void actualizar(Long id, ProductoRequest request) {
-        new ActualizarProductoValidator(request, productoRepository, id).validate();
-        Producto anteriorProducto = obtenerProductoService.obtener(id);
+        Producto producto = obtenerProductoService.obtener(id);
         Familia nuevaFamilia = obtenerFamiliaService.obtener(request.familia_id());
-        anteriorProducto.actualizar(
-                CodigoProducto.of(request.codigo()),
+        CodigoProducto codigo = validarCodigoProductoService.validar(request.codigo(), producto);
+
+        producto.actualizar(
+                codigo,
                 request.descripcion(),
                 request.unidad(),
                 nuevaFamilia,

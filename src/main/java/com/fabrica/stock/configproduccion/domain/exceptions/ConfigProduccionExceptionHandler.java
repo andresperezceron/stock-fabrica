@@ -1,4 +1,4 @@
-package com.fabrica.stock.producto.configproduccion.domain.exceptions;
+package com.fabrica.stock.configproduccion.domain.exceptions;
 
 import com.fabrica.stock.shared.domain.DomainErrorResponse;
 import org.springframework.http.HttpStatus;

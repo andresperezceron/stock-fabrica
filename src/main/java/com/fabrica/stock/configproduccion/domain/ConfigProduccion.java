@@ -1,4 +1,4 @@
-package com.fabrica.stock.producto.configproduccion.domain;
+package com.fabrica.stock.configproduccion.domain;
 
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
@@ -73,8 +73,11 @@ public class ConfigProduccion {
 
     public void actualizarObservaciones(String observaciones) { this.observaciones = observaciones; }
 
-    public boolean esValida() {
-        return !materiasPrimas.isEmpty() && cajasPorPalet > 0;
+    public boolean esValida() { return !materiasPrimas.isEmpty() && cajasPorPalet > 0; }
+
+    public boolean contieneMateriaPrima(Producto producto) {
+        return materiasPrimas.stream()
+                .anyMatch(mp -> mp.mismaEntidadQue(producto));
     }
 
     @PrePersist

@@ -22,7 +22,7 @@ public class ObtenerUbicacionService {
 
     public Ubicacion obtener(NombreUbicacion nombre) {
         return ubicacionRepository
-                .findByNombreAndActivoTrue(nombre.valor())
+                .findByNombreAndActivoTrue(nombre)
                 .orElseThrow(() ->
                         new UbicacionNoEncontradaException("No existe ubicacion con nombre: " + nombre.valor()));
     }

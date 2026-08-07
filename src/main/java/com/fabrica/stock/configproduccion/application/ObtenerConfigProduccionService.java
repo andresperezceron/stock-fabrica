@@ -1,8 +1,8 @@
-package com.fabrica.stock.producto.configproduccion.application;
+package com.fabrica.stock.configproduccion.application;
 
-import com.fabrica.stock.producto.configproduccion.domain.ConfigProduccion;
-import com.fabrica.stock.producto.configproduccion.domain.exceptions.ConfigProduccionNoExisteException;
-import com.fabrica.stock.producto.configproduccion.infrastructure.ConfigProduccionRepository;
+import com.fabrica.stock.configproduccion.domain.ConfigProduccion;
+import com.fabrica.stock.configproduccion.domain.exceptions.ConfigProduccionNoExisteException;
+import com.fabrica.stock.configproduccion.infrastructure.ConfigProduccionRepository;
 import com.fabrica.stock.producto.domain.Producto;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ public class ObtenerConfigProduccionService {
         this.configProduccionRepository = configProduccionRepository;
     }
 
-    public ConfigProduccion obtenerPorProducto(Producto producto) {
+    public ConfigProduccion porProducto(Producto producto) {
         return configProduccionRepository.findConfigProduccionByProducto(producto)
                 .orElseThrow(() -> new ConfigProduccionNoExisteException("Configuración de producción no encontrada."));
     }

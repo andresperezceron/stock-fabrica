@@ -1,4 +1,4 @@
-package com.fabrica.stock.producto.configproduccion.domain.exceptions;
+package com.fabrica.stock.configproduccion.domain.exceptions;
 
 public class MateriaPrimaDupicadaException extends RuntimeException {
     public MateriaPrimaDupicadaException(String message) {

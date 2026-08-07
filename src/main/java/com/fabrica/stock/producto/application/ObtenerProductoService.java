@@ -19,8 +19,8 @@ public class ObtenerProductoService {
                 .orElseThrow(() -> new ProductoNoEncontradoException("No existe Producto con maquinaId: " + id));
     }
 
-    public Producto obtener(String codigo) {
-        return productoRepository.findByCodigoAndActivoTrue(new CodigoProducto(codigo))
+    public Producto obtener(CodigoProducto codigo) {
+        return productoRepository.findByCodigoAndActivoTrue(codigo)
                 .orElseThrow(() -> new ProductoNoEncontradoException("No existe Producto con codigo: " + codigo));
     }
 }

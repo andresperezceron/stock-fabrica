@@ -1,9 +1,9 @@
 package com.fabrica.stock.maquina.application;
 
+import com.fabrica.stock.configproduccion.application.CrearConfigProduccionService;
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.maquina.domain.exceptions.EstadoMaquinaNoValidoException;
 import com.fabrica.stock.maquina.domain.exceptions.ProductoActivoNoValidoException;
-import com.fabrica.stock.producto.application.ConfigProduccionService;
 import com.fabrica.stock.producto.application.ObtenerProductoService;
 import com.fabrica.stock.producto.domain.Producto;
 import jakarta.transaction.Transactional;
@@ -13,15 +13,15 @@ import org.springframework.stereotype.Service;
 public class AsignarProductoActivoService {
     private final ObtenerMaquinaService obtenerMaquinaService;
     private final ObtenerProductoService obtenerProductoService;
-    private final ConfigProduccionService configProduccionService;
+    private final CrearConfigProduccionService crearConfigProduccionService;
 
     public AsignarProductoActivoService(ObtenerMaquinaService obtenerMaquinaService,
                                         ObtenerProductoService obtenerProductoService,
-                                        ConfigProduccionService configProduccionService)
+                                        CrearConfigProduccionService crearConfigProduccionService)
     {
         this.obtenerMaquinaService = obtenerMaquinaService;
         this.obtenerProductoService = obtenerProductoService;
-        this.configProduccionService = configProduccionService;
+        this.crearConfigProduccionService = crearConfigProduccionService;
     }
 
     @Transactional
@@ -38,7 +38,7 @@ public class AsignarProductoActivoService {
             throw new ProductoActivoNoValidoException("La máquina no puede fabricar: " + producto.getDescripcion());
 
         maquina.asignarProductoActivo(producto);
-        if(configProduccionService.crearSinoExiste(producto).esValida())
+        if(crearConfigProduccionService.PorProductoSiNoExiste(producto).esValida())
             maquina.configurada();
         else maquina.enConfiguracion();
     }

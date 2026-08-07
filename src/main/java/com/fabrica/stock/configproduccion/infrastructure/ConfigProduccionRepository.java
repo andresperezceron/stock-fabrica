@@ -1,6 +1,6 @@
-package com.fabrica.stock.producto.configproduccion.infrastructure;
+package com.fabrica.stock.configproduccion.infrastructure;
 
-import com.fabrica.stock.producto.configproduccion.domain.ConfigProduccion;
+import com.fabrica.stock.configproduccion.domain.ConfigProduccion;
 import com.fabrica.stock.producto.domain.Producto;
 import org.springframework.data.jpa.repository.JpaRepository;
 

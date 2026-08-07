@@ -1,7 +1,7 @@
-package com.fabrica.stock.producto.configproduccion.application;
+package com.fabrica.stock.configproduccion.application;
 
 import com.fabrica.stock.palet.domain.Palet;
-import com.fabrica.stock.producto.configproduccion.domain.exceptions.CajasPorPaletNoValidoException;
+import com.fabrica.stock.configproduccion.domain.exceptions.CajasPorPaletNoValidoException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

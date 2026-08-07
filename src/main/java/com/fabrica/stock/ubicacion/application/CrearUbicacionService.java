@@ -2,21 +2,22 @@ package com.fabrica.stock.ubicacion.application;
 
 import com.fabrica.stock.ubicacion.api.dto.UbicacionRequest;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
-import com.fabrica.stock.ubicacion.domain.validation.CrearUbicacionValidator;
-import com.fabrica.stock.ubicacion.domain.vo.NombreUbicacion;
 import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CrearUbicacionService {
     private final UbicacionRepository ubicacionRepository;
+    private final ValidarNombreUbicacionService validarNombreUbicacionService;
 
-    public CrearUbicacionService(UbicacionRepository ubicacionRepository) {
+    public CrearUbicacionService(UbicacionRepository ubicacionRepository,
+                                 ValidarNombreUbicacionService validarNombreUbicacionService)
+    {
         this.ubicacionRepository = ubicacionRepository;
+        this.validarNombreUbicacionService = validarNombreUbicacionService;
     }
 
     public void crear(UbicacionRequest request) {
-        new CrearUbicacionValidator(request, ubicacionRepository).validate();
-        ubicacionRepository.save(new Ubicacion(NombreUbicacion.of(request.nombre())));
+        ubicacionRepository.save(new Ubicacion(validarNombreUbicacionService.validar(request.nombre())));
     }
 }
