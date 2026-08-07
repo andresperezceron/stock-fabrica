@@ -4,7 +4,7 @@ import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public record CrearUbicacionRequest(
+public record UbicacionRequest(
     @NotBlank(message = "Nombre Ubicacion es obligatorio.")
     @Size(
             max = TextoConstraints.CORTO,

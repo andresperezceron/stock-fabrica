@@ -1,11 +1,14 @@
 package com.fabrica.stock.producto.domain.vo;
 
-import com.fabrica.stock.producto.domain.constraints.ProductoConstraints;
 import com.fabrica.stock.producto.domain.exceptions.ProductoCodigoNoValidoException;
 
+import java.util.regex.Pattern;
+
 public record CodigoProducto(String valor) {
+    private static final Pattern PATRON = Pattern.compile("\\d{6}");
+
     public CodigoProducto {
-        if(!ProductoConstraints.codigoProductoValido(valor))
+        if(!PATRON.matcher(valor).matches())
             throw new ProductoCodigoNoValidoException("Código producto solo puede ser seis dígitos.");
     }
 

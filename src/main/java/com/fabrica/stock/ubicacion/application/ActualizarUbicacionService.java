@@ -1,6 +1,6 @@
 package com.fabrica.stock.ubicacion.application;
 
-import com.fabrica.stock.ubicacion.api.dto.ActualizarUbicacionRequest;
+import com.fabrica.stock.ubicacion.api.dto.UbicacionRequest;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import com.fabrica.stock.ubicacion.domain.validation.ActualizarUbicacionValidator;
 import com.fabrica.stock.ubicacion.domain.vo.NombreUbicacion;
@@ -20,7 +20,7 @@ public class ActualizarUbicacionService {
     }
 
     @Transactional
-    public void actualizar(Long id, ActualizarUbicacionRequest request) {
+    public void actualizar(Long id, UbicacionRequest request) {
         new ActualizarUbicacionValidator(request, ubicacionRepository, id).validate();
         Ubicacion ubicacion = obtenerUbicacionService.obtener(id);
         ubicacion.modificarNombre(NombreUbicacion.of(request.nombre()));

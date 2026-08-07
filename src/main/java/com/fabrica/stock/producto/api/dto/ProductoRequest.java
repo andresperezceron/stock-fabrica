@@ -39,6 +39,6 @@ public record ProductoRequest(
     DestinoProducto destino
 ){
     public ProductoRequest {
-        descripcion = descripcion.trim();
+        if(descripcion != null) descripcion = descripcion.trim();
     }
 }

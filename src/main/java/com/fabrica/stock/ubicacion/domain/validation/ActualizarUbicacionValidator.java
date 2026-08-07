@@ -1,18 +1,18 @@
 package com.fabrica.stock.ubicacion.domain.validation;
 
 import com.fabrica.stock.shared.domain.validation.RequestValidator;
-import com.fabrica.stock.ubicacion.api.dto.ActualizarUbicacionRequest;
+import com.fabrica.stock.ubicacion.api.dto.UbicacionRequest;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import com.fabrica.stock.ubicacion.domain.exceptions.NombreUbicacionDuplicadoException;
 import com.fabrica.stock.ubicacion.domain.vo.NombreUbicacion;
 import com.fabrica.stock.ubicacion.infrastructure.UbicacionRepository;
 
 public class ActualizarUbicacionValidator extends
-        RequestValidator<ActualizarUbicacionRequest, Ubicacion, UbicacionRepository> {
+        RequestValidator<UbicacionRequest, Ubicacion, UbicacionRepository> {
     private final Long ubicacionId;
 
     public ActualizarUbicacionValidator(
-            ActualizarUbicacionRequest request,
+            UbicacionRequest request,
             UbicacionRepository repository,
             Long ubicacionId)
     {

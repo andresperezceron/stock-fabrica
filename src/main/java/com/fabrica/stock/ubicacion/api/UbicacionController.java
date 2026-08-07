@@ -1,7 +1,6 @@
 package com.fabrica.stock.ubicacion.api;
 
-import com.fabrica.stock.ubicacion.api.dto.CrearUbicacionRequest;
-import com.fabrica.stock.ubicacion.api.dto.ActualizarUbicacionRequest;
+import com.fabrica.stock.ubicacion.api.dto.UbicacionRequest;
 import com.fabrica.stock.ubicacion.api.dto.UbicacionesResponse;
 import com.fabrica.stock.ubicacion.api.dto.UbicacionResponse;
 import com.fabrica.stock.ubicacion.application.*;
@@ -60,7 +59,7 @@ public class UbicacionController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> crear(@Valid @RequestBody CrearUbicacionRequest request) {
+    public ResponseEntity<Void> crear(@Valid @RequestBody UbicacionRequest request) {
         crearUbicacionService.crear(request);
         return ResponseEntity.noContent().build();
     }
@@ -68,7 +67,7 @@ public class UbicacionController {
     @PutMapping("/{id}")
     public ResponseEntity<Void> actualizar(
             @PathVariable Long id,
-            @Valid @RequestBody ActualizarUbicacionRequest request){
+            @Valid @RequestBody UbicacionRequest request){
         actualizarUbicacionService.actualizar(id, request);
         return ResponseEntity.noContent().build();
     }

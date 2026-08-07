@@ -1,7 +1,6 @@
 package com.fabrica.stock.producto.domain;
 
 import com.fabrica.stock.familia.domain.Familia;
-import com.fabrica.stock.producto.domain.constraints.ProductoConstraints;
 import com.fabrica.stock.producto.domain.vo.CodigoProducto;
 import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
 import jakarta.persistence.*;
@@ -13,7 +12,7 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, length = ProductoConstraints.CODIGO)
+    @Column(unique = true)
     private CodigoProducto codigo;
 
     @Column(nullable = false, length = TextoConstraints.MEDIO)

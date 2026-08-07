@@ -31,7 +31,8 @@ public class ComprobarUsoProductoService {
                 throw new ProductoActivoEnMaquinaException("Producto activo: " + producto.getDescripcion() +
                         " en máquina: " + maquina.getNombre());
 
-        return movimientoRepository.existsByProducto(producto); //||
+        return false;
+        //return movimientoRepository.existsByProducto(producto); //||
                 //contenidoPaletRepository.existsByProducto(producto);
     }
 }
