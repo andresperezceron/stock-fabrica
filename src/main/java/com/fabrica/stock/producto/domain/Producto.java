@@ -92,31 +92,31 @@ public class Producto {
 
     public DestinoProducto getDestino() { return destino; }
 
-    public boolean estaActivo() { return activo; }
-
-    public boolean esDestinoInyeccion() {
-        return destino == DestinoProducto.INYECCION ||
-                destino == DestinoProducto.INYECCION_O_EXTRUSION;
-    }
-
-    public boolean esDestinoExtrusion() {
-        return destino == DestinoProducto.EXTRUSION ||
-                destino == DestinoProducto.INYECCION_O_EXTRUSION;
-    }
-
-    public boolean esDestinoInyeccionOExtrusion() {
-        return destino == DestinoProducto.INYECCION_O_EXTRUSION;
-    }
-
-    public boolean esMateriaPrima() { return tipo == TipoProducto.MATERIA_PRIMA; }
-
     public void activar() { activo = true; }
 
     public void desactivar() { activo = false; }
 
-    public boolean mismaEntidadQue(Producto producto) {
-        return producto != null && this.id.equals(producto.getId());
-    }
+    public boolean estoyActivo() { return activo; }
+
+    public boolean soyTerminado() { return tipo == TipoProducto.TERMINADO; }
+
+    public boolean soyIntermedio() { return tipo == TipoProducto.INTERMEDIO; }
+
+    public boolean soyMateriaPrima() { return tipo == TipoProducto.MATERIA_PRIMA; }
+
+    public boolean esProduccionPropia() { return origen == OrigenProducto.PRODUCCION_PROPIA; }
+
+    public boolean esOrigenCompra() { return origen == OrigenProducto.COMPRA; }
+
+    public boolean esNinguno() { return destino == DestinoProducto.NINGUNO; }
+
+    public boolean esMontaje() { return destino == DestinoProducto.MONTAJE; }
+
+    public boolean esInyeccion() { return destino == DestinoProducto.INYECCION; }
+
+    public boolean esExtrusion() { return destino == DestinoProducto.EXTRUSION; }
+
+    public boolean esInyeccionOExtrusion() { return destino == DestinoProducto.INYECCION_O_EXTRUSION; }
 
     public void actualizar(CodigoProducto codigo,
                            String descripcion,

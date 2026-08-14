@@ -2,5 +2,8 @@ package com.fabrica.stock.movimiento.domain;
 
 public enum TipoMovimiento {
     ENTRADA,
-    SALIDA
+    SALIDA,
+    REUBICACION,
+    PARA_CONSUMICION,
+    CONSUMICION
 }

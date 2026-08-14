@@ -1,9 +1,9 @@
 package com.fabrica.stock.producto.application;
 
 import com.fabrica.stock.producto.domain.Producto;
-import com.fabrica.stock.producto.domain.exceptions.ProductoNoEncontradoException;
 import com.fabrica.stock.producto.domain.vo.CodigoProducto;
 import com.fabrica.stock.producto.infrastructure.ProductoRepository;
+import com.fabrica.stock.shared.domain.exceptions.RecursoNoEncontradoException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,11 +16,11 @@ public class ObtenerProductoService {
 
     public Producto obtener(Long id) {
         return productoRepository.findByIdAndActivoTrue(id)
-                .orElseThrow(() -> new ProductoNoEncontradoException("No existe Producto con maquinaId: " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("No existe Producto con maquinaId: " + id));
     }
 
     public Producto obtener(CodigoProducto codigo) {
         return productoRepository.findByCodigoAndActivoTrue(codigo)
-                .orElseThrow(() -> new ProductoNoEncontradoException("No existe Producto con codigo: " + codigo));
+                .orElseThrow(() -> new RecursoNoEncontradoException("No existe Producto con codigo: " + codigo));
     }
 }

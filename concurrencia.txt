@@ -1,12 +1,8 @@
-Caso de uso			      Agregado principal      ¿concurrencia?        ¿qué protege?
------------------------------------------------------------------------------------------------------------------------
-Asignar estado Api/cliente	    Maquina		        ✅ Sí 		Solo un estado Api/cliente activo.
-Asignar producto activo		    Maquina			    ✅ Sí 		Solo un producto activo estado coherente.
-Iniciar producción		        Maquina			    ✅ Sí		Solo una producción activa.
------------------------------------------------------------------------------------------------------------------------
-Agregar materia prima		    ConfigProduccion    ✅ Sí		Configuración consistente.
-Quitar materia prima		    ConfigProduccion    ✅ Sí 		Configuración consistente.
-Actualizar Cajas por palet	    ConfigProduccion    ✅ Sí		Configuración consistente. (impacto leve)
------------------------------------------------------------------------------------------------------------------------
-Registrar producción            Palet               ✅ Sí       Contenidos de palet consistentes.
 
+Módulo	                      Servicio	           ¿Concurrencia?       Motivo / riesgo
+-----------------------------------------------------------------------------------------------------------------------
+ConfigProduccion    ActualizarCajasPorPaletService	    ✅           Modificación concurrente
+                	ActualizarObservacionesService	    ✅           Modificación concurrente
+                	AgregarMateriaPrimaService	        ✅           Modificación concurrente
+                	ConsumirMateriaPrimaService	        ✅           Modificación concurrente
+-----------------------------------------------------------------------------------------------------------------------

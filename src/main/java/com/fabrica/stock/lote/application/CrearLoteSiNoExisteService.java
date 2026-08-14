@@ -20,9 +20,11 @@ public class CrearLoteSiNoExisteService {
 
     public Lote crearSiNoExiste(OrigenLote origenLote, String loteProveedor, Maquina maquina, Producto producto) {
         Maquina.LoteGenerado loteGenerado = maquina.obtenerLoteGenerado();
-        Optional<Lote> existente = loteRepository.findByCodigoLote(loteGenerado.getCodigo());
+        CodigoLote codigo = new CodigoLote(loteGenerado.getCodigo());
+
+        Optional<Lote> existente = loteRepository.findByCodigo(codigo);
         return existente.orElseGet(() -> loteRepository.save(new Lote(
-                CodigoLote.of(loteGenerado.getCodigo()),
+                codigo,
                 origenLote,
                 loteProveedor,
                 loteGenerado.getFechaCreacion(),

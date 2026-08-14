@@ -37,8 +37,4 @@ public record ProductoRequest(
 
     @NotNull(message = "Proceso fabricación de producto es obligatorio.")
     DestinoProducto destino
-){
-    public ProductoRequest {
-        if(descripcion != null) descripcion = descripcion.trim();
-    }
-}
+){}

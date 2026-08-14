@@ -1,6 +1,5 @@
 package com.fabrica.stock.lote.domain;
 
-import com.fabrica.stock.lote.domain.constraints.LoteConstraints;
 import com.fabrica.stock.lote.domain.vo.CodigoLote;
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.producto.domain.Producto;
@@ -17,7 +16,7 @@ public class Lote {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private CodigoLote codigoLote;
+    private CodigoLote codigo;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -44,7 +43,7 @@ public class Lote {
     protected Lote() {}
 
     public Lote(
-            CodigoLote codigoLote,
+            CodigoLote codigo,
             OrigenLote origen,
             String loteProveedor,
             LocalDateTime fechaCreacion,
@@ -52,7 +51,7 @@ public class Lote {
             Producto producto,
             TurnoProduccion turno
     ) {
-        this.codigoLote = codigoLote;
+        this.codigo = codigo;
         this.origen = origen;
         this.loteProveedor = loteProveedor;
         this.fechaCreacion = fechaCreacion;
@@ -65,9 +64,7 @@ public class Lote {
         return id;
     }
 
-    public CodigoLote getCodigoLote() {
-        return codigoLote;
-    }
+    public String getCodigo() { return loteProveedor == null ? codigo.valor() : loteProveedor; }
 
     public OrigenLote getOrigen() {
         return origen;

@@ -22,26 +22,4 @@ public class MaquinaExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .body(DomainErrorResponse.of(ex.getMessage()));
     }
-
-    @ExceptionHandler(ProductoActivoNoValidoException.class)
-    public ResponseEntity<DomainErrorResponse>
-    manejarProductoActivoNoValidoException(ProductoActivoNoValidoException ex) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(DomainErrorResponse.of(ex.getMessage()));
-    }
-
-    @ExceptionHandler(MaquinaNoAptaProduccionException.class)
-    public ResponseEntity<DomainErrorResponse> manejarNoAptaProduccion(MaquinaNoAptaProduccionException ex) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(DomainErrorResponse.of(ex.getMessage()));
-    }
-
-    @ExceptionHandler(EstadoMaquinaNoValidoException.class)
-    public ResponseEntity<DomainErrorResponse> manejarEstadoMaquinaNoValido(EstadoMaquinaNoValidoException ex) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(DomainErrorResponse.of(ex.getMessage()));
-    }
 }

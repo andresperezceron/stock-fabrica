@@ -1,5 +1,8 @@
 package com.fabrica.stock.configproduccion.domain;
 
+import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
+import com.fabrica.stock.lote.domain.Lote;
+import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
 import jakarta.persistence.*;
@@ -34,20 +37,20 @@ public class ConfigProduccion {
 
     @ManyToMany
     @JoinTable(
-            name = "config_produccion_producto",
+            name = "config_produccion_palet",
             joinColumns = @JoinColumn(name = "config_produccion_id"),
-            inverseJoinColumns = @JoinColumn(name = "producto_id")
+            inverseJoinColumns = @JoinColumn(name = "palet_id")
     )
-    private final List<Producto> materiasPrimas = new ArrayList<>();
+    private final List<Palet> materiasPrimas = new ArrayList<>();
 
-    @Column(nullable = false, length = TextoConstraints.LARGO)
+    @Column(length = TextoConstraints.LARGO)
     private String observaciones;
 
     protected ConfigProduccion() {}
 
     public ConfigProduccion(Producto producto) {
         this.producto = producto;
-        cajasPorPalet = 0;
+        cajasPorPalet = 1;
         observaciones = "";
     }
 
@@ -59,15 +62,15 @@ public class ConfigProduccion {
 
     public LocalDateTime getFechaUltimaModificacion() {  return fechaUltimaModificacion; }
 
-    public List<Producto> getMateriasPrimas() { return Collections.unmodifiableList(materiasPrimas); }
+    public List<Palet> getMateriasPrimas() { return Collections.unmodifiableList(materiasPrimas); }
 
     public int getCajasPorPalet() { return cajasPorPalet; }
 
     public String getObservaciones() { return observaciones; }
 
-    public void agregarMateriaPrima(Producto producto) { materiasPrimas.add(producto); }
+    public void agregarMateriaPrima(Palet palet) { materiasPrimas.add(palet); }
 
-    public void quitarMateriaPrima(Producto producto) { materiasPrimas.remove(producto); }
+    public void consumirMateriaPrima(Palet palet) { materiasPrimas.remove(palet); }
 
     public void actualizarCajasPorPalet(int cajasPorPalet) {  this.cajasPorPalet = cajasPorPalet; }
 
@@ -75,9 +78,16 @@ public class ConfigProduccion {
 
     public boolean esValida() { return !materiasPrimas.isEmpty() && cajasPorPalet > 0; }
 
-    public boolean contieneMateriaPrima(Producto producto) {
-        return materiasPrimas.stream()
-                .anyMatch(mp -> mp.mismaEntidadQue(producto));
+    public boolean contieneMateriaPrima(Palet palet) {
+        return materiasPrimas.stream().anyMatch(p -> p.getId().equals(palet.getId()));
+    }
+
+    public List<Lote> obtenerLotesMateriaPrima() {
+        return materiasPrimas
+                .stream()
+                .flatMap(p -> p.getContenidos().stream())
+                .map(ContenidoPalet::getLote)
+                .toList();
     }
 
     @PrePersist

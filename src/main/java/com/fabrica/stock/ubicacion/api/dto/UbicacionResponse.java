@@ -7,6 +7,6 @@ public record UbicacionResponse(
     String nombre
 ) {
     public static UbicacionResponse of(Ubicacion ubicacion) {
-        return new UbicacionResponse(ubicacion.getId(), ubicacion.getNombre());
+        return new UbicacionResponse(ubicacion.getId(), ubicacion.getNombre().valor());
     }
 }

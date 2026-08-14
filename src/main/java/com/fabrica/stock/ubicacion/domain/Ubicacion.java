@@ -13,14 +13,14 @@ public class Ubicacion extends Localizacion implements EntidadActivable {
     protected Ubicacion() {}
 
     public Ubicacion(NombreUbicacion nombre) {
-        super(nombre.valor());
+        super(nombre);
     }
 
     public Long getId() { return super.getId(); }
 
-    public String getNombre() { return super.getNombre(); }
+    public NombreUbicacion getNombre() { return super.getNombre(); }
 
-    public void actualizarNombre(NombreUbicacion nombre) { super.setNombre(nombre.valor()); }
+    public void actualizarNombre(NombreUbicacion nombre) { super.setNombre(nombre); }
 
     @Override
     public boolean estaActiva() {

@@ -2,7 +2,7 @@ package com.fabrica.stock.maquina.application;
 
 import com.fabrica.stock.maquina.domain.EstadoMaquina;
 import com.fabrica.stock.maquina.domain.Maquina;
-import com.fabrica.stock.maquina.domain.exceptions.EstadoMaquinaNoValidoException;
+import com.fabrica.stock.shared.domain.exceptions.EstadoNoValidoException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,21 +15,21 @@ public class CambiarEstadoMaquinaService {
 
     public void cambiar(Long id, EstadoMaquina estado) {
         Maquina maquina = obtenerMaquinaService.obtener(id);
-        if(maquina.estaProduccion()) throw new EstadoMaquinaNoValidoException("Máquina está en producción.");
+        if(maquina.estaEnProduccion()) throw new EstadoNoValidoException("Máquina está en producción.");
         switch(estado) {
             case CAMBIO_MOLDE -> {
-                maquina.cambiarACambioMolde();
+                maquina.cambioMolde();
                 maquina.quitarProductoActivo();
             }
             case FUERA_SERVICIO -> {
-                maquina.cambiarAFueraServicio();
+                maquina.fueraServicio();
                 maquina.quitarProductoActivo();
             }
             case MANTENIMIENTO -> {
-                maquina.cambiarAMantenimiento();
+                maquina.mantenimiento();
                 maquina.quitarProductoActivo();
             }
-            case APTA ->  maquina.cambiarAAptaProduccion();
+            case APTA_PRODUCCION ->  maquina.aptaProduccion();
         }
     }
 }

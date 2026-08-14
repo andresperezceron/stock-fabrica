@@ -1,6 +1,5 @@
 package com.fabrica.stock.producto.api;
 
-import com.fabrica.stock.producto.api.dto.ActualizarObservacionesRequest;
 import com.fabrica.stock.producto.api.dto.ProductoRequest;
 import com.fabrica.stock.producto.api.dto.ProductoResponse;
 import com.fabrica.stock.producto.api.dto.ProductosResponse;
@@ -22,7 +21,6 @@ public class ProductoController {
     private final ActualizarProductoService actualizarProductoService;
     private final EliminarProductoService eliminarProductoService;
     private final ActivarProductoService activarProductoService;
-    private final ConfigProduccionService configProduccionService;
 
     public ProductoController(CrearProductoService crearProductoService,
                               ListarProductosService listarProductosService,
@@ -30,8 +28,7 @@ public class ProductoController {
                               ObtenerProductoService obtenerProductoService,
                               ActualizarProductoService actualizarProductoService,
                               EliminarProductoService eliminarProductoService,
-                              ActivarProductoService activarProductoService,
-                              ConfigProduccionService configProduccionService)
+                              ActivarProductoService activarProductoService)
     {
         this.crearProductoService = crearProductoService;
         this.listarProductosService = listarProductosService;
@@ -40,7 +37,6 @@ public class ProductoController {
         this.actualizarProductoService = actualizarProductoService;
         this.eliminarProductoService = eliminarProductoService;
         this.activarProductoService = activarProductoService;
-        this.configProduccionService = configProduccionService;
     }
 
     @GetMapping
@@ -61,7 +57,7 @@ public class ProductoController {
         return ResponseEntity.ok(ProductoResponse.of(producto));
     }
 
-    @PostMapping("{id}/activar")
+    @PostMapping("/{id}/activar")
     public ResponseEntity<Void> activar(@PathVariable Long id) {
         activarProductoService.activar(id);
         return ResponseEntity.noContent().build();
@@ -78,22 +74,6 @@ public class ProductoController {
             @PathVariable Long id,
             @Valid @RequestBody ProductoRequest request) {
         actualizarProductoService.actualizar(id, request);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PatchMapping("/{id}/observaciones")
-    public ResponseEntity<Void> actualizarObservaciones(
-            @PathVariable Long id,
-            @RequestBody ActualizarObservacionesRequest request) {
-        configProduccionService.actualizarObservaciones(id, request);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PatchMapping("/{paletId}/cajas-por-palet/{cajasPorPalet}")
-    public ResponseEntity<Void> actualizarCajasPorPalet(
-            @PathVariable Long paletId,
-            @PathVariable Integer cajasPorPalet) {
-        configProduccionService.actualizarCajasPorPalet(paletId, cajasPorPalet);
         return ResponseEntity.noContent().build();
     }
 

@@ -4,5 +4,7 @@ public enum EstadoPalet {
     ABIERTO,
     CERRADO,
     PENDIENTE_VALIDACION,
-    VALIDADO
+    VALIDADO,
+    EN_CONSUMO,
+    CONSUMIDO
 }

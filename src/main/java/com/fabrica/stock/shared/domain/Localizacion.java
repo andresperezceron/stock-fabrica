@@ -1,6 +1,6 @@
 package com.fabrica.stock.shared.domain;
 
-import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
+import com.fabrica.stock.ubicacion.domain.vo.NombreUbicacion;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,20 +10,20 @@ public abstract class Localizacion {
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false, unique = true, length = TextoConstraints.CORTO)
-    private String nombre;
+    @Column(nullable = false, unique = true)
+    private NombreUbicacion nombre;
 
     protected Localizacion() {}
 
-    protected Localizacion(String nombre) {
+    protected Localizacion(NombreUbicacion nombre) {
         this.nombre = nombre;
     }
 
     protected Long getId() { return id; }
 
-    protected String getNombre() {
+    protected NombreUbicacion getNombre() {
         return nombre;
     }
 
-    protected void setNombre(String nombre) { this.nombre = nombre; }
+    protected void setNombre(NombreUbicacion nombre) { this.nombre = nombre; }
 }

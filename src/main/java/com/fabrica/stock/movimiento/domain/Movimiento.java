@@ -4,6 +4,7 @@ import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
 import com.fabrica.stock.estacion.domain.Estacion;
 import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.shared.domain.Localizacion;
+import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -66,8 +67,16 @@ public class Movimiento {
 
     public Localizacion getDestino() { return destino; }
 
-    public static List<Movimiento> primerMovimiento(Palet palet, Estacion origen, Estacion destino) {
-        return crearMovimientos(palet, TipoMovimiento.ENTRADA, origen, destino);
+    public static List<Movimiento> primerMovimiento(Palet palet, Estacion produccion, Estacion validacion) {
+        return crearMovimientos(palet, TipoMovimiento.ENTRADA, produccion, validacion);
+    }
+
+    public static List<Movimiento> paraConsumo(Palet palet, Ubicacion ubicacion, Estacion produccion) {
+        return crearMovimientos(palet, TipoMovimiento.PARA_CONSUMICION, ubicacion, produccion);
+    }
+
+    public static List<Movimiento> consumicion(Palet palet, Estacion produccion, Estacion consumicion) {
+        return crearMovimientos(palet, TipoMovimiento.CONSUMICION, produccion, consumicion);
     }
 
     private static List<Movimiento> crearMovimientos(

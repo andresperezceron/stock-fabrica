@@ -13,7 +13,7 @@ public class CrearConfigProduccionService {
         this.configProduccionRepository = configProduccionRepository;
     }
 
-    public ConfigProduccion PorProductoSiNoExiste(Producto producto) {
+    public ConfigProduccion porProductoSiNoExiste(Producto producto) {
         return configProduccionRepository
                 .findConfigProduccionByProducto(producto)
                 .orElseGet(() -> configProduccionRepository.save(new ConfigProduccion(producto)));

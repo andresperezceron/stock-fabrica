@@ -1,12 +1,10 @@
 package com.fabrica.stock.palet.application;
 
-import com.fabrica.stock.estacion.application.ObtenerEstacionService;
-import com.fabrica.stock.estacion.domain.Estacion;
-import com.fabrica.stock.maquina.domain.exceptions.EstadoMaquinaNoValidoException;
-import com.fabrica.stock.movimiento.domain.Movimiento;
-import com.fabrica.stock.movimiento.infrastructure.MovimientoRepository;
+import com.fabrica.stock.maquina.application.ObtenerMaquinaService;
+import com.fabrica.stock.maquina.domain.Maquina;
+import com.fabrica.stock.movimiento.application.CrearMovimientoService;
+import com.fabrica.stock.palet.api.dto.MaquinaIdPaletIdRequest;
 import com.fabrica.stock.palet.domain.Palet;
-import com.fabrica.stock.palet.domain.exceptions.EstadoPaletInvalidoException;
 import com.fabrica.stock.palet.infrastructure.PaletRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -14,35 +12,36 @@ import org.springframework.stereotype.Service;
 @Service
 public class FinalizarPaletService {
     private final ObtenerPaletService obtenerPaletService;
-    private final ObtenerEstacionService obtenerEstacionService;
+    private final ObtenerMaquinaService obtenerMaquinaService;
+    private final ComprobarFinalizarPaletService comprobarFinalizarPaletService;
     private final PaletRepository paletRepository;
-    private final MovimientoRepository movimientoRepository;
+    private final CrearMovimientoService crearMovimientoService;
 
     public FinalizarPaletService(ObtenerPaletService obtenerPaletService,
-                                 ObtenerEstacionService obtenerEstacionService,
+                                 ObtenerMaquinaService obtenerMaquinaService,
+                                 ComprobarFinalizarPaletService comprobarFinalizarPaletService,
                                  PaletRepository paletRepository,
-                                 MovimientoRepository movimientoRepository)
+                                 CrearMovimientoService crearMovimientoService)
     {
         this.obtenerPaletService = obtenerPaletService;
-        this.obtenerEstacionService = obtenerEstacionService;
+        this.obtenerMaquinaService = obtenerMaquinaService;
+        this.comprobarFinalizarPaletService = comprobarFinalizarPaletService;
         this.paletRepository = paletRepository;
-        this.movimientoRepository = movimientoRepository;
+        this.crearMovimientoService = crearMovimientoService;
     }
 
     @Transactional
-    public void finalizar(Long id) {
-        Palet palet = obtenerPaletService.obtener(id);
+    public void finalizar(MaquinaIdPaletIdRequest request) {
+        Maquina maquina = obtenerMaquinaService.obtener(request.maquinaId());
+        Palet palet = obtenerPaletService.obtener(request.paletId());
 
-        if(!palet.getMaquina().estaProduccion()) throw new EstadoMaquinaNoValidoException("No hay producción activa.");
-        else if(!palet.estaCerrado()) throw new EstadoPaletInvalidoException("El palet no está cerrado.");
+        comprobarFinalizarPaletService.comprobar(maquina, palet);
 
-        if(!palet.estaVacio()) {
-            Estacion origen = obtenerEstacionService.obtenerProduccion();
-            Estacion destino = obtenerEstacionService.obtenerValidacion();
-            palet.cambiarAPendienteValidacion();
-            palet.moverA(destino);
-            palet.getMaquina().cambiarAConfigurada();
-            movimientoRepository.saveAll(Movimiento.primerMovimiento(palet, origen, destino));
+        if(!palet.estoyVacio()) {
+            palet.consolidarContenidos();
+            crearMovimientoService.primerMovimiento(palet);
+            palet.pendienteValidacion();
+            palet.getMaquina().configurada();
         }else paletRepository.delete(palet);
     }
 }

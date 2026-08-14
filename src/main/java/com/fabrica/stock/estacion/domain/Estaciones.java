@@ -10,6 +10,7 @@ public final class Estaciones {
     public static final String PROVEEDOR = "PROVEEDOR";
     public static final String EXPEDICION = "EXPEDICION";
     public static final String CORRECCION = "CORRECCION";
+    public static final String CONSUMICION = "CONSUMICION";
 
     public static List<String> todas() {
         return List.of(
@@ -17,7 +18,8 @@ public final class Estaciones {
                 VALIDACION,
                 PROVEEDOR,
                 EXPEDICION,
-                CORRECCION
+                CORRECCION,
+                CONSUMICION
         );
     }
 }

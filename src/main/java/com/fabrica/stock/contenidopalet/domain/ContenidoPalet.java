@@ -2,11 +2,11 @@ package com.fabrica.stock.contenidopalet.domain;
 
 import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.palet.domain.Palet;
+import com.fabrica.stock.palet.domain.TipoCaja;
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -21,19 +21,31 @@ public class ContenidoPalet {
     @ManyToOne(optional = false)
     private Lote lote;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private BigDecimal cantidad;
+    private TipoCaja tipoCaja;
+
+    @Column(nullable = false)
+    private Integer cantidad;
+
+    @ManyToMany
+    private List<Lote> lotesMateriaPrima;
 
     @Column(nullable = false)
     private LocalDateTime fechaCreacion;
 
-    @ManyToMany
-    private final List<Lote> lotesMateriaPrima = new ArrayList<>();
-
-    public ContenidoPalet(Palet palet, Lote lote, BigDecimal cantidad) {
+    public ContenidoPalet(
+            Palet palet,
+            Lote lote,
+            TipoCaja tipoCaja,
+            Integer cantidad,
+            List<Lote> lotesMateriaPrima)
+    {
         this.palet = palet;
         this.lote = lote;
+        this.tipoCaja = tipoCaja;
         this.cantidad = cantidad;
+        this.lotesMateriaPrima = lotesMateriaPrima;
         fechaCreacion = LocalDateTime.now();
     }
 
@@ -47,11 +59,33 @@ public class ContenidoPalet {
         return palet;
     }
 
+    public TipoCaja getTipoCaja() { return tipoCaja; }
+
     public Lote getLote() { return lote; }
 
-    public BigDecimal getCantidad() { return cantidad; }
+    public Integer getCantidad() { return cantidad; }
+
+    public List<Lote> getLotesMateriaPrima() { return Collections.unmodifiableList(lotesMateriaPrima); }
 
     public LocalDateTime getFechaCreacion() { return fechaCreacion; }
 
-    public List<Lote> getLotesMateriaPrima() { return lotesMateriaPrima; }
+    public boolean esMismoContenido(ContenidoPalet otro) {
+        boolean mismoLoteMismoTipo = lote.getCodigo().equals(otro.lote.getCodigo()) && tipoCaja == otro.tipoCaja;
+
+        boolean mismasMateriasPrimas =
+                lotesMateriaPrima.stream()
+                        .map(Lote::getId)
+                        .sorted()
+                        .toList()
+                        .equals(otro.lotesMateriaPrima.stream()
+                                        .map(Lote::getId)
+                                        .sorted()
+                                        .toList());
+
+        return mismoLoteMismoTipo && mismasMateriasPrimas;
+    }
+
+    public void acumular(ContenidoPalet otro) {
+        cantidad += otro.cantidad;
+    }
 }

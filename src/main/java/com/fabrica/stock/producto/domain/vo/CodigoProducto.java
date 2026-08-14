@@ -1,6 +1,6 @@
 package com.fabrica.stock.producto.domain.vo;
 
-import com.fabrica.stock.producto.domain.exceptions.ProductoCodigoNoValidoException;
+import com.fabrica.stock.shared.domain.exceptions.RecursoNoValidoException;
 
 import java.util.regex.Pattern;
 
@@ -9,7 +9,7 @@ public record CodigoProducto(String valor) {
 
     public CodigoProducto {
         if(!PATRON.matcher(valor).matches())
-            throw new ProductoCodigoNoValidoException("Código producto solo puede ser seis dígitos.");
+            throw new RecursoNoValidoException("Código producto solo puede ser seis dígitos.");
     }
 
     public static CodigoProducto of(String valor) {
