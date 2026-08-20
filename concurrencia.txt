@@ -6,3 +6,9 @@ ConfigProduccion    ActualizarCajasPorPaletService	    ✅           Modificaci�
                 	AgregarMateriaPrimaService	        ✅           Modificación concurrente
                 	ConsumirMateriaPrimaService	        ✅           Modificación concurrente
 -----------------------------------------------------------------------------------------------------------------------
+Maquina             AsignarConfigProduccionService	    ✅           Modificación concurrente
+                    CambiarEstadoMaquinaService	        ✅           Modificación concurrente
+                    IniciarProduccionService            ✅           Modificación concurrente
+                    ReaunudarProduccionService          ✅           Modificación concurrente
+                    FinalizarProduccionService          ✅           Modificación concurrente
+                    RegistrarProduccionService          ✅           Modificación concurrente

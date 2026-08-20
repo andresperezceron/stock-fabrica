@@ -28,6 +28,7 @@ public class CrearMovimientoService {
         Estacion validacion = obtenerEstacionService.obtenerValidacion();
         movimientoRepository.saveAll(Movimiento.primerMovimiento(palet, produccion, validacion));
         palet.moverA(validacion);
+        palet.pendienteValidacion();
     }
 
     public void paraConsumo(Palet palet) {
@@ -37,6 +38,7 @@ public class CrearMovimientoService {
         Estacion produccion = obtenerEstacionService.obtenerProduccion();
         movimientoRepository.saveAll(Movimiento.paraConsumo(palet, ubicacion, produccion));
         palet.moverA(produccion);
+        palet.enConsumo();
     }
 
     public void consumicion(Palet palet) {
@@ -46,5 +48,6 @@ public class CrearMovimientoService {
         Estacion consumicion = obtenerEstacionService.obtenerConsumicion();
         movimientoRepository.saveAll(Movimiento.consumicion(palet, produccion, consumicion));
         palet.moverA(consumicion);
+        palet.consumido();
     }
 }

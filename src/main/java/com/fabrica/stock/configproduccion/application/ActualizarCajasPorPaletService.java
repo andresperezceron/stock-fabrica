@@ -1,32 +1,31 @@
 package com.fabrica.stock.configproduccion.application;
 
+import com.fabrica.stock.maquina.api.dto.request.CajasPorPaletRequest;
 import com.fabrica.stock.maquina.application.ObtenerMaquinaService;
 import com.fabrica.stock.maquina.domain.Maquina;
+import com.fabrica.stock.shared.domain.exceptions.EstadoNoValidoException;
+import com.fabrica.stock.shared.domain.exceptions.RecursoNoValidoException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ActualizarCajasPorPaletService {
     private final ObtenerMaquinaService obtenerMaquinaService;
-    private final ObtenerConfigProduccionService obtenerConfigProduccionService;
-    private final ComprobarActCajasPorPaletService comprobarActCajasPorPaletService;
 
-    public ActualizarCajasPorPaletService(ObtenerMaquinaService obtenerMaquinaService,
-                                          ObtenerConfigProduccionService obtenerConfigProduccionService,
-                                          ComprobarActCajasPorPaletService comprobarActCajasPorPaletService)
-    {
+    public ActualizarCajasPorPaletService(ObtenerMaquinaService obtenerMaquinaService) {
         this.obtenerMaquinaService = obtenerMaquinaService;
-        this.obtenerConfigProduccionService = obtenerConfigProduccionService;
-        this.comprobarActCajasPorPaletService = comprobarActCajasPorPaletService;
     }
 
     @Transactional
-    public void actualizar(Long maquinaId, Integer cajasPorPalet) {
+    public void actualizar(Long maquinaId, CajasPorPaletRequest request) {
         Maquina maquina = obtenerMaquinaService.obtener(maquinaId);
-        comprobarActCajasPorPaletService.comprobar(maquina, cajasPorPalet);
 
-        obtenerConfigProduccionService
-                    .porProducto(maquina.getProductoActivo())
-                    .actualizarCajasPorPalet(cajasPorPalet);
+        if(!maquina.estaEnProduccion())
+            throw new EstadoNoValidoException("Servicio no disponible.");
+
+        if(maquina.getPalet().soyTipoGranel())
+            throw new RecursoNoValidoException("Servicio no disponible.");
+
+        maquina.getConfigProduccion().actualizarCajasPorPalet(request.cajasPorPalet());
     }
 }

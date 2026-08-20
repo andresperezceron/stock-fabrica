@@ -1,8 +1,7 @@
 package com.fabrica.stock.maquina.application;
 
-import com.fabrica.stock.configproduccion.application.ObtenerConfigProduccionService;
 import com.fabrica.stock.estacion.application.ObtenerEstacionService;
-import com.fabrica.stock.maquina.api.dto.IniciarProduccionRequest;
+import com.fabrica.stock.maquina.api.dto.request.IniciarProduccionRequest;
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.palet.infrastructure.PaletRepository;
@@ -14,38 +13,32 @@ import org.springframework.stereotype.Service;
 public class IniciarProduccionService {
     private final ObtenerMaquinaService obtenerMaquinaService;
     private final ObtenerEstacionService obtenerEstacionService;
-    private final ObtenerConfigProduccionService obtenerConfigProduccionService;
-    private final ComprobarIniProduccionService comprobarIniProduccionService;
     private final PaletRepository paletRepository;
 
     public IniciarProduccionService(ObtenerMaquinaService obtenerMaquinaService,
                                     ObtenerEstacionService obtenerEstacionService,
-                                    ObtenerConfigProduccionService obtenerConfigProduccionService,
-                                    ComprobarIniProduccionService comprobarIniProduccionService,
                                     PaletRepository paletRepository)
     {
         this.obtenerMaquinaService = obtenerMaquinaService;
         this.obtenerEstacionService = obtenerEstacionService;
-        this.obtenerConfigProduccionService = obtenerConfigProduccionService;
-        this.comprobarIniProduccionService = comprobarIniProduccionService;
         this.paletRepository = paletRepository;
     }
 
     @Transactional
-    public void iniciar(IniciarProduccionRequest request) {
-        Maquina maquina = obtenerMaquinaService.obtener(request.maquinaId());
+    public void iniciar(Long maquinaId, IniciarProduccionRequest request) {
+        Maquina maquina = obtenerMaquinaService.obtener(maquinaId);
 
-        comprobarIniProduccionService.comprobar(maquina);
+        if(maquina.estaEnProduccion())
+            throw new EstadoNoValidoException("Servicio no disponible.");
+
+        if(!maquina.estaConfigurada())
+            throw new EstadoNoValidoException("Máquina no configurada.");
 
         Palet palet = paletRepository.save(new Palet(
                 request.tipoPalet(),
-                maquina,
-                maquina.getProductoActivo(),
+                maquina.getConfigProduccion().getProducto(),
                 obtenerEstacionService.obtenerProduccion()));
 
-        if(palet.soyTipoGranel())
-            obtenerConfigProduccionService.porProducto(maquina.getProductoActivo()).actualizarCajasPorPalet(1);
-
-        maquina.enProduccion();
+        maquina.asignarPalet(palet);
     }
 }

@@ -4,6 +4,7 @@ import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
 import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.producto.domain.Producto;
+import com.fabrica.stock.producto.domain.UnidadMedida;
 import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
 import jakarta.persistence.*;
 
@@ -76,7 +77,9 @@ public class ConfigProduccion {
 
     public void actualizarObservaciones(String observaciones) { this.observaciones = observaciones; }
 
-    public boolean esValida() { return !materiasPrimas.isEmpty() && cajasPorPalet > 0; }
+    public boolean esValida() {
+        return !materiasPrimas.isEmpty() && cajasPorPalet > 0;
+    }
 
     public boolean contieneMateriaPrima(Palet palet) {
         return materiasPrimas.stream().anyMatch(p -> p.getId().equals(palet.getId()));

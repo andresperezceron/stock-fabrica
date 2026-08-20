@@ -1,8 +1,9 @@
 package com.fabrica.stock.maquina.application;
 
-import com.fabrica.stock.maquina.domain.EstadoMaquina;
+import com.fabrica.stock.maquina.api.dto.request.EstadoMaquinaRequest;
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.shared.domain.exceptions.EstadoNoValidoException;
+import com.fabrica.stock.shared.domain.exceptions.RecursoNoValidoException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,23 +14,26 @@ public class CambiarEstadoMaquinaService {
         this.obtenerMaquinaService = obtenerMaquinaService;
     }
 
-    public void cambiar(Long id, EstadoMaquina estado) {
-        Maquina maquina = obtenerMaquinaService.obtener(id);
-        if(maquina.estaEnProduccion()) throw new EstadoNoValidoException("Máquina está en producción.");
-        switch(estado) {
+    public void cambiar(Long maquinaId, EstadoMaquinaRequest request) {
+        Maquina maquina = obtenerMaquinaService.obtener(maquinaId);
+        if(maquina.estaEnProduccion()) throw new EstadoNoValidoException("Servicio no disponible.");
+
+        switch(request.estado()) {
             case CAMBIO_MOLDE -> {
                 maquina.cambioMolde();
-                maquina.quitarProductoActivo();
+                maquina.quitarConfigProduccion();
             }
             case FUERA_SERVICIO -> {
                 maquina.fueraServicio();
-                maquina.quitarProductoActivo();
+                maquina.quitarConfigProduccion();
             }
             case MANTENIMIENTO -> {
                 maquina.mantenimiento();
-                maquina.quitarProductoActivo();
+                maquina.quitarConfigProduccion();
             }
             case APTA_PRODUCCION ->  maquina.aptaProduccion();
+
+            default -> throw new RecursoNoValidoException("Estado máquina no valido.");
         }
     }
 }

@@ -6,17 +6,17 @@ public enum TipoMaquina {
     INYECCION {
         @Override
         public boolean puedeFabricar(Producto producto) {
-            boolean tipo = producto.soyTerminado() || producto.soyIntermedio();
-            boolean origen = producto.esProduccionPropia();
-            boolean destino = producto.esNinguno() || producto.esMontaje();
+            boolean tipo = producto.soyTipoTerminado() || producto.soyTipoIntermedio();
+            boolean origen = producto.esOrigenProduccionPropia();
+            boolean destino = producto.esDestinoNinguno() || producto.esDestinoMontaje();
             return tipo && origen && destino;
         }
 
         @Override
         public boolean materiaPrimaPuedeUsar(Producto producto) {
-            boolean tipo = producto.soyMateriaPrima();
-            boolean origen = producto.esProduccionPropia() || producto.esOrigenCompra();
-            boolean destino = producto.esInyeccion() || producto.esInyeccionOExtrusion();
+            boolean tipo = producto.soyTipoMateriaPrima();
+            boolean origen = producto.esOrigenProduccionPropia() || producto.esOrigenCompra();
+            boolean destino = producto.esDestinoInyeccion() || producto.esDestinoInyExt();
             return tipo && origen && destino;
         }
     },
@@ -24,17 +24,17 @@ public enum TipoMaquina {
     EXTRUSION {
         @Override
         public boolean puedeFabricar(Producto producto) {
-            boolean tipo = producto.soyTerminado();
-            boolean origen = producto.esProduccionPropia();
-            boolean destino = producto.esNinguno();
+            boolean tipo = producto.soyTipoTerminado();
+            boolean origen = producto.esOrigenProduccionPropia();
+            boolean destino = producto.esDestinoNinguno();
             return tipo && origen && destino;
         }
 
         @Override
         public boolean materiaPrimaPuedeUsar(Producto producto) {
-            boolean tipo = producto.soyMateriaPrima();
-            boolean origen = producto.esProduccionPropia() || producto.esOrigenCompra();
-            boolean destino = producto.esExtrusion();
+            boolean tipo = producto.soyTipoMateriaPrima();
+            boolean origen = producto.esOrigenProduccionPropia() || producto.esOrigenCompra();
+            boolean destino = producto.esDestinoExtrusion();
             return tipo && origen && destino;
         }
     },
@@ -42,9 +42,9 @@ public enum TipoMaquina {
     MOLINO {
         @Override
         public boolean puedeFabricar(Producto producto) {
-            boolean tipo = producto.soyMateriaPrima();
-            boolean origen = producto.esProduccionPropia();
-            boolean destino = producto.esInyeccion() || producto.esExtrusion() || producto.esInyeccionOExtrusion();
+            boolean tipo = producto.soyTipoMateriaPrima();
+            boolean origen = producto.esOrigenProduccionPropia();
+            boolean destino = producto.esDestinoInyeccion() || producto.esDestinoExtrusion() || producto.esDestinoInyExt();
             return tipo && origen && destino;
         }
 

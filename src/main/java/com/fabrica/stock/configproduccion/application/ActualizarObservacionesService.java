@@ -1,6 +1,6 @@
 package com.fabrica.stock.configproduccion.application;
 
-import com.fabrica.stock.configproduccion.api.dto.ObsConfigProduccionRequest;
+import com.fabrica.stock.maquina.api.dto.request.ActualizarObsRequest;
 import com.fabrica.stock.maquina.application.ObtenerMaquinaService;
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.shared.domain.exceptions.EstadoNoValidoException;
@@ -9,26 +9,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ActualizarObservacionesService {
-    private final ObtenerConfigProduccionService obtenerConfigProduccionService;
     private final ObtenerMaquinaService obtenerMaquinaService;
 
-    public ActualizarObservacionesService(ObtenerConfigProduccionService obtenerConfigProduccionService,
-                                          ObtenerMaquinaService obtenerMaquinaService)
-    {
-        this.obtenerConfigProduccionService = obtenerConfigProduccionService;
+    public ActualizarObservacionesService(ObtenerMaquinaService obtenerMaquinaService) {
         this.obtenerMaquinaService = obtenerMaquinaService;
     }
 
     @Transactional
-    public void actualizar(Long maquinaId, ObsConfigProduccionRequest request) {
+    public void actualizar(Long maquinaId, ActualizarObsRequest request) {
         Maquina maquina = obtenerMaquinaService.obtener(maquinaId);
 
-        if(!maquina.tengoProductoActivo())
+        if(maquina.noTengoConfigProduccion())
             throw new EstadoNoValidoException("Servicio no disponible.");
 
         String obsNormalizada = request.observaciones() == null ? "" : request.observaciones().trim();
-        obtenerConfigProduccionService
-                .porProducto(maquina.getProductoActivo())
-                .actualizarObservaciones(obsNormalizada);
+        maquina.getConfigProduccion().actualizarObservaciones(obsNormalizada);
     }
 }

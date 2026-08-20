@@ -1,6 +1,6 @@
 package com.fabrica.stock.maquina.application;
 
-import com.fabrica.stock.maquina.api.dto.MaquinaRequest;
+import com.fabrica.stock.maquina.api.dto.request.CrearMaquinaRequest;
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.maquina.domain.vo.NombreMaquina;
 import com.fabrica.stock.maquina.infrastructure.MaquinaRepository;
@@ -16,7 +16,10 @@ public class CrearMaquinaService {
     }
 
     @Transactional
-    public void crear(MaquinaRequest request) {
-        maquinaRepository.save(new Maquina(request.tipo(), NombreMaquina.of(request.nombre())));
+    public void crear(CrearMaquinaRequest request) {
+        NombreMaquina nombre = new NombreMaquina(request.nombre());
+        String descNormalizada = request.descripcion().trim().isBlank() ?
+                "Sin descripción" : request.descripcion().trim();
+        maquinaRepository.save(new Maquina(request.tipo(), nombre, descNormalizada));
     }
 }

@@ -1,55 +1,40 @@
 package com.fabrica.stock.palet.api;
 
-import com.fabrica.stock.palet.api.dto.MaquinaIdPaletIdRequest;
-import com.fabrica.stock.palet.api.dto.RegistrarProduccionRequest;
-import com.fabrica.stock.palet.application.AbrirPaletService;
-import com.fabrica.stock.palet.application.FinalizarPaletService;
-import com.fabrica.stock.palet.application.RegistrarCajaPersonalizadaService;
-import com.fabrica.stock.palet.application.RegistrarProduccionService;
-import jakarta.validation.Valid;
+import com.fabrica.stock.palet.api.dto.response.VerPaletDetalleResponse;
+import com.fabrica.stock.palet.api.dto.response.VerPaletResponse;
+import com.fabrica.stock.palet.api.dto.response.PaletsConsumoInyeccionResponse;
+import com.fabrica.stock.palet.application.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/palets")
 public class PaletController {
-    private final RegistrarProduccionService registrarProduccionService;
-    private final RegistrarCajaPersonalizadaService registrarCajaPersonalizadaService;
-    private final AbrirPaletService abrirPaletService;
-    private final FinalizarPaletService finalizarPaletService;
+    private final VerPaletService verPaletService;
+    private final VerPaletDetalleService verPaletDetalleService;
+    private final PaletsConsumoInyeccionService paletsConsumoInyeccionService;
 
-    public PaletController(RegistrarProduccionService registrarProduccionService,
-                           RegistrarCajaPersonalizadaService registrarCajaPersonalizadaService,
-                           AbrirPaletService abrirPaletService,
-                           FinalizarPaletService finalizarPaletService)
+    public PaletController(VerPaletService verPaletService,
+                           VerPaletDetalleService verPaletDetalleService,
+                           PaletsConsumoInyeccionService paletsConsumoInyeccionService)
     {
-        this.registrarProduccionService = registrarProduccionService;
-        this.registrarCajaPersonalizadaService = registrarCajaPersonalizadaService;
-        this.abrirPaletService = abrirPaletService;
-        this.finalizarPaletService = finalizarPaletService;
+        this.verPaletService = verPaletService;
+        this.verPaletDetalleService = verPaletDetalleService;
+        this.paletsConsumoInyeccionService = paletsConsumoInyeccionService;
     }
 
-    @PostMapping("/registrar")
-    public ResponseEntity<Void> registrar(@Valid @RequestBody RegistrarProduccionRequest request) {
-        registrarProduccionService.registrar(request);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/consumo-inyeccion")
+    public ResponseEntity<PaletsConsumoInyeccionResponse> listarPaletsConsumoInyeccion() {
+        return ResponseEntity.ok(paletsConsumoInyeccionService.listar());
     }
 
-    @PostMapping("/caja-personalizada")
-    public ResponseEntity<Void> cajaPersonalizada(@Valid @RequestBody RegistrarProduccionRequest request) {
-        registrarCajaPersonalizadaService.registrar(request);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/{id}")
+    public ResponseEntity<VerPaletResponse> verPalet(@PathVariable Long id) {
+        return ResponseEntity.ok(verPaletService.ver(id));
     }
 
-    @PostMapping("/abrir")
-    public ResponseEntity<Void> abrir(@Valid @RequestBody MaquinaIdPaletIdRequest request) {
-        abrirPaletService.abrir(request);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping("/finalizar")
-    public ResponseEntity<Void> finalizar(@Valid @RequestBody MaquinaIdPaletIdRequest request) {
-        finalizarPaletService.finalizar(request);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/{id}/detalle")
+    public ResponseEntity<VerPaletDetalleResponse> verPaletDetalle(@PathVariable Long id) {
+        return ResponseEntity.ok(verPaletDetalleService.ver(id));
     }
 }

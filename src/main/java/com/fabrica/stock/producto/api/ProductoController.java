@@ -1,15 +1,13 @@
 package com.fabrica.stock.producto.api;
 
+import com.fabrica.stock.producto.api.dto.ProductosInyeccionResponse;
 import com.fabrica.stock.producto.api.dto.ProductoRequest;
-import com.fabrica.stock.producto.api.dto.ProductoResponse;
+import com.fabrica.stock.producto.api.dto.DtoProducto;
 import com.fabrica.stock.producto.api.dto.ProductosResponse;
 import com.fabrica.stock.producto.application.*;
-import com.fabrica.stock.producto.domain.Producto;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/productos")
@@ -17,6 +15,7 @@ public class ProductoController {
     private final CrearProductoService crearProductoService;
     private final ListarProductosService listarProductosService;
     private final ListarProductosInactivosService listarProductosInactivosService;
+    private final ListarProductosInyectoraService listarProductosInyectoraService;
     private final ObtenerProductoService obtenerProductoService;
     private final ActualizarProductoService actualizarProductoService;
     private final EliminarProductoService eliminarProductoService;
@@ -25,6 +24,7 @@ public class ProductoController {
     public ProductoController(CrearProductoService crearProductoService,
                               ListarProductosService listarProductosService,
                               ListarProductosInactivosService listarProductosInactivosService,
+                              ListarProductosInyectoraService listarProductosInyectoraService,
                               ObtenerProductoService obtenerProductoService,
                               ActualizarProductoService actualizarProductoService,
                               EliminarProductoService eliminarProductoService,
@@ -33,6 +33,7 @@ public class ProductoController {
         this.crearProductoService = crearProductoService;
         this.listarProductosService = listarProductosService;
         this.listarProductosInactivosService = listarProductosInactivosService;
+        this.listarProductosInyectoraService = listarProductosInyectoraService;
         this.obtenerProductoService = obtenerProductoService;
         this.actualizarProductoService = actualizarProductoService;
         this.eliminarProductoService = eliminarProductoService;
@@ -41,20 +42,22 @@ public class ProductoController {
 
     @GetMapping
     public ResponseEntity<ProductosResponse> listar() {
-        List<Producto> productos = listarProductosService.listar();
-        return ResponseEntity.ok(ProductosResponse.of(productos));
+        return ResponseEntity.ok(ProductosResponse.of(listarProductosService.listar()));
     }
 
     @GetMapping("/inactivos")
     public ResponseEntity<ProductosResponse> listarInactivos() {
-        List<Producto> productos = listarProductosInactivosService.listar();
-        return ResponseEntity.ok(ProductosResponse.of(productos));
+        return ResponseEntity.ok(ProductosResponse.of(listarProductosInactivosService.listar()));
+    }
+
+    @GetMapping("/inyeccion")
+    public ResponseEntity<ProductosInyeccionResponse> listarProductosInyeccion() {
+        return ResponseEntity.ok(ProductosInyeccionResponse.of(listarProductosInyectoraService.listar()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductoResponse> obtener(@PathVariable Long id) {
-        Producto producto = obtenerProductoService.obtener(id);
-        return ResponseEntity.ok(ProductoResponse.of(producto));
+    public ResponseEntity<DtoProducto> obtener(@PathVariable Long id) {
+        return ResponseEntity.ok(DtoProducto.of(obtenerProductoService.obtener(id)));
     }
 
     @PostMapping("/{id}/activar")

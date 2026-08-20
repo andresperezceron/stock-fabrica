@@ -9,8 +9,4 @@ public record NombreMaquina(String valor) {
             throw new NombreMaquinaNoValidoException("Nombre de máquina no válido: " + valor);
         }
     }
-
-    public static NombreMaquina of(String valor) {
-        return new NombreMaquina(valor);
-    }
 }

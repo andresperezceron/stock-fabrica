@@ -2,12 +2,13 @@ package com.fabrica.stock.producto.domain;
 
 import com.fabrica.stock.familia.domain.Familia;
 import com.fabrica.stock.producto.domain.vo.CodigoProducto;
+import com.fabrica.stock.shared.domain.EntidadActivable;
 import com.fabrica.stock.shared.domain.constraints.TextoConstraints;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "producto")
-public class Producto {
+public class Producto implements EntidadActivable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -92,31 +93,41 @@ public class Producto {
 
     public DestinoProducto getDestino() { return destino; }
 
-    public void activar() { activo = true; }
-
-    public void desactivar() { activo = false; }
-
     public boolean estoyActivo() { return activo; }
 
-    public boolean soyTerminado() { return tipo == TipoProducto.TERMINADO; }
+    public boolean soyTipoTerminado() { return tipo == TipoProducto.TERMINADO; }
 
-    public boolean soyIntermedio() { return tipo == TipoProducto.INTERMEDIO; }
+    public boolean soyTipoIntermedio() { return tipo == TipoProducto.INTERMEDIO; }
 
-    public boolean soyMateriaPrima() { return tipo == TipoProducto.MATERIA_PRIMA; }
+    public boolean soyTipoMateriaPrima() { return tipo == TipoProducto.MATERIA_PRIMA; }
 
-    public boolean esProduccionPropia() { return origen == OrigenProducto.PRODUCCION_PROPIA; }
+    public boolean esOrigenProduccionPropia() { return origen == OrigenProducto.PRODUCCION_PROPIA; }
 
     public boolean esOrigenCompra() { return origen == OrigenProducto.COMPRA; }
 
-    public boolean esNinguno() { return destino == DestinoProducto.NINGUNO; }
+    public boolean esDestinoNinguno() { return destino == DestinoProducto.NINGUNO; }
 
-    public boolean esMontaje() { return destino == DestinoProducto.MONTAJE; }
+    public boolean esDestinoMontaje() { return destino == DestinoProducto.MONTAJE; }
 
-    public boolean esInyeccion() { return destino == DestinoProducto.INYECCION; }
+    public boolean esDestinoInyeccion() { return destino == DestinoProducto.INYECCION; }
 
-    public boolean esExtrusion() { return destino == DestinoProducto.EXTRUSION; }
+    public boolean esDestinoExtrusion() { return destino == DestinoProducto.EXTRUSION; }
 
-    public boolean esInyeccionOExtrusion() { return destino == DestinoProducto.INYECCION_O_EXTRUSION; }
+    public boolean esDestinoInyExt() { return destino == DestinoProducto.INYECCION_O_EXTRUSION; }
+
+    public boolean consumeInyeccion() {
+        return soyTipoMateriaPrima() && esDestinoInyeccion();
+    }
+
+    public boolean produceInyeccion() {
+        return (soyTipoTerminado() || soyTipoIntermedio()) && esDestinoInyeccion();
+    }
+
+    @Override public boolean estaActiva() { return activo; }
+
+    @Override public void activar() { activo = true; }
+
+    @Override public void desactivar() { activo = false; }
 
     public void actualizar(CodigoProducto codigo,
                            String descripcion,
