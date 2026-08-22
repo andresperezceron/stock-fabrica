@@ -6,7 +6,6 @@ import com.fabrica.stock.contenidopalet.domain.TipoContenido;
 import com.fabrica.stock.contenidopalet.infrastructure.ContenidoPaletRepository;
 import com.fabrica.stock.lote.application.CrearLoteSiNoExisteService;
 import com.fabrica.stock.lote.domain.Lote;
-import com.fabrica.stock.lote.domain.OrigenLote;
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.maquina.api.dto.request.RegistrarProduccionRequest;
 import com.fabrica.stock.palet.domain.Palet;
@@ -55,9 +54,8 @@ public class RegistrarProduccionService {
             throw new RecursoNoValidoException("Registro supera cajas por palet.");
 
         Lote lote = crearLoteSiNoExisteService.crearSiNoExiste(
-                OrigenLote.PRODUCCION,
                 null,
-                maquina,
+                maquina.getNombre(),
                 config.getProducto());
 
         contenidoPaletRepository.save(new ContenidoPalet(

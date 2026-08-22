@@ -130,32 +130,6 @@ public class Maquina {
 
     public void aptaProduccion() { cambiarEstado(EstadoMaquina.APTA_PRODUCCION); }
 
-    public LoteGenerado obtenerLoteGenerado() { return new LoteGenerado(nombre); }
-
-    public static final class LoteGenerado {
-        private final LocalDateTime fechaCreacion;
-        private final TurnoProduccion turnoProduccion;
-        private final String codigo;
-
-        private LoteGenerado(NombreMaquina nombreMaquina) {
-            fechaCreacion = LocalDateTime.now();
-            turnoProduccion = TurnoProduccion.obtener(fechaCreacion);
-
-            String primerDigitoYear = String.valueOf(fechaCreacion.getYear()).substring(0,1);
-            String ultimoDigitoYear = String.valueOf(fechaCreacion.getYear()).substring(3);
-            String dia = String.format("%03d", fechaCreacion.getDayOfYear());
-            codigo =  nombreMaquina.valor() + "-"
-                    + primerDigitoYear + dia + ultimoDigitoYear + "-"
-                    + turnoProduccion.getCodigo();
-        }
-
-        public String getCodigo() { return codigo; }
-
-        public LocalDateTime getFechaCreacion() { return fechaCreacion; }
-
-        public TurnoProduccion getTurnoProduccion() { return turnoProduccion; }
-    }
-
     private void cambiarEstado(EstadoMaquina estado) {
         this.estado = estado;
         this.fechaCambioEstado = LocalDateTime.now();

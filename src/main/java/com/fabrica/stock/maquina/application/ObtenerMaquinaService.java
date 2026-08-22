@@ -1,8 +1,8 @@
 package com.fabrica.stock.maquina.application;
 
 import com.fabrica.stock.maquina.domain.Maquina;
-import com.fabrica.stock.maquina.domain.exceptions.MaquinaNoEncontradaException;
 import com.fabrica.stock.maquina.infrastructure.MaquinaRepository;
+import com.fabrica.stock.shared.domain.exceptions.RecursoNoEncontradoException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +15,6 @@ public class ObtenerMaquinaService {
 
     public Maquina obtener(Long id) {
         return maquinaRepository.findById(id).orElseThrow(() ->
-                new MaquinaNoEncontradaException("Maquina no encontrada."));
+                new RecursoNoEncontradoException("Maquina no encontrada."));
     }
 }

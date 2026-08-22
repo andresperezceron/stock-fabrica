@@ -22,5 +22,10 @@ public class EliminarPaletService {
 
         if(!palet.estoyValidado() && !palet.estoyPendienteValidacion())
             throw new EstadoNoValidoException("Servicio no disponible.");
+
+        if(!palet.estoyVacio())
+            throw new EstadoNoValidoException("Palet debe estar vacío.");
+
+        paletRepository.delete(palet);
     }
 }

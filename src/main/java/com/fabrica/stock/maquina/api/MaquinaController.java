@@ -145,7 +145,7 @@ public class MaquinaController {
     }
 
     @PutMapping("/{id}/estado")
-    public ResponseEntity<Void> asignarEstadoFueraServicio(
+    public ResponseEntity<Void> cambiarEstadoMaquina(
             @PathVariable Long id,
             @Valid @RequestBody EstadoMaquinaRequest request) {
         cambiarEstadoMaquinaService.cambiar(id, request);

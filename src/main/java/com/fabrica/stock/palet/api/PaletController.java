@@ -13,14 +13,17 @@ public class PaletController {
     private final VerPaletService verPaletService;
     private final VerPaletDetalleService verPaletDetalleService;
     private final PaletsConsumoInyeccionService paletsConsumoInyeccionService;
+    private final EliminarPaletService eliminarPaletService;
 
     public PaletController(VerPaletService verPaletService,
                            VerPaletDetalleService verPaletDetalleService,
-                           PaletsConsumoInyeccionService paletsConsumoInyeccionService)
+                           PaletsConsumoInyeccionService paletsConsumoInyeccionService,
+                           EliminarPaletService eliminarPaletService)
     {
         this.verPaletService = verPaletService;
         this.verPaletDetalleService = verPaletDetalleService;
         this.paletsConsumoInyeccionService = paletsConsumoInyeccionService;
+        this.eliminarPaletService = eliminarPaletService;
     }
 
     @GetMapping("/consumo-inyeccion")
@@ -36,5 +39,11 @@ public class PaletController {
     @GetMapping("/{id}/detalle")
     public ResponseEntity<VerPaletDetalleResponse> verPaletDetalle(@PathVariable Long id) {
         return ResponseEntity.ok(verPaletDetalleService.ver(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        eliminarPaletService.eliminar(id);
+        return ResponseEntity.noContent().build();
     }
 }

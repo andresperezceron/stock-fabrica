@@ -14,6 +14,7 @@ public class ObtenerPaletService {
     }
 
     public Palet obtener(Long id){
-        return paletRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Palet no encontrado."));
+        return paletRepository.findById(id).orElseThrow(() ->
+                new RecursoNoEncontradoException("Palet no encontrado."));
     }
 }

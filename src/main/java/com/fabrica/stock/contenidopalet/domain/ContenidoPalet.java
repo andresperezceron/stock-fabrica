@@ -5,6 +5,7 @@ import com.fabrica.stock.palet.domain.Palet;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,14 +16,16 @@ public class ContenidoPalet {
     private Long id;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "palet_id")
     private Palet palet;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "lote_id")
     private Lote lote;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TipoContenido tipoContenido;
+    private TipoContenido tipo;
 
     @Column(nullable = false)
     private Integer cantidad;
@@ -36,15 +39,15 @@ public class ContenidoPalet {
     public ContenidoPalet(
             Palet palet,
             Lote lote,
-            TipoContenido tipoContenido,
+            TipoContenido tipo,
             Integer cantidad,
             List<Lote> lotesMateriaPrima)
     {
         this.palet = palet;
         this.lote = lote;
-        this.tipoContenido = tipoContenido;
+        this.tipo = tipo;
         this.cantidad = cantidad;
-        this.lotesMateriaPrima = lotesMateriaPrima;
+        this.lotesMateriaPrima = new ArrayList<>(lotesMateriaPrima);
         fechaCreacion = LocalDateTime.now();
     }
 
@@ -58,7 +61,7 @@ public class ContenidoPalet {
         return palet;
     }
 
-    public TipoContenido getTipo() { return tipoContenido; }
+    public TipoContenido getTipo() { return tipo; }
 
     public Lote getLote() { return lote; }
 
@@ -69,7 +72,7 @@ public class ContenidoPalet {
     public LocalDateTime getFechaCreacion() { return fechaCreacion; }
 
     public boolean esMismoContenido(ContenidoPalet otro) {
-        boolean mismoLoteMismoTipo = lote.getCodigo().equals(otro.lote.getCodigo()) && tipoContenido == otro.tipoContenido;
+        boolean mismoLoteMismoTipo = lote.getCodigo().equals(otro.lote.getCodigo()) && tipo == otro.tipo;
         boolean mismasMateriasPrimas =
                 lotesMateriaPrima.stream()
                         .map(Lote::getId)
@@ -84,11 +87,14 @@ public class ContenidoPalet {
     }
 
     public boolean esMismoLoteTipoCaja(ContenidoPalet otro) {
-        return lote.getCodigo().equals(otro.lote.getCodigo()) && tipoContenido == otro.tipoContenido;
+        return lote.getCodigo().equals(otro.lote.getCodigo()) && tipo == otro.tipo;
     }
 
     public void acumular(ContenidoPalet otro) {
         cantidad += otro.cantidad;
+
+        if(otro.fechaCreacion.isAfter(fechaCreacion))
+            fechaCreacion = otro.fechaCreacion;
     }
 
     public boolean esMiPalet(Palet palet) {

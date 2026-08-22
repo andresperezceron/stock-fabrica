@@ -5,6 +5,7 @@ import com.fabrica.stock.estacion.domain.Estacion;
 import com.fabrica.stock.movimiento.domain.Movimiento;
 import com.fabrica.stock.movimiento.infrastructure.MovimientoRepository;
 import com.fabrica.stock.palet.domain.Palet;
+import com.fabrica.stock.shared.domain.exceptions.ConflictException;
 import com.fabrica.stock.shared.domain.exceptions.RecursoNoEncontradoException;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,16 @@ public class CrearMovimientoService {
     }
 
     public void primerMovimiento(Palet palet) {
-        if(!(palet.getLocalizacion() instanceof Estacion produccion))
+        if(!(palet.getLocalizacion() instanceof Estacion estacion))
             throw new RecursoNoEncontradoException("El palet no está en estación Producción.");
 
+        Estacion produccion = obtenerEstacionService.obtenerProduccion();
         Estacion validacion = obtenerEstacionService.obtenerValidacion();
-        movimientoRepository.saveAll(Movimiento.primerMovimiento(palet, produccion, validacion));
+
+        if(!estacion.getNombre().equals(produccion.getNombre()))
+            throw new ConflictException("El palet no está en producción.");
+
+        movimientoRepository.saveAll(Movimiento.primerMovimiento(palet, estacion, validacion));
         palet.moverA(validacion);
         palet.pendienteValidacion();
     }
@@ -42,12 +48,28 @@ public class CrearMovimientoService {
     }
 
     public void consumicion(Palet palet) {
-        if(!(palet.getLocalizacion() instanceof Estacion produccion))
-            throw new RecursoNoEncontradoException("El palet no está en Producción.");
+        if(!(palet.getLocalizacion() instanceof Estacion estacion))
+            throw new RecursoNoEncontradoException("El palet no está en una estación.");
 
+        Estacion produccion = obtenerEstacionService.obtenerProduccion();
         Estacion consumicion = obtenerEstacionService.obtenerConsumicion();
-        movimientoRepository.saveAll(Movimiento.consumicion(palet, produccion, consumicion));
+
+        if(!estacion.getNombre().equals(produccion.getNombre()))
+            throw new ConflictException("El palet no está en producción.");
+
+        movimientoRepository.saveAll(Movimiento.consumicion(palet, estacion, consumicion));
         palet.moverA(consumicion);
         palet.consumido();
+    }
+
+    public void entradaForanea(Palet palet) {
+        if(!palet.estoyEstacionProveedor())
+            throw new ConflictException("Palet no está en Proveedor.");
+
+        Estacion validacion = obtenerEstacionService.obtenerValidacion();
+
+        movimientoRepository.saveAll(Movimiento.entradaForanea(palet, palet.getEstacion(), validacion));
+        palet.moverA(validacion);
+        palet.pendienteValidacion();
     }
 }

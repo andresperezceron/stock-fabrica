@@ -4,6 +4,7 @@ import com.fabrica.stock.configproduccion.domain.ConfigProduccion;
 import com.fabrica.stock.contenidopalet.domain.ContenidoPalet;
 import com.fabrica.stock.contenidopalet.domain.TipoContenido;
 import com.fabrica.stock.estacion.domain.Estacion;
+import com.fabrica.stock.estacion.domain.Estaciones;
 import com.fabrica.stock.producto.domain.Producto;
 import com.fabrica.stock.shared.domain.EntidadActivable;
 import com.fabrica.stock.shared.domain.Localizacion;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Palet implements EntidadActivable {
+public class Palet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,9 +45,6 @@ public class Palet implements EntidadActivable {
 
     @Column(nullable = false)
     private LocalDateTime fechaCreacion;
-
-    @Column(nullable = false)
-    private boolean activo = true;
 
     private LocalDateTime fechaCambioEstado;
 
@@ -90,6 +88,16 @@ public class Palet implements EntidadActivable {
         return contenidos.get(0);
     }
 
+    public Estacion getEstacion() {
+        if(!(localizacion instanceof Estacion)) throw new ConflictException("Estoy en una ubicación.");
+        return (Estacion) localizacion;
+    }
+
+    public Ubicacion getUbicacion() {
+        if(!(localizacion instanceof Ubicacion)) throw new ConflictException("Estoy en una estación.");
+        return (Ubicacion) localizacion;
+    }
+
     public void abrir() { cambiarEstado(EstadoPalet.ABIERTO); }
 
     public void cerrar() { cambiarEstado(EstadoPalet.CERRADO); }
@@ -118,13 +126,11 @@ public class Palet implements EntidadActivable {
 
     public boolean estoyVacio() { return contenidos.isEmpty(); }
 
+    public boolean estoyEstacionProveedor() {
+        return localizacion instanceof Estacion estacion && estacion.getNombre().valor().equals(Estaciones.PROVEEDOR);
+    }
+
     public boolean soyConsumoInyeccion() { return producto.consumeInyeccion() && soyTipoGranel(); }
-
-    @Override public boolean estaActiva() { return activo; }
-
-    @Override public void activar() { activo = true; }
-
-    @Override public void desactivar() { activo = false; }
 
     public boolean tengoPersonalizada() {
         return contenidos.stream()

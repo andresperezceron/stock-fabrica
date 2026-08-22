@@ -79,6 +79,10 @@ public class Movimiento {
         return crearMovimientos(palet, TipoMovimiento.CONSUMICION, produccion, consumicion);
     }
 
+    public static List<Movimiento> entradaForanea(Palet palet, Estacion proveedor, Estacion validacion) {
+        return crearMovimientos(palet, TipoMovimiento.ENTRADA, proveedor, validacion);
+    }
+
     private static List<Movimiento> crearMovimientos(
             Palet palet,
             TipoMovimiento tipo,
