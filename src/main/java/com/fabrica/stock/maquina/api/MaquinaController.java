@@ -32,6 +32,8 @@ public class MaquinaController {
     private final ContenidosRegistradosService contenidosRegistradosService;
     private final VerConfigProduccionService verConfigProduccionService;
 
+    private final TerminalService terminalService;
+
     public MaquinaController(ObtenerMaquinaService obtenerMaquinaService,
                              CrearMaquinaService crearMaquinaService,
                              AsignarConfigProduccionService asignarConfigProduccionService,
@@ -47,7 +49,8 @@ public class MaquinaController {
                              ListarMaquinasService listarMaquinasService,
                              ContenidoRegistradoService contenidoRegistradoService,
                              ContenidosRegistradosService contenidosRegistradosService,
-                             VerConfigProduccionService verConfigProduccionService)
+                             VerConfigProduccionService verConfigProduccionService,
+                             TerminalService terminalService)
     {
         this.obtenerMaquinaService = obtenerMaquinaService;
         this.crearMaquinaService = crearMaquinaService;
@@ -65,6 +68,12 @@ public class MaquinaController {
         this.contenidoRegistradoService = contenidoRegistradoService;
         this.contenidosRegistradosService = contenidosRegistradosService;
         this.verConfigProduccionService = verConfigProduccionService;
+        this.terminalService = terminalService;
+    }
+
+    @GetMapping("/{id}/terminal")
+    public ResponseEntity<TerminalResponse> terminal(@PathVariable Long id) {
+        return ResponseEntity.ok(terminalService.obtener(id));
     }
 
     @GetMapping

@@ -4,6 +4,7 @@ import com.fabrica.stock.maquina.api.dto.request.EstadoMaquinaRequest;
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.shared.domain.exceptions.EstadoNoValidoException;
 import com.fabrica.stock.shared.domain.exceptions.RecursoNoValidoException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,7 @@ public class CambiarEstadoMaquinaService {
         this.obtenerMaquinaService = obtenerMaquinaService;
     }
 
+    @Transactional
     public void cambiar(Long maquinaId, EstadoMaquinaRequest request) {
         Maquina maquina = obtenerMaquinaService.obtener(maquinaId);
         if(maquina.estaEnProduccion()) throw new EstadoNoValidoException("Servicio no disponible.");
