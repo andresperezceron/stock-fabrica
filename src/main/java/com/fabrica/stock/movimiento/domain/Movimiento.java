@@ -83,6 +83,12 @@ public class Movimiento {
         return crearMovimientos(palet, TipoMovimiento.ENTRADA, proveedor, validacion);
     }
 
+    public static List<Movimiento> validacion(Palet palet, Estacion validacion, Ubicacion ubicacion) {
+        return crearMovimientos(palet, TipoMovimiento.VALIDACION, validacion, ubicacion);
+    }
+
+
+
     private static List<Movimiento> crearMovimientos(
             Palet palet,
             TipoMovimiento tipo,

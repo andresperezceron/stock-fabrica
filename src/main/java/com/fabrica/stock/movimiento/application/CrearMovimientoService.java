@@ -8,9 +8,11 @@ import com.fabrica.stock.palet.domain.Palet;
 import com.fabrica.stock.shared.domain.exceptions.ConflictException;
 import com.fabrica.stock.shared.domain.exceptions.RecursoNoEncontradoException;
 import com.fabrica.stock.ubicacion.domain.Ubicacion;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class CrearMovimientoService {
     private final ObtenerEstacionService obtenerEstacionService;
     private final MovimientoRepository movimientoRepository;
@@ -71,5 +73,14 @@ public class CrearMovimientoService {
         movimientoRepository.saveAll(Movimiento.entradaForanea(palet, palet.getEstacion(), validacion));
         palet.moverA(validacion);
         palet.pendienteValidacion();
+    }
+
+    public void validacion(Palet palet, Ubicacion ubicacion) {
+        if(!palet.estoyEstacionValidacion()) throw new ConflictException("Palet no está en validación.");
+        if(ubicacion == null) throw new RecursoNoEncontradoException("Ubicación no encontrada.");
+
+        movimientoRepository.saveAll(Movimiento.validacion(palet, palet.getEstacion(), ubicacion));
+        palet.moverA(ubicacion);
+        palet.validado();
     }
 }

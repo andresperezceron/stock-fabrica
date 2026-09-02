@@ -108,6 +108,8 @@ public class Palet {
 
     public void consumido() { cambiarEstado(EstadoPalet.CONSUMIDO); }
 
+    public void validado() { cambiarEstado(EstadoPalet.VALIDADO); }
+
     public void moverA(Localizacion localizacion) {
         this.localizacion = localizacion;
     }
@@ -128,6 +130,10 @@ public class Palet {
 
     public boolean estoyEstacionProveedor() {
         return localizacion instanceof Estacion estacion && estacion.getNombre().valor().equals(Estaciones.PROVEEDOR);
+    }
+
+    public boolean estoyEstacionValidacion() {
+        return localizacion instanceof Estacion estacion && estacion.getNombre().valor().equals(Estaciones.VALIDACION);
     }
 
     public boolean soyConsumoInyeccion() { return producto.consumeInyeccion() && soyTipoGranel(); }

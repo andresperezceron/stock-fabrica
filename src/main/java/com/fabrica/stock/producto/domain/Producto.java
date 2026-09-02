@@ -120,7 +120,7 @@ public class Producto implements EntidadActivable {
     }
 
     public boolean produceInyeccion() {
-        return (soyTipoTerminado() || soyTipoIntermedio()) && esDestinoInyeccion();
+        return (soyTipoTerminado() || soyTipoIntermedio()) && (esDestinoNinguno() || esDestinoMontaje());
     }
 
     @Override public boolean estaActiva() { return activo; }
