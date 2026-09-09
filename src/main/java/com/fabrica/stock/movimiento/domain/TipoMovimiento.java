@@ -6,5 +6,7 @@ public enum TipoMovimiento {
     VALIDACION,
     REUBICACION,
     PARA_CONSUMICION,
-    CONSUMICION
+    CONSUMICION,
+    CONSUMO_INYECCION,
+    DEVOLUCION
 }

@@ -6,7 +6,6 @@ import com.fabrica.stock.contenidopalet.domain.TipoContenido;
 import com.fabrica.stock.estacion.domain.Estacion;
 import com.fabrica.stock.estacion.domain.Estaciones;
 import com.fabrica.stock.producto.domain.Producto;
-import com.fabrica.stock.shared.domain.EntidadActivable;
 import com.fabrica.stock.shared.domain.Localizacion;
 import com.fabrica.stock.shared.domain.exceptions.ConflictException;
 import com.fabrica.stock.shared.domain.exceptions.RecursoNoValidoException;
@@ -136,11 +135,21 @@ public class Palet {
         return localizacion instanceof Estacion estacion && estacion.getNombre().valor().equals(Estaciones.VALIDACION);
     }
 
+    public boolean estoyEstacionConsumoInyeccion() {
+        return localizacion instanceof Estacion estacion &&
+                estacion.getNombre().valor().equals(Estaciones.CONSUMO_INYECCION);
+    }
+
     public boolean soyConsumoInyeccion() { return producto.consumeInyeccion() && soyTipoGranel(); }
 
     public boolean tengoPersonalizada() {
         return contenidos.stream()
                 .anyMatch(c -> c.getTipo() == TipoContenido.PERSONALIZADA);
+    }
+
+    public void modificarContenidoPalet(Integer nuevaCantidad) {
+        if(soyTipoCaja()) throw new ConflictException("Servicio no disponible para tipo Caja.");
+        getContenidoGranel().modificarCantidad(nuevaCantidad);
     }
 
     public void consolidarContenidos() {

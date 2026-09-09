@@ -2,6 +2,7 @@ package com.fabrica.stock.contenidopalet.domain;
 
 import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.palet.domain.Palet;
+import com.fabrica.stock.shared.domain.exceptions.RecursoNoValidoException;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -99,5 +100,16 @@ public class ContenidoPalet {
 
     public boolean esMiPalet(Palet palet) {
         return this.palet.getId().equals(palet.getId());
+    }
+
+    public void modificarCantidad(Integer nuevaCantidad) {
+        if (nuevaCantidad == null || nuevaCantidad <= 0)
+            throw new RecursoNoValidoException("La cantidad debe ser mayor que 0.");
+
+        if (nuevaCantidad > cantidad)
+            throw new RecursoNoValidoException(
+                    "La nueva cantidad no puede ser mayor que la cantidad actual.");
+
+        cantidad = nuevaCantidad;
     }
 }

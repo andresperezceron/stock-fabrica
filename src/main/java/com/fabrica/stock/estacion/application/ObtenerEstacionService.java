@@ -27,6 +27,8 @@ public class ObtenerEstacionService {
 
     public Estacion obtenerConsumicion() { return obtenerPorNombre(NombreUbicacion.of(Estaciones.CONSUMICION)); }
 
+    public Estacion obtenerCosumoInyeccion() { return obtenerPorNombre(NombreUbicacion.of(Estaciones.CONSUMO_INYECCION)); }
+
     private Estacion obtenerPorNombre(NombreUbicacion nombre) {
         return estacionRepository.findByNombre(nombre)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Estación no encontrada: " + nombre));

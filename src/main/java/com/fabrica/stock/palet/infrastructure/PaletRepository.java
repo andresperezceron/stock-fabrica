@@ -2,6 +2,7 @@ package com.fabrica.stock.palet.infrastructure;
 
 import com.fabrica.stock.palet.domain.EstadoPalet;
 import com.fabrica.stock.palet.domain.Palet;
+import com.fabrica.stock.shared.domain.Localizacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -9,4 +10,6 @@ import java.util.Optional;
 
 public interface PaletRepository extends JpaRepository<Palet, Long> {
     List<Palet> findAllByEstado(EstadoPalet estado);
+    List<Palet> findAllByEstadoAndLocalizacion(EstadoPalet estado, Localizacion localizacion);
+
 }

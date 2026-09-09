@@ -87,7 +87,13 @@ public class Movimiento {
         return crearMovimientos(palet, TipoMovimiento.VALIDACION, validacion, ubicacion);
     }
 
+    public static List<Movimiento> consumoInyeccion(Palet palet, Ubicacion ubicacion, Estacion consumoInyeccion) {
+        return crearMovimientos(palet, TipoMovimiento.CONSUMO_INYECCION, ubicacion, consumoInyeccion);
+    }
 
+    public static List<Movimiento> devolucionConsumoInyeccion(Palet palet, Estacion consumoInyeccion, Estacion validacion) {
+        return crearMovimientos(palet, TipoMovimiento.DEVOLUCION,  consumoInyeccion, validacion);
+    }
 
     private static List<Movimiento> crearMovimientos(
             Palet palet,

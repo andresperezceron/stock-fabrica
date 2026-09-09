@@ -64,6 +64,17 @@ public class CrearMovimientoService {
         palet.consumido();
     }
 
+    public void consumoInyeccion(Palet palet) {
+        if(!(palet.getLocalizacion() instanceof Ubicacion ubicacion))
+            throw new RecursoNoEncontradoException("El palet no está en una ubicación.");
+
+        Estacion consumoInyeccion = obtenerEstacionService.obtenerCosumoInyeccion();
+
+        movimientoRepository.saveAll(Movimiento.consumoInyeccion(palet, ubicacion, consumoInyeccion));
+        palet.moverA(consumoInyeccion);
+        palet.enConsumo();
+    }
+
     public void entradaForanea(Palet palet) {
         if(!palet.estoyEstacionProveedor())
             throw new ConflictException("Palet no está en Proveedor.");
@@ -82,5 +93,14 @@ public class CrearMovimientoService {
         movimientoRepository.saveAll(Movimiento.validacion(palet, palet.getEstacion(), ubicacion));
         palet.moverA(ubicacion);
         palet.validado();
+    }
+
+    public void devolucionConsumoInyeccion(Palet palet) {
+        if(!palet.estoyEstacionConsumoInyeccion()) throw new ConflictException("Palet no está en consumo inyección.");
+        Estacion validacion = obtenerEstacionService.obtenerValidacion();
+        movimientoRepository.saveAll(Movimiento.devolucionConsumoInyeccion(palet,  palet.getEstacion(), validacion));
+
+        palet.moverA(validacion);
+        palet.pendienteValidacion();
     }
 }

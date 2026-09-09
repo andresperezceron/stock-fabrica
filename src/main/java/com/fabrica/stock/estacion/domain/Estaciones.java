@@ -11,6 +11,7 @@ public final class Estaciones {
     public static final String EXPEDICION = "EXPEDICION";
     public static final String CORRECCION = "CORRECCION";
     public static final String CONSUMICION = "CONSUMICION";
+    public static final String CONSUMO_INYECCION =  "CONSUMO_INYECCION";
 
     public static List<String> todas() {
         return List.of(
@@ -19,7 +20,8 @@ public final class Estaciones {
                 PROVEEDOR,
                 EXPEDICION,
                 CORRECCION,
-                CONSUMICION
+                CONSUMICION,
+                CONSUMO_INYECCION
         );
     }
 }
