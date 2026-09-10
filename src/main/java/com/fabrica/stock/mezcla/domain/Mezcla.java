@@ -32,6 +32,10 @@ public class Mezcla {
         this.producto = producto;
     }
 
+    public Long getId() { return id; }
+
+    public Producto getProducto() { return producto; }
+
     public boolean contieneMateriaPrima(Lote lote) {
         return lotesMateriaPrima.stream().anyMatch(l -> l.getId().equals(lote.getId()));
     }

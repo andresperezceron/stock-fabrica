@@ -4,11 +4,11 @@ import com.fabrica.stock.producto.domain.Producto;
 
 import java.util.List;
 
-public record ProductosInyeccionResponse(List<DtoProductoInyeccion> productos) {
+public record ProductosInyeccionResponse(List<ProductoInyeccionDto> productosInyeccion) {
     public static ProductosInyeccionResponse of(List<Producto> productos) {
         return new ProductosInyeccionResponse(productos
                 .stream()
-                .map(DtoProductoInyeccion::of)
+                .map(ProductoInyeccionDto::of)
                 .toList());
     }
 }

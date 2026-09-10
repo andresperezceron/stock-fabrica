@@ -15,7 +15,7 @@ public class ProductoController {
     private final CrearProductoService crearProductoService;
     private final ListarProductosService listarProductosService;
     private final ListarProductosInactivosService listarProductosInactivosService;
-    private final ListarProductosInyectoraService listarProductosInyectoraService;
+    private final ProductosInyeccionService productosInyeccionService;
     private final ObtenerProductoService obtenerProductoService;
     private final ActualizarProductoService actualizarProductoService;
     private final EliminarProductoService eliminarProductoService;
@@ -24,7 +24,7 @@ public class ProductoController {
     public ProductoController(CrearProductoService crearProductoService,
                               ListarProductosService listarProductosService,
                               ListarProductosInactivosService listarProductosInactivosService,
-                              ListarProductosInyectoraService listarProductosInyectoraService,
+                              ProductosInyeccionService productosInyeccionService,
                               ObtenerProductoService obtenerProductoService,
                               ActualizarProductoService actualizarProductoService,
                               EliminarProductoService eliminarProductoService,
@@ -33,7 +33,7 @@ public class ProductoController {
         this.crearProductoService = crearProductoService;
         this.listarProductosService = listarProductosService;
         this.listarProductosInactivosService = listarProductosInactivosService;
-        this.listarProductosInyectoraService = listarProductosInyectoraService;
+        this.productosInyeccionService = productosInyeccionService;
         this.obtenerProductoService = obtenerProductoService;
         this.actualizarProductoService = actualizarProductoService;
         this.eliminarProductoService = eliminarProductoService;
@@ -51,8 +51,8 @@ public class ProductoController {
     }
 
     @GetMapping("/inyeccion")
-    public ResponseEntity<ProductosInyeccionResponse> listarProductosInyeccion() {
-        return ResponseEntity.ok(ProductosInyeccionResponse.of(listarProductosInyectoraService.listar()));
+    public ResponseEntity<ProductosInyeccionResponse> productosInyeccion() {
+        return ResponseEntity.ok(productosInyeccionService.listar());
     }
 
     @GetMapping("/{id}")

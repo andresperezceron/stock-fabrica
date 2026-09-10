@@ -4,21 +4,21 @@ import com.fabrica.stock.maquina.api.dto.response.TerminalResponse;
 import com.fabrica.stock.maquina.domain.Maquina;
 import com.fabrica.stock.palet.application.PaletsConsumoInyeccionService;
 import com.fabrica.stock.producto.api.dto.ProductosInyeccionResponse;
-import com.fabrica.stock.producto.application.ListarProductosInyectoraService;
+import com.fabrica.stock.producto.application.ProductosInyeccionService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TerminalService {
     private final ObtenerMaquinaService obtenerMaquinaService;
-    private final ListarProductosInyectoraService listarProductosInyectoraService;
+    private final ProductosInyeccionService productosInyeccionService;
     private final PaletsConsumoInyeccionService paletsConsumoInyeccionService;
 
     public TerminalService(ObtenerMaquinaService obtenerMaquinaService,
-                           ListarProductosInyectoraService listarProductosInyectoraService,
+                           ProductosInyeccionService productosInyeccionService,
                            PaletsConsumoInyeccionService paletsConsumoInyeccionService)
     {
         this.obtenerMaquinaService = obtenerMaquinaService;
-        this.listarProductosInyectoraService = listarProductosInyectoraService;
+        this.productosInyeccionService = productosInyeccionService;
         this.paletsConsumoInyeccionService = paletsConsumoInyeccionService;
     }
 
@@ -26,7 +26,7 @@ public class TerminalService {
         Maquina maquina = obtenerMaquinaService.obtener(maquinaId);
         return TerminalResponse.of(
                 maquina,
-                ProductosInyeccionResponse.of(listarProductosInyectoraService.listar()),
+                productosInyeccionService.listar(),
                 paletsConsumoInyeccionService.listar());
     }
 }

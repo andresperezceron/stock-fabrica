@@ -72,7 +72,6 @@ public class CrearMovimientoService {
 
         movimientoRepository.saveAll(Movimiento.consumoInyeccion(palet, ubicacion, consumoInyeccion));
         palet.moverA(consumoInyeccion);
-        palet.enConsumo();
     }
 
     public void entradaForanea(Palet palet) {
