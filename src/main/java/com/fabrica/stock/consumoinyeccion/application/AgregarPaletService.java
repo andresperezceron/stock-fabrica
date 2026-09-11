@@ -23,6 +23,9 @@ public class AgregarPaletService {
     public void agregarPalet(Long paletId) {
         Palet palet = obtenerPaletService.obtener(paletId);
 
+        if(!palet.estoyUbicacion())
+            throw new RecursoNoValidoException("Palet no está en Ubicación.");
+        
         if(!palet.soyConsumoInyeccion())
             throw new RecursoNoValidoException("Palet no valido para consumo inyección.");
 

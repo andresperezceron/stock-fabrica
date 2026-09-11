@@ -4,6 +4,7 @@ import com.fabrica.stock.lote.domain.Lote;
 import com.fabrica.stock.producto.domain.Producto;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,15 +27,23 @@ public class Mezcla {
     )
     private List<Lote> lotesMateriaPrima = new ArrayList<>();
 
+    @Column(nullable = false)
+    private LocalDateTime fechaCreacion;
+
     protected Mezcla() {}
 
     public Mezcla(Producto producto) {
         this.producto = producto;
+        fechaCreacion = LocalDateTime.now();
     }
 
     public Long getId() { return id; }
 
     public Producto getProducto() { return producto; }
+
+    public List<Lote> getLotesMateriaPrima() { return lotesMateriaPrima; }
+
+    public LocalDateTime getFechaCreacion() { return fechaCreacion; }
 
     public boolean contieneMateriaPrima(Lote lote) {
         return lotesMateriaPrima.stream().anyMatch(l -> l.getId().equals(lote.getId()));

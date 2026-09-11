@@ -24,19 +24,19 @@ public class ConsumoInyeccionController {
         this.devolverPaletService = devolverPaletService;
     }
 
-    @PostMapping
+    @PostMapping("/{paletId}")
     public ResponseEntity<Void> agregarPalet(@PathVariable Long paletId) {
         agregarPaletService.agregarPalet(paletId);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{paletId}")
     public ResponseEntity<Void> consumirPalet(@PathVariable Long paletId) {
         consumirPaletService.consumir(paletId);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
+    @PutMapping("/{paletId}")
     public ResponseEntity<Void> devolverPalet(
             @PathVariable Long paletId,
             @Valid @RequestBody CantidadModificada request) {

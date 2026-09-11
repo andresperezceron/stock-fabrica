@@ -121,6 +121,10 @@ public class Palet {
 
     public boolean soyTipoCaja() { return tipo == TipoPalet.CAJA; }
 
+    public boolean soyConsumoInyeccion() { return producto.consumeInyeccion() && soyTipoGranel(); }
+
+    public boolean estoyUbicacion() { return localizacion instanceof Ubicacion; }
+
     public boolean estoyPendienteValidacion() { return estado == EstadoPalet.PENDIENTE_VALIDACION; }
 
     public boolean estoyValidado() { return estado == EstadoPalet.VALIDADO; }
@@ -139,8 +143,6 @@ public class Palet {
         return localizacion instanceof Estacion estacion &&
                 estacion.getNombre().valor().equals(Estaciones.CONSUMO_INYECCION);
     }
-
-    public boolean soyConsumoInyeccion() { return producto.consumeInyeccion() && soyTipoGranel(); }
 
     public boolean tengoPersonalizada() {
         return contenidos.stream()
