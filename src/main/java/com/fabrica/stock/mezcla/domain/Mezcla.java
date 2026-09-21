@@ -32,8 +32,9 @@ public class Mezcla {
 
     protected Mezcla() {}
 
-    public Mezcla(Producto producto) {
+    public Mezcla(Producto producto, List<Lote> lotesMateriaPrima) {
         this.producto = producto;
+        this.lotesMateriaPrima = lotesMateriaPrima;
         fechaCreacion = LocalDateTime.now();
     }
 

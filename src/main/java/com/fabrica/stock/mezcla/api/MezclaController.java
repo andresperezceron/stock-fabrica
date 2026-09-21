@@ -1,5 +1,6 @@
 package com.fabrica.stock.mezcla.api;
 
+import com.fabrica.stock.mezcla.api.dto.CrearMezclaRequest;
 import com.fabrica.stock.mezcla.api.dto.IdLoteIngrediente;
 import com.fabrica.stock.mezcla.api.dto.IdPaletIngrediente;
 import com.fabrica.stock.mezcla.api.dto.MezclasResponse;
@@ -35,9 +36,9 @@ public class MezclaController {
         return ResponseEntity.ok(this.listarMezclasService.listar());
     }
 
-    @PostMapping("/{productoId}")
-    public ResponseEntity<Void> crear(@PathVariable Long productoId) {
-        crearMezclaService.crear(productoId);
+    @PostMapping
+    public ResponseEntity<Void> crear(@Valid @RequestBody CrearMezclaRequest request) {
+        crearMezclaService.crear(request.productoId(), request.paletsId());
         return ResponseEntity.noContent().build();
     }
 
