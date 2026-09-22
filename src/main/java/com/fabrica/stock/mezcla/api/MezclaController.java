@@ -1,13 +1,7 @@
 package com.fabrica.stock.mezcla.api;
 
-import com.fabrica.stock.mezcla.api.dto.CrearMezclaRequest;
-import com.fabrica.stock.mezcla.api.dto.IdLoteIngrediente;
-import com.fabrica.stock.mezcla.api.dto.IdPaletIngrediente;
-import com.fabrica.stock.mezcla.api.dto.MezclasResponse;
-import com.fabrica.stock.mezcla.application.AgregarIngredienteService;
-import com.fabrica.stock.mezcla.application.CrearMezclaService;
-import com.fabrica.stock.mezcla.application.ListarMezclasService;
-import com.fabrica.stock.mezcla.application.QuitarIngredienteService;
+import com.fabrica.stock.mezcla.api.dto.*;
+import com.fabrica.stock.mezcla.application.*;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,16 +10,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/mezclas")
 public class MezclaController {
     private final CrearMezclaService crearMezclaService;
+    private final ObtenerMezclaService obtenerMezclaService;
     private final AgregarIngredienteService agregarIngredienteService;
     private final QuitarIngredienteService quitarIngredienteService;
     private final ListarMezclasService listarMezclasService;
 
     public MezclaController(CrearMezclaService crearMezclaService,
+                            ObtenerMezclaService obtenerMezclaService,
                             AgregarIngredienteService agregarIngredienteService,
                             QuitarIngredienteService quitarIngredienteService,
                             ListarMezclasService listarMezclasService)
     {
         this.crearMezclaService = crearMezclaService;
+        this.obtenerMezclaService = obtenerMezclaService;
         this.agregarIngredienteService = agregarIngredienteService;
         this.quitarIngredienteService = quitarIngredienteService;
         this.listarMezclasService = listarMezclasService;
@@ -34,6 +31,11 @@ public class MezclaController {
     @GetMapping
     public ResponseEntity<MezclasResponse> listar() {
         return ResponseEntity.ok(this.listarMezclasService.listar());
+    }
+
+    @GetMapping("/{mezclaId}")
+    public ResponseEntity<MezclaDto> obtener(@PathVariable Long id) {
+        return ResponseEntity.ok(MezclaDto.of(obtenerMezclaService.obtener(id)));
     }
 
     @PostMapping
